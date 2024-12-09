@@ -4,8 +4,8 @@ import React from "react";
 
 export default function Register() {
 
-  async function handleRegister(valuse){
-    let response = await axios.post("http://localhost:8080/api/register", valuse)
+  async function handleRegister(values){
+    let response = await axios.post("http://localhost:8085/api/register", values)
     console.log(response);
   }
 
