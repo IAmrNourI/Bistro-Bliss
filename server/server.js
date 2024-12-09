@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const cookiesParser = require("cookie-parser");
-const { app, server } = require("./socket/index");
+const app = express();
+
 const {default: mongoose} = require("mongoose");
 const userRoutes = require('./routes/userRoutes')
 
@@ -33,10 +34,10 @@ mongoose
   .catch((err) => console.log(err));
 
 
-  server.listen(PORT, () => {
+  app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
   });   
 
 
-  app.use("/api",userRoutes);  
+  app.use("/api",userRoutes);   
   
