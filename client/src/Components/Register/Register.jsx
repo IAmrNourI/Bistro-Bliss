@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import React from "react";
+import { register } from "../../network/user.api";
 
 export default function Register() {
 
   async function handleRegister(values){
     console.log(values);
-    let res = await axios.post(`http://localhost:8085/api/register`, values)
-    console.log(res);    
+    // const res = await register(values);
+    let res = await axios.post(`http://localhost:8080/api/register`, values)
+    // console.log(process.env.BACKEND_URL);
+    console.log(res);     
   }
 
   let formik = useFormik({
