@@ -3,11 +3,10 @@ import { useFormik } from "formik";
 import React from "react";
 
 export default function Register() {
-
-  async function handleRegister(values){
+  async function handleRegister(values) {
     console.log(values);
-    let res = await axios.post(`http://localhost:8085/api/register`, values)
-    console.log(res);    
+    let res = await axios.post(`http://localhost:8080/api/register`, values);
+    console.log(res);
   }
 
   let formik = useFormik({
@@ -16,7 +15,7 @@ export default function Register() {
       email: "",
       password: "",
     },
-    onSubmit : handleRegister,
+    onSubmit: handleRegister,
   });
 
   return (
@@ -63,7 +62,9 @@ export default function Register() {
               />
             </div>
 
-            <button type="submit" className="btn-1 d-block">Register</button>
+            <button type="submit" className="btn-1 d-block">
+              Register
+            </button>
           </div>
         </form>
       </section>
