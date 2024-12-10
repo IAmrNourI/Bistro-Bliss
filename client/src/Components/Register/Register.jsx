@@ -5,8 +5,9 @@ import React from "react";
 export default function Register() {
 
   async function handleRegister(values){
-    let response = await axios.post("http://localhost:8085/api/register", values)
-    console.log(response);
+    console.log(values);
+    let res = await axios.post(`http://localhost:8085/api/register`, values)
+    console.log(res);    
   }
 
   let formik = useFormik({
@@ -15,7 +16,7 @@ export default function Register() {
       email: "",
       password: "",
     },
-    onSubmit : handleRegister
+    onSubmit : handleRegister,
   });
 
   return (
@@ -68,42 +69,4 @@ export default function Register() {
       </section>
     </>
   );
-}
-
-{
-  /* <section className="register">
-        <form action="">
-          <div className="row">
-            <div className="col-lg-6 col-md-12">
-              <div className="d-flex flex-column">
-                <label htmlFor="">Name</label>
-                <input type="text" placeholder="Enter your name" />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-12">
-              <div className="d-flex flex-column">
-                <label htmlFor="">Email</label>
-                <input type="email" placeholder="Enter email adress" />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-12">
-              <div className="d-flex flex-column my-4">
-                <label htmlFor="">Password</label>
-                <input type="password" placeholder="Enter the password" />
-              </div>
-            </div>
-
-            <div className="col-lg-6 col-md-12">
-              <div className="d-flex flex-column my-4">
-                <label htmlFor="">Phone</label>
-                <input type="phone" placeholder="x-xxx-xxx-xxxx" />
-              </div>
-            </div>
-          </div>
-
-          <button className="btn-1 d-block">Register</button>
-        </form>
-      </section> */
 }
