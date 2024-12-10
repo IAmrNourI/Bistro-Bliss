@@ -12,6 +12,6 @@ const transporter = nodemailer.createTransport({
   tls: {
     ciphers: "SSLv3",
   },
-});
+}); 
 
 module.exports = transporter;
