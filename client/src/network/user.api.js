@@ -2,7 +2,11 @@
 import { axiosInstance } from "./index"
 
 const register = async(data) => {
-    return await axiosInstance.post("/api/register" ,data)
+    return await axiosInstance.post("/register" ,data)
 }
 
-export { register }
+const verify = async(data) => {
+    return await axiosInstance.post("/verify-otp" ,data)
+}
+
+export { register, verify }

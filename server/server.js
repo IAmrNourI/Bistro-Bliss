@@ -7,8 +7,8 @@ const app = express();
 const {default: mongoose} = require("mongoose");
 const userRoutes = require('./routes/userRoutes')
 
+  
  
-
 app.use(
   cors({
     origin: process.env.FRONTEND_URL, // Make sure this points to http://localhost:3000 during development
@@ -17,7 +17,7 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
   })
 );
-
+ 
 app.use(express.json());
 app.use(cookiesParser());
 
