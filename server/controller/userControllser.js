@@ -217,13 +217,6 @@ exports.register = async (req, res) => {
     }
     return res.status(400).json({ message: "Failed to send OTP" });
 
-    // res
-    //   .status(201)
-    //   .json({
-    //     message: "User registered successfully",
-    //     data: user,
-    //     success: true,
-    //   });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -233,7 +226,6 @@ exports.verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
   try {
     const user = await User.findOne({ email: email, otp });
-    console.log(user);
     if (!user) {
       return res.status(404).json({ message: "Invalid OTP" });
     }
@@ -269,7 +261,6 @@ exports.resendOtp = async (req, res) => {
       from: process.env.SMTP_USER,
       to: email,
       subject: "YOUR OTP CODE",
-      // text: `Your OTP code is ${otp}`,
       html: `<!DOCTYPE html>
 <html lang="en">
 
