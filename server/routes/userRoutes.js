@@ -1,9 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controller/userControllser");
-const { isAuth } = require("../middleware/authMiddleware");
+const { isAuth } = require("../middlewares/authMiddleware");
+const {
+    userValidationRules,
+    updateUserValidationRules,
+  } = require("../middlewares/UserValidation");
 
-router.post("/register", userController.register);
+const { valdationResults } = require("../middlewares/validationResult");
+
+
+router.post("/register", userValidationRules, valdationResults, userController.register);
 router.post("/verify-otp", userController.verifyOtp);
 router.post("/resend-otp", userController.resendOtp);
 
