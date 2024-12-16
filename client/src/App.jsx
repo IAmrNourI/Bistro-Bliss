@@ -8,7 +8,9 @@ import Register from "./Components/Register/Register";
 import Login from "./Components/Login/Login";
 import AuthLayout from "./Components/AuthLayout/AuthLayout";
 import LoginPassword from "./Components/LoginPassword/LoginPassword";
-import Ottp from "./Components/Ottp/Ottp";
+import Otp from "./Components/Otp/Otp";
+import UserContextProvider from "./Context/UserContext";
+
 
 let route = createBrowserRouter([
   {
@@ -26,7 +28,7 @@ let route = createBrowserRouter([
       {path: "register", element: <Register />},
       {path: "login", element: <Login />},
       {path: "loginpassword", element: <LoginPassword />},
-      {path: "ottp", element: <Ottp />},
+      {path: "otp", element: <Otp />},
     ]
   }
 ]);
@@ -36,7 +38,9 @@ let route = createBrowserRouter([
 function App() {
   return (
     <>
+    <UserContextProvider>
       <RouterProvider router={route}></RouterProvider>
+    </UserContextProvider>
     </>
   );
 }

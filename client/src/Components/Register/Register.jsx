@@ -11,7 +11,7 @@ export default function Register() {
   async function handleRegister(values) {
     const result = await register(values)
       .then((res) => {
-        navigate("/auth/ottp", { state: { email: values.email } });
+        navigate("/auth/otp", { state: { email: values.email } });
       })
       .catch((res) => {
         console.log(res.response.data.message);
@@ -47,54 +47,60 @@ export default function Register() {
 
   return (
     <>
-      <section className="register">
+      <div className="bg-register">
+        <section className="register">
         <form onSubmit={formik.handleSubmit} action="">
-          <div className="center d-flex justify-content-center flex-wrap">
-            <div className="d-flex flex-column">
-              <label htmlFor="">Name</label>
-              <input
+          <div className="register-container">
+              <div class="form-floating mb-3">
+                <input
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 name="name"
                 value={formik.values.name}
                 type="text"
                 id="name"
+                className="form-control"
                 placeholder="Enter your name"
-              />
-            </div>
+                />
+                <label for="floatingInput">Enter your name</label>
+              </div>
 
-            <div className="d-flex flex-column">
-              <label htmlFor="">Email</label>
-              <input
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                name="email"
-                value={formik.values.email}
-                type="email"
-                id="email"
-                placeholder="Enter email adress"
-              />
-            </div>
+              <div class="form-floating mb-3">
+                <input
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  name="email"
+                  value={formik.values.email}
+                  type="email"
+                  id="email"
+                  className="form-control"
+                  placeholder="Enter email adress"
+                />
+                <label for="floatingInput">Email address</label>
+              </div>
+              
+              <div class="form-floating mb-3">
+                <input
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  name="password"
+                  value={formik.values.password}
+                  type="password"
+                  id="password"
+                  className="form-control"
+                  placeholder=""
+                />
+                <label for="floatingInput">Password</label>
+              </div>
 
-            <div className="d-flex flex-column my-4">
-              <label htmlFor="">Password</label>
-              <input
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                name="password"
-                value={formik.values.password}
-                type="password"
-                id="password"
-                placeholder="Enter the password"
-              />
-            </div>
-
-            <button type="submit" className="btn-1 d-block">
+            <button type="submit" class="btn btn-register w-100">
               Register
             </button>
+            
           </div>
         </form>
       </section>
+    </div>
     </>
   );
 }
