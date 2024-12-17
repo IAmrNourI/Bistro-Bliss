@@ -4,16 +4,11 @@ const jwt = require("jsonwebtoken");
 const { generateUniqueOtp } = require("../utils/otpGenerator");
 const transporter = require("../config/nodemailer");
 const { trusted } = require("mongoose");
+const { gernerateToken } = require("../utils/tokenGenerator");
 
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, profile_pic } = req.body;
-    const isEmailExist = await User.findOne({ email: email });
-    if (isEmailExist) {
-      return res
-        .status(400)
-        .json({ message: "Email already exists", error: true });
-    }
+    const { name, email, password, phoneNumber, profilePic, role } = req.body;
 
     const hashedPassword = await bcryptjs.hashSync(password, 12);
 
@@ -21,7 +16,9 @@ exports.register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      profile_pic,
+      phoneNumber,
+      profilePic,
+      role,
     });
     await user.save();
 
@@ -473,31 +470,20 @@ exports.verifyPassword = async (req, res) => {
   try {
     const { userId, password } = req.body;
     const user = await User.findById(userId);
-    console.log(user.password);
-    console.log(password);
+
     const checkPassword = await bcryptjs.compareSync(password, user.password);
     if (!checkPassword) {
       return res
         .status(400)
         .json({ message: "Invalid Credentials", error: true });
     }
-    const payload = {
-      id: user._id,
-      email: user.email,
-    };
-    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-      expiresIn: "2d",
-    });
-
-    const cookieOptions = {
-      http: true,
-      secure: true,
-    };
+    
+    const tokenDetails = gernerateToken(user);
 
     return res
-      .cookie("token", token, cookieOptions)
+      .cookie("token", tokenDetails.token, tokenDetails.cookieOptions)
       .status(200)
-      .json({ message: "Login Successfully", success: true, token });
+      .json({ message: "Login Successfully", success: true, token: tokenDetails.token });
   } catch (error) {
     res.status(500).json({ message: error.message, error: true });
   }
@@ -533,10 +519,10 @@ exports.logout = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const { name, profile_pic } = req.body;
+    const { name, phoneNumber, profilePic } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
-      { name, profile_pic },
+      { name, phoneNumber, profilePic },
       { new: true }
     );
     return res.status(200).json({

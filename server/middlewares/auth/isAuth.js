@@ -8,7 +8,7 @@ exports.isAuth = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = decoded;
     next();
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       message: error.message,
       error: true,
