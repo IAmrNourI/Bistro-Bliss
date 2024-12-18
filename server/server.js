@@ -6,6 +6,8 @@ const app = express();
 
 const {default: mongoose} = require("mongoose");
 const userRoutes = require('./routes/userRoutes')
+const menuRoutes = require('./routes/menuRoutes');
+
 
 
 app.use(
@@ -39,5 +41,10 @@ mongoose
   });   
 
 
-  app.use("/api",userRoutes);   
-  
+  app.use("/api/user",userRoutes);   
+  app.use("/api/menu", menuRoutes);
+
+  //IsKtJzcQQF30kSdN
+  //amrelshayal4445
+ 
+   
