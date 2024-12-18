@@ -12,7 +12,19 @@ li {
     list-style: none;
 }
 
+.p-y {
+    padding-block: 70px ;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
 /* ---------- Register ---------- */
+
+.healthy-food {
+    background-color: #F9F9F7;
+}
 
 .bg-register {
     background-color: #F9F9F7;
@@ -79,14 +91,6 @@ input {
 .otp-btn {
     width: 15%;
     border-radius: 0px !important;
-}
-
-.resend-otp-btn {
-    border: none;
-    background-color: transparent;
-    margin-left: 9%;
-    margin-top: 10px;
-    text-decoration: underline;
 }
 
 /* ---------- Login ---------- */
@@ -166,6 +170,7 @@ input {
     background-color: transparent;
     color: black;
     font-weight: 500;
+    width: 170px;
 }
 
 /* ---------- Hero ---------- */
@@ -374,4 +379,132 @@ input {
         width: 200px; 
         height: 150px; 
     }
+}
+
+
+
+/* ---------- About ---------- */
+/* ---------- healthy-food ---------- */
+
+.healthy-img img {
+    position: absolute;
+    position: relative;
+}
+
+.bg-contact {
+    background-color: #474747;
+    border-radius: 12px;
+    width: 330px;
+    height: 270px;
+    color: white;
+    padding: 40px;
+    position: absolute;
+    bottom: -40px;
+    right: 0px;
+}
+
+.contact-header {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.contact-ist li {
+    padding-block: 8px;
+    display: flex;
+}
+
+.contact-ist li i{
+    padding-right: 10px;
+}
+
+.contact-ist li span {
+    color: #F9F9F7;
+    font-size: 14px;
+}
+
+/* ---------- Guest ---------- */
+.guest {
+    background-color: #F9F9F7;
+}
+
+.guest-info h1 {
+}
+
+.facts {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.square {
+    background-color: white;
+    border: 1px solid #DBDFD0;
+    border-radius: 8px;
+    width: 250px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media (max-width: 1200px) {
+    .square {
+        width: 220px;
+        height: 150px;
+    }
+}
+@media (max-width: 1000px){
+    .square {
+        width: 240px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 600px) {
+    .square {
+        width: 200px; 
+        height: 150px;
+        font-size: 10px;
+    }
+}
+
+/* ---------- Feedback ---------- */
+
+.feedback-item {
+    background-color: #F9F9F7;
+    border-radius: 12px;
+    padding: 30px;
+}
+
+.feedback-item .header {
+    color: #AD343E;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.feedback-item .info {
+    padding-bottom: 40px;
+    border-bottom: 1px solid #DBDFD0 ;
+}
+
+
+/* ---------- OurMenu ---------- */
+
+.fs-menu {
+    font-size: 90px;
+    line-height: 96px;
+    font-weight: 400;
+}
+
+.btn-category  {
+    margin-inline: 10px;
+    width: 120px !important;
+    height: 48px;
+    border-radius: 50px;
+    border: 1px solid #DBDFD0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

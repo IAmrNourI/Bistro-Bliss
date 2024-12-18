@@ -21,4 +21,8 @@ const password = async(data) => {
     return await axiosInstance.post("/password" ,data)
 }
 
-export { register, verify, resendOtp, email, password }
+const items = async() => {
+    return await axiosInstance.get("/menu/")
+}
+
+export { register, verify, resendOtp, email, password, items }
