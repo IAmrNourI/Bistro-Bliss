@@ -428,9 +428,6 @@ input {
     background-color: #F9F9F7;
 }
 
-.guest-info h1 {
-}
-
 .facts {
     display: flex;
     flex-wrap: wrap;
@@ -507,4 +504,42 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.menu-item {
+    height: 345px;
+}
+
+.menu-item .price {
+    color: #AD343E;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.menu-item .name {
+    color: black;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.menu-item .desc {
+    font-size: 14px;
+    color: gray;
+}
+
+.img-border {
+    border-top-left-radius: 0.5rem; 
+    border-top-right-radius: 0.5rem; 
+    height: 200px;
+    object-fit: cover;
+    transition: 0.3s;
+}
+
+.img-border:hover {
+    transform: scale(1.2);
+}
+
+.active-menu {
+    background-color: #AD343E;
+    color: white;
 }

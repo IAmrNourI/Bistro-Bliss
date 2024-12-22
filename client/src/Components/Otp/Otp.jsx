@@ -13,7 +13,7 @@ const isDisabled = inputValue.length !== 6;
 const [reDisabled, setReDisabled] = useState(false);
 const [isLoding, setIsLoding] = useState(false);
 const [reLoding, setReLoding] = useState(false);
-const [countdown, setCountdown] = useState(300);
+const [countdown, setCountdown] = useState(60);
 const [isOtpSent, setIsOtpSent] = useState(false); 
 
 
@@ -58,7 +58,7 @@ setReLoding(false);
 
 function timeout() {
 setReDisabled(true); 
-let calldown = 300; 
+let calldown = 60; 
 setCountdown(calldown);
 
 const time = setInterval(() => {

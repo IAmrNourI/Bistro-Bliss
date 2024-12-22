@@ -12,7 +12,6 @@ exports.itemValidationRules = [
     }
   }),
   check("description")
-    .optional()
     .custom(async (val) => {
       if (typeof val !== "string" || val.trim().length === 0) {
         throw new Error("Item description is required");
@@ -24,7 +23,6 @@ exports.itemValidationRules = [
     }
   }),
   check("image")
-    .optional()
     .custom(async (val) => {
       if (typeof val !== "string" || val.trim().length === 0) {
         throw new Error("Item Image source is required");

@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 
 exports.isAuth = (req, res, next) => {
+  console.log("test");
+  console.log(cookies);
   const token =
     req.cookies.token || req.headers["authorization"]?.split(" ")[1];
   if (!token) return res.status(401).json({ message: "invalid token" });
@@ -14,4 +16,4 @@ exports.isAuth = (req, res, next) => {
       error: true,
     });
   }
-};
+}; 
