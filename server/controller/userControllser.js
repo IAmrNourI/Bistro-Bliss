@@ -479,6 +479,9 @@ exports.verifyPassword = async (req, res) => {
     }
     
     const tokenDetails = generateToken(user);
+    
+    console.log("Set-Cookie Header:", tokenDetails.cookieOptions);
+
 
     return res
       .cookie("token", tokenDetails.token, tokenDetails.cookieOptions)

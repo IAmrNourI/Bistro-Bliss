@@ -57,3 +57,7 @@ exports.itemUpdateValidationRules = [
     .isString()
     .withMessage("Item category is required"),
 ];
+
+exports.itemDeleteValidationRules = [
+  check("id").trim().notEmpty().withMessage("ID is required"),
+];

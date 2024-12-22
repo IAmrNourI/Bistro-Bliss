@@ -4,8 +4,11 @@ const menuController = require("../controller/menuController");
 const {
   itemValidationRules,
   itemUpdateValidationRules,
+  itemDeleteValidationRules,
 } = require("../middlewares/validation/itemsValidation");
-const { valdationResults } = require("../middlewares/validation/validationResult");
+const {
+  valdationResults,
+} = require("../middlewares/validation/validationResult");
 const { isAuth } = require("../middlewares/auth/isAuth");
 const isRole = require("../middlewares/auth/isRole");
 
@@ -29,6 +32,13 @@ router.put(
   menuController.edit
 );
 
-router.delete("/delete-item", isAuth, isRole("user"), menuController.delete);
+router.delete(
+  "/delete-item",
+  isAuth,
+  isRole("admin"),
+  itemDeleteValidationRules,
+  valdationResults,
+  menuController.delete
+);
 
 module.exports = router;

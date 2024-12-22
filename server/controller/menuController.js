@@ -39,7 +39,10 @@ exports.edit = async (req, res) => {
 exports.delete = async (req, res) => {
     try {
         cosnt = {id} = req.body;
-        await MenuItem.findByIdAndDelete(id);
+        const deletedItem = await MenuItem.findByIdAndDelete(id);
+        if (!deletedItem) {
+            return res.status(404).json({ message: "Item not found" });
+        }
         return res.status(200).json({ message: "Item deleted successfully", success: true });
     }catch (error) {
         res.status(500).json({ message: error.message, error: true });
