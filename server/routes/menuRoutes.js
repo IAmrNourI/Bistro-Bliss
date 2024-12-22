@@ -41,4 +41,9 @@ router.delete(
   menuController.delete
 );
 
+router.post(
+  "/search-item",
+  menuController.searchItems,
+)
+
 module.exports = router;

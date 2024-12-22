@@ -10,12 +10,12 @@ const {
 } = require("../middlewares/validation/validationResult");
 
 router.post(
-  "/create",
+  "/create-contact",
   contactsValidationRules,
   valdationResults,
   contactController.createContact
 );
-router.get("/getContacts", contactController.getAllContacts);
-router.post("/searchContacts", contactController.searchContacts);
+router.get("/get-contacts", contactController.getAllContacts);
+router.post("/search-contacts", contactController.searchContacts);
 
 module.exports = router;
