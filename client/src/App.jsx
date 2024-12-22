@@ -12,7 +12,8 @@ import Otp from "./Components/Otp/Otp";
 import UserContextProvider from "./Context/UserContext";
 import { Toaster } from 'react-hot-toast';
 import About from "./Components/About/About";
-import Menu from "./network/Menu/Menu";
+import Menu from "./Components/Menu/Menu";
+import Add from "./Components/AddItem/Add";
 
 
 let route = createBrowserRouter([
@@ -23,6 +24,7 @@ let route = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "about", element: <About /> },
       { path: "Menu", element: <Menu /> },
+      { path: "add", element: <Add /> },
     ],
   },
 

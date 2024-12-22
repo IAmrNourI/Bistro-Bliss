@@ -13,12 +13,16 @@ export default function Register() {
   async function handleRegister(values) {
     setbtnLoding(true)
     const result = await register(values)
-      .then((res) => {
+    // result.value = "user"
+    
+    .then((res) => {
+        console.log(res)
         navigate("/auth/otp", { state: { email: values.email } });
         setbtnLoding(false)
       })
       .catch((res) => {
         setbtnLoding(true)
+        console.log(res);
         toast.error(res.response.data.message)
         setbtnLoding(false)
       });
@@ -35,17 +39,22 @@ export default function Register() {
     email: Yup.string().email("invalid email").required("Email is required"),
     password: Yup.string()
       .matches(
-        /^[A-Za-z0-9]{6,10}$/,
-        "6-10 letters or numbers only"
+        /^[A-Za-z0-9]{8,10}$/,
+        "8-10 letters or numbers only"
       )
       .required("Password is required"),
+      phoneNumber: Yup.string().matches(/^01[0125][0-9]{8}$/, "invalid phone number")
+      .required("phone is erquired"),
   });
 
   let formik = useFormik({
     initialValues: {
       name: "",
       email: "",
+      phoneNumber: "",
       password: "",
+      profilePic:"static"
+
     },
     validationSchema,
     onSubmit: handleRegister,
@@ -91,6 +100,25 @@ export default function Register() {
                 {formik.errors.email ? (
                   <span className="alert alert-danger p-0 mt-1 d-block">
                     {formik.errors.email}
+                  </span>
+                ) : null}
+              </div>
+
+              <div className="form-floating mb-3">
+                <input
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  name="phoneNumber"
+                  value={formik.values.phoneNumber}
+                  type="text"
+                  id="phone"
+                  className="form-control"
+                  placeholder=""
+                />
+                <label htmlFor="floatingInput">Phone</label>
+                {formik.errors.phoneNumber ? (
+                  <span className="alert alert-danger p-0 mt-1 d-block">
+                    {formik.errors.phoneNumber}
                   </span>
                 ) : null}
               </div>
