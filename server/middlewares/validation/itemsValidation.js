@@ -31,6 +31,7 @@ exports.itemValidationRules = [
 ];
 
 exports.itemUpdateValidationRules = [
+  check("id").trim().notEmpty().withMessage("ID is required"),
   check("name").optional().notEmpty().withMessage("Item name is required"),
   check("price")
     .optional()
@@ -53,4 +54,8 @@ exports.itemUpdateValidationRules = [
     .notEmpty()
     .isString()
     .withMessage("Item category is required"),
+];
+
+exports.itemDeleteValidationRules = [
+  check("id").trim().notEmpty().withMessage("ID is required"),
 ];

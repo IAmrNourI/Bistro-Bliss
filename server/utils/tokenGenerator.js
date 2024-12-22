@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-exports.gernerateToken = (user) => {
+exports.generateToken = (user) => {
   const payload = {
     id: user._id,
     email: user.email,
@@ -17,8 +17,8 @@ exports.gernerateToken = (user) => {
 
   const cookieOptions = {
     httpOnly: true,
-    secure: true,
-    sameSite: 'strict',  // or 'lax'
+    secure: false,
+    sameSite: 'lax',  // or 'lax'
     maxAge: 48 * 60 * 60 * 1000, // match token expiration if possible (2 days)
   };
   

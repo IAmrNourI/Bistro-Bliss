@@ -4,6 +4,7 @@ const menuController = require("../controller/menuController");
 const {
   itemValidationRules,
   itemUpdateValidationRules,
+  itemDeleteValidationRules,
 } = require("../middlewares/validation/itemsValidation");
 const {
   valdationResults,
@@ -33,6 +34,18 @@ router.put(
   menuController.edit
 );
 
-router.delete("/delete-item", isAuth, isRole("user"), menuController.delete);
+router.delete(
+  "/delete-item",
+  //isAuth,
+  //isRole("admin"),
+  itemDeleteValidationRules,
+  valdationResults,
+  menuController.delete
+);
+
+router.post(
+  "/search-item",
+  menuController.searchItems,
+)
 
 module.exports = router;
