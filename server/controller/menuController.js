@@ -25,6 +25,11 @@ exports.edit = async (req, res) => {
     try {
         const { id, name, price, category, description, image } = req.body;
         const updatedItem = await MenuItem.findByIdAndUpdate(id, { name, price, category, description, image }, { new: true });
+
+        if (!updatedItem) {
+            return res.status(404).json({ message: "Item not found" });
+        }
+
         return res.status(200).json({ message: "Item updated successfully", success: true, updatedItem });
     }catch (error) {
         res.status(500).json({ message: error.message, error: true });

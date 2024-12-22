@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { generateUniqueOtp } = require("../utils/otpGenerator");
 const transporter = require("../config/nodemailer");
 const { trusted } = require("mongoose");
-const { gernerateToken } = require("../utils/tokenGenerator");
+const { generateToken } = require("../utils/tokenGenerator");
 
 exports.register = async (req, res) => {
   try {
@@ -478,7 +478,7 @@ exports.verifyPassword = async (req, res) => {
         .json({ message: "Invalid Credentials", error: true });
     }
     
-    const tokenDetails = gernerateToken(user);
+    const tokenDetails = generateToken(user);
 
     return res
       .cookie("token", tokenDetails.token, tokenDetails.cookieOptions)
