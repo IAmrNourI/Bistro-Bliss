@@ -48,3 +48,28 @@ exports.delete = async (req, res) => {
         res.status(500).json({ message: error.message, error: true });
     }
 }
+
+
+exports.searchItems = async (req, res) => {
+    try {
+      const { search } = req.body;
+  
+      const query = new RegExp(search, "i", "g");
+  
+      const items = await MenuItem.find({
+        $or: [{ name: query }, { description: query }, {category: query}],
+      }).sort({ name: 1 });
+  
+      return res.status(200).json({
+        message: "all menu items found",
+        data: items,
+        success: true,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: error.message,
+        error: true,
+      });
+    }
+  };
+  
