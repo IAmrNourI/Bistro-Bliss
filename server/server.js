@@ -8,6 +8,7 @@ const {default: mongoose} = require("mongoose");
 const userRoutes = require('./routes/userRoutes')
 const menuRoutes = require('./routes/menuRoutes');
 const contactRoutes = require('./routes/contactRoutes');
+const bookingRoutes = require('./routes/bookingRoutes');
 
 app.use( 
   cors({
@@ -41,6 +42,6 @@ app.listen(PORT, () => {
 app.use("/api/user", userRoutes);
 app.use("/api/menu", menuRoutes);
 app.use("/api/contact", contactRoutes);
-
+app.use("/api/booking", bookingRoutes);
 
 
