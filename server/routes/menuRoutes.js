@@ -16,8 +16,8 @@ router.get("/", menuController.getAllItems);
 
 router.post(
   "/add-item",
-  //isAuth,
-  //isRole("admin"),
+  isAuth,
+  isRole("admin"),
   itemValidationRules,
   valdationResults,
   menuController.add
@@ -25,8 +25,8 @@ router.post(
 
 router.put(
   "/edit-item",
-  //isAuth,
-  //isRole("admin"),
+  isAuth,
+  isRole("admin"),
   itemUpdateValidationRules,
   valdationResults,
   menuController.edit
@@ -34,8 +34,8 @@ router.put(
 
 router.delete(
   "/delete-item",
-  //isAuth,
-  //isRole("admin"),
+  isAuth,
+  isRole("admin"),
   itemDeleteValidationRules,
   valdationResults,
   menuController.delete
