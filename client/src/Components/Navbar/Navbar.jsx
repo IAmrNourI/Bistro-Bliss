@@ -63,7 +63,7 @@ export default function Navbar() {
               <li className="nav-item mx-2">
                 <Link className={activeLink === "contact" ? "active nav-link" : "nav-link"} 
                 onClick={() => setactiveLink("contact")}
-                to="">
+                to="contact">
                   Contact
                 </Link>
               </li>

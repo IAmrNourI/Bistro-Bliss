@@ -507,7 +507,7 @@ input {
 }
 
 .menu-item {
-    height: 345px;
+    height: 420px;
 }
 
 .menu-item .price {
@@ -542,4 +542,43 @@ input {
 .active-menu {
     background-color: #AD343E;
     color: white;
+}
+
+
+/* ---------- Contact Us ---------- */
+
+.contact {
+    background: linear-gradient(to bottom, #f9f9f7 60%, #ffffff 40%);
+}
+
+.input-style {
+    border-radius: 72px;
+    border: 1px solid #DBDFD0 !important;
+    padding: 12px;
+    padding-inline: 15px;
+}
+
+.input-style:focus {
+    outline: none;
+    border-color: inherit;
+}
+
+.container-contact {
+    width: 50%;
+    margin: auto;
+    z-index: 5;
+}
+
+.drop-shadow {
+    border-radius: 16px;
+    box-shadow: 0px 3px 60px rgba(0, 0, 0, 0.08);
+    
+}
+
+.btn-contact {
+    background-color: #AD343E;
+    border-radius: 118px;
+    border: none;
+    color: white;
+    padding-block: 10px;
 }

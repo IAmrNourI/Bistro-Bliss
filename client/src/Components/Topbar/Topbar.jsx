@@ -26,7 +26,7 @@ export default function Topbar() {
 
               <div className="d-flex align-items-center">
                 <i className="fa-regular fa-envelope mx-2"></i>
-                <p className="p-e">Jab_food@bistrobliss</p>
+                <p className="p-e">bisto_bliss@bistrobliss</p>
               </div>
             </div>
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { items } from "../../network/user.api";
-import { Link } from "react-router-dom";
-
+import { items, deleteItem } from "../../network/user.api";
+import { Link, useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 export default function RecentMenu() {
+const navigate = useNavigate();
 const [menu, setmenu] = useState([]);
 const [activeLink, setactiveLink] = useState("All");
 
@@ -18,6 +19,7 @@ async function getAllMenu() {
         console.log(res);
     });
 }
+
 
 async function getBreakfastMenu() {
     const result = await items()
@@ -64,6 +66,20 @@ async function getDessertsMenu() {
     });
 }
 
+async function removeItem(id) {
+    const result = await deleteItem({ id })
+        .then((res) => {
+            toast.success(res.data.message)
+            getAllMenu()
+        })
+        .catch((res) => {
+            toast.error(res.response.data.message);
+        });
+}
+
+function editItem(id,name,price,desc,category){
+    navigate("/edit", { state: { id, name, price, desc, category,} });
+}
 
 useEffect(() => {
     getAllMenu();
@@ -164,12 +180,15 @@ return (
                     <p className="price mb-1">${item.price}</p>
                     <p className="name mb-1">{item.name}</p>
                     <p className="desc mb-0">{item.description}</p>
-                </div>
+                    <button onClick={() => removeItem(item._id)} className="mt-2 btn-register bg-transparent">Delete item</button>
+                    <button onClick={() => editItem(item._id, item.name, item.price, item.description, item.category)} className="d-block m-auto mt-2 btn btn-outline-warning">Edit</button>
+
+                    </div>
                 </div>
             </div>
             ))}
             <div className="col-lg-3 col-md-6 gy-5">
-                <Link to="/Add"
+                <Link to={"/Add"}
                 className="text-decoration-none menu-item text-center border border-1 
                 rounded-3 d-flex justify-content-center align-items-center bg-body-secondary">
                     <i className="fa-solid fa-plus h2"></i>
