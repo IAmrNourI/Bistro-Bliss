@@ -1,9 +1,11 @@
 const contactController = require("../controller/contactController");
 const express = require("express");
 const router = express.Router();
+const { isAuth } = require("../middlewares/auth/isAuth");
+const isRole = require("../middlewares/auth/isRole");
 
 const {
-    contactsValidationRules,
+  contactsValidationRules,
 } = require("../middlewares/validation/contactsValidation");
 const {
   valdationResults,
@@ -15,7 +17,17 @@ router.post(
   valdationResults,
   contactController.createContact
 );
-router.get("/get-contacts", contactController.getAllContacts);
-router.post("/search-contacts", contactController.searchContacts);
+router.get(
+  "/get-contacts",
+  isAuth,
+  isRole("admin"),
+  contactController.getAllContacts
+);
+router.post(
+  "/search-contacts",
+  isAuth,
+  isRole("admin"),
+  contactController.searchContacts
+);
 
 module.exports = router;
