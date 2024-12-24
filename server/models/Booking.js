@@ -6,18 +6,14 @@ const BookingSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "userId is required"],
   },
-  date: {
+  date_time: {
     type: Date,
     required: [true, "date is required"],
   },
-  time: {
-    type: Date,
-    required: [true, "time is required"],
-  },
   status: {
     type: String,
-    enum: ["pending", "accepted", "rejected", "completed"],
-    default: "pending",
+    enum: ["Pending", "Accepted", "Rejected", "Cancelled", "Completed"],
+    default: "Pending",
     required: [true, "status is required"],
   },
 });
