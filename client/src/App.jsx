@@ -14,6 +14,8 @@ import { Toaster } from 'react-hot-toast';
 import About from "./Components/About/About";
 import Menu from "./Components/Menu/Menu";
 import Add from "./Components/AddItem/Add";
+import Edit from "./Components/EditItem/Edit";
+import Contact from "./Components/Contact/Contact";
 
 
 let route = createBrowserRouter([
@@ -25,6 +27,8 @@ let route = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "Menu", element: <Menu /> },
       { path: "add", element: <Add /> },
+      { path: "edit", element: <Edit /> },
+      { path: "contact", element: <Contact /> },
     ],
   },
 

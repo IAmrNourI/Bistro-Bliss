@@ -1,5 +1,5 @@
-
 import { axiosInstance } from "./index"
+
 
 const register = async(data) => {
     return await axiosInstance.post("/user/register", data)
@@ -26,7 +26,42 @@ const items = async() => {
 }
 
 const addItem = async(data) => {
-    return await axiosInstance.post("/menu/add-item", data)
+    // console.log(localStorage.getItem("userToken"))
+    // return await axiosInstance.post("/menu/add-item", data)
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.post("/menu/add-item", data, {
+        
+    headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+    },
+});
 }
 
-export { register, verify, resendOtp, email, password, items, addItem }
+const deleteItem = async (data) => {
+    const token = localStorage.getItem("userToken");
+    return await axiosInstance.delete("/menu/delete-item", {
+        data: data,
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+        },
+    });
+}
+
+const editItem = async (data) => {
+    // return await axiosInstance.put("/menu/edit-item", data)
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.put("/menu/edit-item", data, {
+        
+    headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+    },
+});
+
+}
+
+
+
+export { register, verify, resendOtp, email, password, items, addItem, deleteItem, editItem }
