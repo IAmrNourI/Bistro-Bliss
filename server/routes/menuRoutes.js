@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const menuController = require("../controller/menuController");
+const upload = require("../middlewares/multerMiddleware");
+
 const {
   itemValidationRules,
   itemUpdateValidationRules,
@@ -46,6 +48,13 @@ router.delete(
 router.post(
   "/search-item",
   menuController.searchItems,
-)
+);
+
+router.post(
+  "/upload",
+  upload.single("image"),
+  menuController.uploadFile
+);
+
 
 module.exports = router;
