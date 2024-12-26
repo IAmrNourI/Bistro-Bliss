@@ -1,9 +1,9 @@
 const User = require("../models/User");
 const bcryptjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const { generateUniqueOtp } = require("../utils/otpGenerator");
 const transporter = require("../config/nodemailer");
-const { trusted } = require("mongoose");
+// const { trusted } = require("mongoose");
 const { generateToken } = require("../utils/tokenGenerator");
 
 exports.register = async (req, res) => {
