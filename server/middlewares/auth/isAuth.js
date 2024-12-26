@@ -6,6 +6,7 @@ exports.isAuth = (req, res, next) => {
   //   req.cookies.token || req.headers["authorization"]?.split(" ")[1];
   // if (!token) return res.status(401).json({ message: "invalid token" });
   const authHeader = req.headers["authorization"];
+  // console.log(req.cookies);
   const token = req.cookies.token || (authHeader && authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : null);
   
   if (!token) {
