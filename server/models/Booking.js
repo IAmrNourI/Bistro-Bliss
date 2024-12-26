@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const BookingSchema = new mongoose.Schema({
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: [true, "userId is required"],
@@ -16,7 +16,7 @@ const BookingSchema = new mongoose.Schema({
     default: "Pending",
     required: [true, "status is required"],
   },
-});
+}, { timestamps: true });
 
 const Booking = mongoose.model("Booking", BookingSchema);
 
