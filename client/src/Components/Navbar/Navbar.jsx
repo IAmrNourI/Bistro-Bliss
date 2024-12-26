@@ -69,7 +69,7 @@ export default function Navbar() {
               </li>
 
             </ul>
-            <button className="book-table">Book A Table</button> </> :             
+            <Link to="book" className="book-table">Book A Table</Link> </> :             
             <>
                 <div className="ms-auto">
                 <Link className="pe-3" to="/auth/register">

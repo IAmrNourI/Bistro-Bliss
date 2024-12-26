@@ -111,9 +111,8 @@ input {
     margin-inline: 2px;
     text-decoration: none;
     background-color: #5a5a5a;
-    border-radius: 50%;
-
 }
+
 .social a i {
     width: 27px;
     height: 27px;
@@ -165,12 +164,14 @@ input {
 
 .book-table {
     border-radius: 118px;
+    border: 1px solid #2C2F24;
     border-color: #2C2F24;
     padding: 8px 20px;
     background-color: transparent;
     color: black;
     font-weight: 500;
     width: 170px;
+    text-decoration: none;
 }
 
 /* ---------- Hero ---------- */
@@ -552,15 +553,16 @@ input {
 }
 
 .input-style {
-    border-radius: 72px;
+    border-radius: 72px !important;
     border: 1px solid #DBDFD0 !important;
-    padding: 12px;
-    padding-inline: 15px;
+    padding: 12px !important;
+    padding-inline: 15px !important;
 }
 
 .input-style:focus {
     outline: none;
     border-color: inherit;
+    box-shadow: 0 0 5px #AD343E !important;
 }
 
 .container-contact {
@@ -581,4 +583,40 @@ input {
     border: none;
     color: white;
     padding-block: 10px;
+}
+
+/* ---------- Book A Table ---------- */
+
+.book {
+    height: 1100px;
+}
+
+.iframe {
+    z-index: -99;
+    width: 100%;
+    height: 50%;
+    bottom: 0;
+}
+
+
+/* ---------- User Profile ---------- */
+
+.user-details span input {
+    border: none;
+}
+
+.user-details span input:focus {
+    outline: none;
+}
+
+.btn-cancle {
+    right: 1px;
+    border: none;
+    border-right: 1px solid #0d6efd;
+    transition: 0.3s;
+    font-weight: 500;
+}
+
+.btn-cancle:hover {
+    color: red;
 }
