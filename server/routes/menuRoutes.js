@@ -12,7 +12,9 @@ const {
 const { isAuth } = require("../middlewares/auth/isAuth");
 const isRole = require("../middlewares/auth/isRole");
 
-router.get("/", menuController.getAllItems);
+router.get("/",
+  //isAuth, isRole("admin"),
+  menuController.getAllItems);
 
 router.post(
   "/add-item",

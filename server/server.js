@@ -10,7 +10,7 @@ const menuRoutes = require('./routes/menuRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 
-app.use(
+app.use( 
   cors({
     origin: process.env.FRONTEND_URL, // Make sure this points to http://localhost:3000 during development
     credentials: true, // Allow credentials like cookies to be sent
@@ -43,4 +43,5 @@ app.use("/api/user", userRoutes);
 app.use("/api/menu", menuRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/booking", bookingRoutes);
+
 
