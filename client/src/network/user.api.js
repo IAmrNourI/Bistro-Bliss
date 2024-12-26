@@ -23,9 +23,10 @@ const password = async (data) => {
   });
 };
 
-const items = async () => {
-  return await axiosInstance.get("/menu/");
-};
+
+const password = async(data) => {
+    return await axiosInstance.post("/user/password", data, { withCredentials: true })
+}
 
 const addItem = async (data) => {
   // console.log(localStorage.getItem("userToken"))
@@ -59,17 +60,121 @@ const editItem = async (data) => {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     },
-  });
-};
 
-export {
-  register,
-  verify,
-  resendOtp,
-  email,
-  password,
-  items,
-  addItem,
-  deleteItem,
-  editItem,
-};
+});
+
+}
+
+
+const createContact = async(data) => {
+    return await axiosInstance.post("/contact/create-contact", data)
+}
+
+const viewContact = async () => {
+    // return await axiosInstance.put("/menu/edit-item", data)
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/contact/get-contacts", {
+        
+    headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+    },
+});
+
+}
+
+const createBook = async(data) => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.post("/booking/create-booking", data, {
+        
+    headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+    },
+});
+}
+
+const getBooking = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/booking/get-user-bookings", {
+        
+    headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+    },
+});
+}
+
+
+const getUser = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/user/user-details", {
+        
+    headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+    },
+});
+}
+
+const updateUser = async(data) => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.put("/user/update-user",data, {
+        
+    headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+    },
+});
+}
+
+const logOut = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/user/logout", {
+        
+    headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+    },
+});
+}
+
+const cancelRequest = async(id) => {
+    // return await axiosInstance.post(`/booking/cancel-booking/${id}`)
+    const token = localStorage.getItem("userToken");    
+    console.log(id)
+    console.log(token)
+    return await axiosInstance.post(`/booking/cancel-booking/${id}`,{
+        
+    headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+    },
+    withCredentials: true
+});
+}
+
+
+
+
+
+
+export { register, 
+        verify, 
+        resendOtp, 
+        email, 
+        password, 
+        items, 
+        addItem, 
+        deleteItem, 
+        editItem, 
+        createContact, 
+        viewContact, 
+        createBook,
+        getBooking,
+        getUser,
+        updateUser,
+        logOut,
+        cancelRequest
+    }
+
