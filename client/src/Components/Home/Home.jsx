@@ -1,11 +1,15 @@
 import React from 'react'
-import style from './Home.module.css'
 import Hero from '../Hero/Hero'
+import MenuCategories from '../MenuCategories/MenuCategories'
+import FastFood from '../FastFood/FastFood'
 
 export default function Home() {
   return (
-
-        <Hero />
-        
+      <>
+      
+      <Hero />
+      <MenuCategories />
+      <FastFood />
+      </>
   )
 }
