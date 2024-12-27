@@ -18,7 +18,7 @@ exports.generateToken = (user) => {
   const cookieOptions = {
     httpOnly: true,
     secure: false,
-    sameSite: 'strict',  // or 'lax'
+    sameSite: 'lax',  // or 'lax'
     maxAge: 48 * 60 * 60 * 1000, // match token expiration if possible (2 days)
   };
   
