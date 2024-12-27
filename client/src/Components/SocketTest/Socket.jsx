@@ -8,8 +8,8 @@ export default function SocketTest() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:8085", { // updated port to match server // edited
-      withCredentials: true, // ensure cookies are sent // added
+    const newSocket = io("http://localhost:8085", {
+      withCredentials: true, 
     });
     setSocket(newSocket);
 
@@ -17,13 +17,6 @@ export default function SocketTest() {
       console.log("Connected:", newSocket.id);
     });
 
-    // newSocket.on("serverResponse", (data) => {
-    //   console.log("From server:", data);
-    // });
-
-    // newSocket.on("hamada", (msg) => {
-    //   console.log("From server:", msg);
-    // });
 
     return () => {
       newSocket.close();
@@ -32,11 +25,10 @@ export default function SocketTest() {
 
   const handleClick = () => {
     if (socket) {
-      // Emit 'notification' with targetUserId and message // edited
       socket.emit("notification", { 
-        targetUserId: "675ffb9fec849012a52bb95f", // replace with the actual user ID // added
-        msg: "Notificatioooons" 
-      }); // edited
+        targetUserId: "675ffb9fec849012a52bb95f",
+        msg: "your booking have been Accepted" 
+      }); 
     }
   };
 

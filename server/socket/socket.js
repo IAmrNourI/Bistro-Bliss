@@ -1,8 +1,8 @@
 // socket.js
 
 const { Server } = require("socket.io");
-const cookie = require("cookie"); // added
-const jwt = require("jsonwebtoken"); // added
+const cookie = require("cookie"); 
+const jwt = require("jsonwebtoken");
 const { isAuth } = require("../middlewares/auth/isAuth"); // existing import
 
 function createSocketIo(server) {
@@ -17,62 +17,50 @@ function createSocketIo(server) {
   io.on("connection", (socket) => {
     console.log("user connected:", socket.id);
 
-    // Parse cookies from the handshake headers // added
-    const cookies = socket.handshake.headers.cookie; // added
-    if (cookies) { // added
-      const parsedCookies = cookie.parse(cookies); // added
-      const token = parsedCookies.token; // assuming token is stored under 'token' key // added
 
-      if (token) { // added
+    const cookies = socket.handshake.headers.cookie; 
+    if (cookies) { 
+      const parsedCookies = cookie.parse(cookies); 
+      const token = parsedCookies.token; 
+
+      if (token) { 
         try {
-          const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY); // verify token // added
-          socket.userId = decoded.id; // attach user ID to socket // added
-          console.log(`Authenticated user ID: ${socket.userId}`); // added
+          const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY); 
+          socket.userId = decoded.id; 
+          console.log(`Authenticated user ID: ${socket.userId}`); 
 
-          // Join the user to a room named after their user ID // added
-          socket.join(socket.userId); // added
+          socket.join(socket.userId); 
 
         } catch (err) {
-          console.log("Invalid token"); // added
-          socket.disconnect(); // disconnect socket if token is invalid // added
-          return; // stop further execution // added
+          console.log("Invalid token"); 
+          socket.disconnect(); 
+          return; 
         }
       } else {
-        console.log("No token found in cookies"); // added
-        socket.disconnect(); // disconnect socket if no token // added
-        return; // stop further execution // added
+        console.log("No token found in cookies");
+        socket.disconnect(); 
+        return;
       }
     } else {
-      console.log("No cookies found"); // added
-      socket.disconnect(); // disconnect socket if no cookies // added
-      return; // stop further execution // added
+      console.log("No cookies found");
+      socket.disconnect();
+      return;
     }
 
-    // Emit a welcome message to the connected user // kept existing
-    socket.emit("hamada", { msg: "Hamada is great!" });
-
-    // Listen for 'someEvent' from the client // kept existing
-    socket.on("someEvent", (data) => {
-      console.log("Data from client:", data);
-      socket.emit("serverResponse", { msg: "Hello from server!" });
-    });
-
-    // Listen for 'notification' event and emit to specific user // edited
     socket.on("notification", (data) => {
-      console.log("Data from client:", data);
-      const targetUserId = data.targetUserId; // added (assuming you send targetUserId) // added
-      const message = data.msg; // keep the message
+      // console.log("Data from client:", data);
+      const targetUserId = data.targetUserId; 
+      const message = data.msg; 
 
-      if (targetUserId) { // added
-        // Emit the notification to the specific user's room // added
-        io.to(targetUserId).emit("receiveNotification", { msg: `from server: ${message}` }); // added
+      if (targetUserId) { 
+
+        io.to(targetUserId).emit("receiveNotification", { msg:  message }); 
       } else {
-        console.log("No targetUserId provided"); // added
-        // Optionally, handle cases where targetUserId is not provided // added
+        console.log("No targetUserId provided"); 
+        
       }
     });
 
-    // Listen for 'disconnect' event // kept existing
     socket.on("disconnect", () => {
       console.log("Socket disconnected:", socket.id);
     });
