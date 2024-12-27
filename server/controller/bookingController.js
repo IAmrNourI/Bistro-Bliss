@@ -123,3 +123,9 @@ exports.getUpcomingBookings = async (req, res) => {
     res.status(500).json({ message: error.message, error: true });
   }
 };
+
+exports.hamada = async (req, res) => {
+  try {
+    const { date_time, totalPerson } = req.body;
+  } catch (error) {}
+}
