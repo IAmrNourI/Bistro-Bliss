@@ -1,19 +1,29 @@
-// SocketTest.jsx
+// SocketTest.jsx (Sender)
+
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import toast from 'react-hot-toast'
+import toast from 'react-hot-toast';
+
 export default function SocketTest() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:8085", {
-      withCredentials: true,
+    const newSocket = io("http://localhost:8085", { // updated port to match server // edited
+      withCredentials: true, // ensure cookies are sent // added
     });
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
       console.log("Connected:", newSocket.id);
     });
+
+    // newSocket.on("serverResponse", (data) => {
+    //   console.log("From server:", data);
+    // });
+
+    // newSocket.on("hamada", (msg) => {
+    //   console.log("From server:", msg);
+    // });
 
     return () => {
       newSocket.close();
@@ -22,7 +32,11 @@ export default function SocketTest() {
 
   const handleClick = () => {
     if (socket) {
-      socket.emit("notification", { msg: "Notificatioooons"})
+      // Emit 'notification' with targetUserId and message // edited
+      socket.emit("notification", { 
+        targetUserId: "675ffb9fec849012a52bb95f", // replace with the actual user ID // added
+        msg: "Notificatioooons" 
+      }); // edited
     }
   };
 
