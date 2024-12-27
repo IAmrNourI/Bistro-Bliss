@@ -19,6 +19,8 @@ import Contact from "./Components/Contact/Contact";
 import Book from "./Components/Book A Table/Book";
 import UserProfile from "./Components/UserProfile/UserProfile";
 import UpdateUser from "./Components/UpdateUser/UpdateUser";
+import Admin from "./Components/Admin/Admin";
+import Socket from "./Components/SocketTest/Socket";
 
 let route = createBrowserRouter([
   {
@@ -34,6 +36,8 @@ let route = createBrowserRouter([
       { path: "book", element: <Book /> },
       { path: "userprofile", element: <UserProfile /> },
       { path: "updateuser", element: <UpdateUser /> },
+      { path: "admin", element: <Admin /> },
+      { path: "socket", element: <Socket /> },
     ],
   },
 

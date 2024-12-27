@@ -3,7 +3,7 @@ import { cancelRequest, getBooking, getUser } from "../../network/user.api";
 import userpic from "../../assets/userpic.jpg";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
+import axios from "axios";
 
 export default function UserProfile() {
 const [user, setuser] = useState(null);
@@ -25,7 +25,6 @@ async function showBooking(){
     const result = await getBooking()
     .then((res) => {
         console.log(res)
-        toast.success(res.data.message)
         setbooking(res.data.data)
     })
     .catch((res) => {
@@ -44,13 +43,19 @@ async function cancelBooking(id){
     const result = await cancelRequest(id)
     .then((res) => {
         console.log(res)
-        // toast.success(res.data.message)
+        toast.success(res.data.message)
+        showBooking()
         // setbooking(res.data.data)
     })
     .catch((res) => {
         console.log(res);
-        // toast.error(res.response.data.message)
+        toast.error(res.response.data.message)
     });
+
+    console.log(result);
+    // let res = await 
+    // axios.post("http://localhost:8085/api/booking/cancel-booking/676e0b4707280308aa62b0e0");
+    // console.log(res);
 }
 
 useEffect(() => {

@@ -54,7 +54,6 @@ export default function Register() {
       phoneNumber: "",
       password: "",
       profilePic:"static"
-
     },
     validationSchema,
     onSubmit: handleRegister,
