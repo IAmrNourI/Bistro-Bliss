@@ -1,64 +1,11 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const bookingController = require("../controller/bookingController");
-const { isAuth } = require("../middlewares/auth/isAuth");
-const isRole = require("../middlewares/auth/isRole");
-const {
-  createBookingValidationRules,
-} = require("../middlewares/validation/bookingValidation");
+const bookingController = require('../controller/bookingController');
+const { isAuth } = require('../middlewares/auth/isAuth');
 
-const {
-  valdationResults,
-} = require("../middlewares/validation/validationResult");
+router.post('/create-booking', isAuth, bookingController.createBooking);
+router.get('/get-user-bookings', isAuth, bookingController.getUserBookings);
+router.post('/cancel-booking/:bookingId', isAuth, bookingController.cancelBooking)
 
-router.post(
-  "/create-booking",
-  isAuth,
-  createBookingValidationRules,
-  valdationResults,
-  bookingController.createBooking
-);
 
-router.get("/get-user-bookings", isAuth, bookingController.getUserBookings);
-
-router.post(
-  "/cancel-booking/:bookingId",
-  isAuth,
-  bookingController.cancelBooking
-);
-
-router.get(
-  "/get-pending-bookings",
-  isAuth,
-  isRole("admin"),
-  bookingController.getPendingBookings
-);
-
-router.post(
-  "/accept-booking/:bookingId",
-  isAuth,
-  isRole("admin"),
-  bookingController.acceptBooking
-);
-
-router.post(
-  "/reject-booking/:bookingId",
-  isAuth,
-  isRole("admin"),
-  bookingController.rejectBooking
-);
-
-router.get(
-  "/get-all-bookings",
-  isAuth,
-  isRole("admin"),
-  bookingController.getAllBookings
-);
-
-router.get(
-    "/get-upcoming-bookings",
-    isAuth,
-    isRole("admin"),
-    bookingController.getUpcomingBookings
-)
 module.exports = router;
