@@ -44,4 +44,4 @@ app.use("/api/menu", menuRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/booking", bookingRoutes);
 
-// ../server/assets\\1735251040153-localhost_5173_auth_login.png
+
