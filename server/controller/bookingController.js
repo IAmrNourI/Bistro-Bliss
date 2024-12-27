@@ -1,3 +1,4 @@
+const { errorMonitor } = require("nodemailer/lib/xoauth2");
 const Booking = require("../models/Booking");
 
 exports.createBooking = async (req, res) => {
@@ -34,9 +35,15 @@ exports.cancelBooking = async (req, res) => {
   try {
     const { bookingId } = req.params;
     const booking = await Booking.findById(bookingId);
+
     if (!booking) {
-      return res.status(404).json({ message: "Booking not found" });
+      return res.status(404).json({ message: "Booking not found", error: true });
     }
+
+    if(booking.status !== "Pending" && booking.status !== "Accepted") {
+      return res.status(400).json({ message: "You can only cancel pending and acepted bookings", error: true });
+    }
+
     booking.status = "Cancelled";
     await booking.save();
     return res
@@ -67,6 +74,11 @@ exports.acceptBooking = async (req, res) => {
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
+
+    if(booking.status !== "Pending") {
+      return res.status(400).json({ message: "You can Accept only pending bookings", error: true });
+    }
+
     booking.status = "Accepted";
     await booking.save();
     return res
@@ -83,6 +95,9 @@ exports.rejectBooking = async (req, res) => {
     const booking = await Booking.findById(bookingId);
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
+    }
+    if(booking.status !== "Pending") {
+      return res.status(400).json({ message: "You can Reject only pending bookings", error: true });
     }
     booking.status = "Rejected";
     await booking.save();
