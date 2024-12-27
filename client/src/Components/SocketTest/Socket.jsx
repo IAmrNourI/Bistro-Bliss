@@ -1,7 +1,7 @@
 // SocketTest.jsx
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-
+import toast from 'react-hot-toast'
 export default function SocketTest() {
   const [socket, setSocket] = useState(null);
 
@@ -15,14 +15,6 @@ export default function SocketTest() {
       console.log("Connected:", newSocket.id);
     });
 
-    newSocket.on("serverResponse", (data) => {
-      console.log("From server:", data);
-    });
-
-    newSocket.on("hamada", (msg) => {
-        console.log("From server:", msg);
-    })
-
     return () => {
       newSocket.close();
     };
@@ -30,7 +22,7 @@ export default function SocketTest() {
 
   const handleClick = () => {
     if (socket) {
-      socket.emit("someEvent", { msg: "Hello from React!" });
+      socket.emit("notification", { msg: "Notificatioooons"})
     }
   };
 
@@ -40,14 +32,3 @@ export default function SocketTest() {
     </div>
   );
 }
-
-
-// return (
-//     <>
-//       <div className="vh-100 text-center mt-5">
-//         <button onClick={hello} className="btn btn-primary">
-//           Socket
-//         </button>
-//       </div>
-//     </>
-//   );

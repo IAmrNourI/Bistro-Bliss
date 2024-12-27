@@ -10,11 +10,6 @@ exports.generateToken = (user) => {
     expiresIn: "2d",
   });
 
-  // const cookieOptions = {
-  //   http: true,
-  //   secure: true,
-  // };
-
   const cookieOptions = {
     httpOnly: true,
     secure: false,

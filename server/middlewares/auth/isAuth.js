@@ -23,4 +23,4 @@ exports.isAuth = (req, res, next) => {
       error: true,
     });
   }
-}; 
+};  

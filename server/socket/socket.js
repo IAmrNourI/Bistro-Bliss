@@ -1,9 +1,9 @@
 // socket.js
 
 const { Server } = require("socket.io");
+const { isAuth } = require("../middlewares/auth/isAuth");
 
 function createSocketIo(server) {
-  // Attach Socket.IO to the passed-in server
   const io = new Server(server, {
     cors: {
       origin: process.env.FRONTEND_URL,
@@ -13,15 +13,16 @@ function createSocketIo(server) {
   });
 
   io.on("connection", (socket) => {
-    console.log("Socket connected:", socket.id);
+    console.log("user connected:", socket.id);
 
-    socket.emit("hamada", {msg: "Hamada is great!"})
+    const token = socket.handshake.auth.token;
+    console.log(token)
 
-    // Example event listener
-    socket.on("someEvent", (data) => {
+    socket.on("notification", (data) => {
+
       console.log("Data from client:", data);
-      socket.emit("serverResponse", { msg: "Hello from server!" });
-    });
+      io.emit("receiveNotification", { msg: `from server: ${data.msg}` }); 
+});
 
     socket.on("disconnect", () => {
       console.log("Socket disconnected:", socket.id);
