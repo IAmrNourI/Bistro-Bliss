@@ -13,7 +13,7 @@ export default function LoginPassword() {
 
   async function verifyPassword() {
     console.log(userId);
-    console.log(inputValue);
+    // console.log(inputValue);
     setisLoding(true)
     const result = await password({ userId, password: inputValue })
     .then((res) => {

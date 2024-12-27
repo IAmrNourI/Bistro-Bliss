@@ -16,7 +16,9 @@ import Menu from "./Components/Menu/Menu";
 import Add from "./Components/AddItem/Add";
 import Edit from "./Components/EditItem/Edit";
 import Contact from "./Components/Contact/Contact";
-
+import Book from "./Components/Book A Table/Book";
+import UserProfile from "./Components/UserProfile/UserProfile";
+import UpdateUser from "./Components/UpdateUser/UpdateUser";
 
 let route = createBrowserRouter([
   {
@@ -29,6 +31,9 @@ let route = createBrowserRouter([
       { path: "add", element: <Add /> },
       { path: "edit", element: <Edit /> },
       { path: "contact", element: <Contact /> },
+      { path: "book", element: <Book /> },
+      { path: "userprofile", element: <UserProfile /> },
+      { path: "updateuser", element: <UpdateUser /> },
     ],
   },
 

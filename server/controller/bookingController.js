@@ -2,10 +2,12 @@ const Booking = require("../models/Booking");
 
 exports.createBooking = async (req, res) => {
   try {
+
     const { date_time, totalPerson } = req.body;
     const userId = req.user.id;
     console.log(userId);
     const newBooking = new Booking({ user: userId, date_time, totalPerson });
+
     await newBooking.save();
     return res.status(200).json({
       message: "Booking created successfully",
