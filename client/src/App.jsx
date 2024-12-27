@@ -23,6 +23,7 @@ import Admin from "./Components/Admin/Admin";
 import Socket from "./Components/SocketTest/Socket";
 import AdminLayout from "./Components/AdminLayout/AdminLayout";
 import AdminMenu from "./Components/AdminMenu/AdminMenu";
+import ReceiveSocket from "./Components/ReceiveSocket/ReceiveSocket";
 
 let route = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ let route = createBrowserRouter([
       { path: "updateuser", element: <UpdateUser /> },
       { path: "admin", element: <Admin /> },
       { path: "socket", element: <Socket /> },
+      { path: "receive-socket", element: <ReceiveSocket /> },
     ],
   },
 
