@@ -21,6 +21,8 @@ import UserProfile from "./Components/UserProfile/UserProfile";
 import UpdateUser from "./Components/UpdateUser/UpdateUser";
 import Admin from "./Components/Admin/Admin";
 import Socket from "./Components/SocketTest/Socket";
+import AdminLayout from "./Components/AdminLayout/AdminLayout";
+import AdminMenu from "./Components/AdminMenu/AdminMenu";
 
 let route = createBrowserRouter([
   {
@@ -42,6 +44,14 @@ let route = createBrowserRouter([
   },
 
   {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      { path: "menu", element: <AdminMenu /> },
+    ],
+  },
+
+  {
     path: "/auth",
     element: <AuthLayout />,
     children: [
@@ -51,6 +61,8 @@ let route = createBrowserRouter([
       {path: "otp", element: <Otp />},
     ]
   }
+
+
 ]);
 
 

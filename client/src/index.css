@@ -623,4 +623,22 @@ input {
 
 /* ---------- Admin Panal ---------- */
 
+.side-nav ul li {
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: 0.2s;
+    border-radius: 10px;
+}
 
+.side-nav ul li:hover {
+    background-color: #ADB29E;
+    color: white;
+    border-radius: 10px;
+}
+
+.br {
+    border-bottom: 2px solid beige;
+    padding-bottom: 20px;
+}
