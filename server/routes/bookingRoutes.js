@@ -5,6 +5,7 @@ const { isAuth } = require("../middlewares/auth/isAuth");
 const isRole = require("../middlewares/auth/isRole");
 const {
   createBookingValidationRules,
+  statusValidationRules,
 } = require("../middlewares/validation/bookingValidation");
 
 const {
@@ -24,6 +25,7 @@ router.get("/get-user-bookings", isAuth, bookingController.getUserBookings);
 router.post(
   "/cancel-booking/:bookingId",
   isAuth,
+  statusValidationRules("Pending"),
   bookingController.cancelBooking
 );
 

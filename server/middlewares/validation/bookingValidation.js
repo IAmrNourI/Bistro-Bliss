@@ -1,4 +1,5 @@
 const { check } = require("express-validator");
+
 exports.createBookingValidationRules = [
   check("date_time")
     .trim()
@@ -36,3 +37,20 @@ exports.createBookingValidationRules = [
       return true;
     }),
 ];
+
+exports.statusValidationRules = (allowedStatuses) => {
+  return [
+    check("status")
+      .trim()
+      .notEmpty()
+      .custom((val) => {
+        console.log(`val = ${val}`);
+        console.log(`baseStauts = ${allowedStatuses}`);
+        if (!allowedStatuses.includes(val)) {
+          throw new Error(
+            `you can convert ${val} to ${allowedStatuses} in this case`
+          );
+        }
+      }),
+  ];
+};
