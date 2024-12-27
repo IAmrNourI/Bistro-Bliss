@@ -192,7 +192,6 @@ return (
                         <button type="submit" className='w-100 mb-4 btn-contact mt-3'>
                             {btnLoding ? <i className='fas fa-spinner fa-spin'></i> : "Book A Table" }  
                         </button>
-                        <button onClick={() => showBooking()}>Get booking</button>  
                     </div>
                 </div>
                 </div>

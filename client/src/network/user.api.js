@@ -31,10 +31,11 @@ const addItem = async(data) => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.post("/menu/add-item", data, {
         
-    headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-    },
+    // headers: {
+    // "Content-Type": "application/json",
+    // Authorization: "Bearer " + token,
+    // },
+    withCredentials: true
 });
 }
 
@@ -136,23 +137,23 @@ const logOut = async() => {
 });
 }
 
-const cancelRequest = async(id) => {
-    // return await axiosInstance.post(`/booking/cancel-booking/${id}`)
-    const token = localStorage.getItem("userToken");    
-    console.log(id)
-    console.log(token)
-    return await axiosInstance.post(`/booking/cancel-booking/${id}`,{
-        
-    headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-    },
-    withCredentials: true
-});
-}
+    const cancelRequest = async (id) => {
+    const token = localStorage.getItem("userToken");
+    console.log(id);
+    console.log(token);
 
-
-
+    return await axiosInstance.post(
+        `/booking/cancel-booking/${id}`,
+        null, // or {}
+        {
+        // headers: {
+        //     "Content-Type": "application/json",
+        //     Authorization: "Bearer " + token,
+        // },
+        withCredentials: true,
+        }
+    );
+    };
 
 
 

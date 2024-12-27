@@ -67,6 +67,20 @@ export default function Navbar() {
                   Contact
                 </Link>
               </li>
+              <li className="nav-item mx-2">
+                <Link className={activeLink === "admin" ? "active nav-link" : "nav-link"} 
+                onClick={() => setactiveLink("admin")}
+                to="admin">
+                  Admin
+                </Link>
+              </li>
+              <li className="nav-item mx-2">
+                <Link className={activeLink === "socket" ? "active nav-link" : "nav-link"} 
+                onClick={() => setactiveLink("socket")}
+                to="socket">
+                  Socket
+                </Link>
+              </li>
 
             </ul>
             <Link to="book" className="book-table">Book A Table</Link> </> :             
@@ -80,9 +94,6 @@ export default function Navbar() {
                 </Link>
                 </div>
             </>}
-
-
-
           </div>
           {/* <button className="book-table">Book A Table</button> */}
           
