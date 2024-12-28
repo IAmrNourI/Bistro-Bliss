@@ -3,7 +3,6 @@
 const { Server } = require("socket.io");
 const cookie = require("cookie"); 
 const jwt = require("jsonwebtoken");
-const { isAuth } = require("../middlewares/auth/isAuth"); // existing import
 
 function createSocketIo(server) {
   const io = new Server(server, {
@@ -15,8 +14,7 @@ function createSocketIo(server) {
   });
 
   io.on("connection", (socket) => {
-    console.log("user connected:", socket.id);
-
+    console.log("User connected:", socket.id);
 
     const cookies = socket.handshake.headers.cookie; 
     if (cookies) { 
@@ -48,16 +46,13 @@ function createSocketIo(server) {
     }
 
     socket.on("notification", (data) => {
-      // console.log("Data from client:", data);
       const targetUserId = data.targetUserId; 
       const message = data.msg; 
 
       if (targetUserId) { 
-
-        io.to(targetUserId).emit("receiveNotification", { msg:  message }); 
+        io.to(targetUserId).emit("receiveNotification", { msg: message }); 
       } else {
         console.log("No targetUserId provided"); 
-        
       }
     });
 

@@ -112,7 +112,7 @@ exports.rejectBooking = async (req, res) => {
 exports.getAllBookings = async (req, res) => {
   try {
     const bookings = await Booking.find()
-      .populate("user", "name -_id")
+      .populate("user", "name")
       .select("date_time status")
       .sort({ createdAt: -1 });
     return res

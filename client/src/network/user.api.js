@@ -80,6 +80,13 @@ const getBooking = async() => {
 });
 }
 
+const getAllBooking = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/booking/get-all-bookings", {
+        withCredentials: true
+});
+}
+
 
 const getUser = async() => {
     const token = localStorage.getItem("userToken");    
@@ -161,5 +168,6 @@ export { register,
         logOut,
         cancelRequest,
         acceptBooking,
-        rejectBooking
+        rejectBooking,
+        getAllBooking
     }

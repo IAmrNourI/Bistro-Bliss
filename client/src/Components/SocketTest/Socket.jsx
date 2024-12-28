@@ -1,34 +1,21 @@
-// SocketTest.jsx (Sender)
+// src/Components/SocketTest/SocketTest.jsx
 
-import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import React from "react";
+import { useSocket } from "../../Context/SocketContext"; //added
 import toast from 'react-hot-toast';
 
 export default function SocketTest() {
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    const newSocket = io("http://localhost:8085", {
-      withCredentials: true, 
-    });
-    setSocket(newSocket);
-
-    newSocket.on("connect", () => {
-      console.log("Connected:", newSocket.id);
-    });
-
-
-    return () => {
-      newSocket.close();
-    };
-  }, []);
+  const socket = useSocket(); 
 
   const handleClick = () => {
-    if (socket) {
+    if (socket) { 
       socket.emit("notification", { 
-        targetUserId: "675ffb9fec849012a52bb95f",
-        msg: "your booking have been Accepted" 
+        targetUserId: "675ffb9fec849012a52bb95f", 
+        msg: "Your booking has been rejected."
       }); 
+      toast.success("Notification sent!"); 
+    } else {
+      toast.error("Socket not connected."); 
     }
   };
 
