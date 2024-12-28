@@ -27,26 +27,6 @@ export default function Book() {
     }
 
 
-    async function showBooking(){
-        console.log("hello");
-        
-        setbtnLoding(true)
-        const result = await getBooking()
-        
-        .then((res) => {
-            console.log(res)
-            toast.success(res.data.message)
-            setbtnLoding(false)
-        })
-        .catch((res) => {
-            setbtnLoding(true)
-            console.log(res);
-            toast.error(res.response.data.message)
-            setbtnLoding(false)
-        });
-    }
-
-
     // let validationSchema = Yup.object().shape({
     // name: Yup.string()
     // .min(3, "Please enter at least 3 characters")
