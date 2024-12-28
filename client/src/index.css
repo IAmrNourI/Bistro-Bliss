@@ -488,7 +488,7 @@ input {
 }
 
 
-/* ---------- OurMenu ---------- */
+/* ---------- Our Menu ---------- */
 
 .fs-menu {
     font-size: 90px;
@@ -545,7 +545,41 @@ input {
     color: white;
 }
 
+.layout-item {
+    color: white;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: 0.3s;
+    /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.7)); */
+}
 
+.add-item:hover .layout-item{
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.add-item:hover .img-border{
+    transform: scale(1.1);
+}
+
+.add-icon {
+    transition: 0.3s;
+    font-size: 20px;
+}
+
+.add-item:hover .add-icon {
+    transform: scale(1.5);
+}
+
+.layout-btn {
+    inset: 0;    
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(100%);
+    transition: 0.5s;
+}
+
+.menu-item:hover .layout-btn {
+    transform: translateY(0);
+}
 /* ---------- Contact Us ---------- */
 
 .contact {

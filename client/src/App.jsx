@@ -25,6 +25,10 @@ import AdminLayout from "./Components/AdminLayout/AdminLayout";
 import AdminMenu from "./Components/AdminMenu/AdminMenu";
 import ReceiveSocket from "./Components/ReceiveSocket/ReceiveSocket";
 import { SocketProvider } from "./Context/SocketContext"; //added
+import AdminContact from "./Components/AdminContact/AdminContact";
+import BookingAdmin from "./Components/BookingAdmin/BookingAdmin";
+
+
 
 let route = createBrowserRouter([
   {
@@ -51,6 +55,8 @@ let route = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       { path: "menu", element: <AdminMenu /> },
+      { path: "contact", element: <AdminContact /> },
+      { path: "booking", element: <BookingAdmin /> },
     ],
   },
 
