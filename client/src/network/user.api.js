@@ -31,10 +31,6 @@ const addItem = async(data) => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.post("/menu/add-item", data, {
         
-    // headers: {
-    // "Content-Type": "application/json",
-    // Authorization: "Bearer " + token,
-    // },
     withCredentials: true
 });
 }
@@ -43,10 +39,7 @@ const deleteItem = async (data) => {
     const token = localStorage.getItem("userToken");
     return await axiosInstance.delete("/menu/delete-item", {
         data: data,
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-        },
+        withCredentials: true
     });
 }
 
@@ -54,11 +47,7 @@ const editItem = async (data) => {
     // return await axiosInstance.put("/menu/edit-item", data)
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.put("/menu/edit-item", data, {
-        
-    headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-    },
+        withCredentials: true
 });
 
 }
@@ -72,11 +61,7 @@ const viewContact = async () => {
     // return await axiosInstance.put("/menu/edit-item", data)
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.get("/contact/get-contacts", {
-        
-    headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-    },
+        withCredentials: true
 });
 
 }
@@ -84,22 +69,14 @@ const viewContact = async () => {
 const createBook = async(data) => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.post("/booking/create-booking", data, {
-        
-    headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-    },
+        withCredentials: true
 });
 }
 
 const getBooking = async() => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.get("/booking/get-user-bookings", {
-        
-    headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-    },
+        withCredentials: true
 });
 }
 
@@ -107,33 +84,23 @@ const getBooking = async() => {
 const getUser = async() => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.get("/user/user-details", {
-        
-    headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-    },
+        withCredentials: true
+
 });
 }
 
 const updateUser = async(data) => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.put("/user/update-user",data, {
-        
-    headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-    },
+        withCredentials: true
 });
 }
 
 const logOut = async() => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.get("/user/logout", {
-        
-    headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token,
-    },
+        withCredentials: true
+
 });
 }
 
@@ -146,16 +113,35 @@ const logOut = async() => {
         `/booking/cancel-booking/${id}`,
         null, // or {}
         {
-        // headers: {
-        //     "Content-Type": "application/json",
-        //     Authorization: "Bearer " + token,
-        // },
         withCredentials: true,
         }
     );
     };
 
+    const acceptBooking = async (id) => {
+        const token = localStorage.getItem("userToken");
+        return await axiosInstance.post(
+            `/booking/accept-booking/${id}`,
+            null, // or {}
+            {
+            withCredentials: true,
+            }
+        );
+        };
 
+        const rejectBooking = async (id) => {
+            const token = localStorage.getItem("userToken");
+            return await axiosInstance.post(
+                `/booking/reject-booking/${id}`,
+                null, // or {}
+                {
+                withCredentials: true,
+                }
+            );
+            };
+
+
+    // withCredentials: true
 
 export { register, 
         verify, 
@@ -173,5 +159,7 @@ export { register,
         getUser,
         updateUser,
         logOut,
-        cancelRequest
+        cancelRequest,
+        acceptBooking,
+        rejectBooking
     }

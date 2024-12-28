@@ -9,25 +9,7 @@ import toast from 'react-hot-toast';
 
 
 export default function Contact() {
-    const [btnLoding, setbtnLoding] = useState(false)
-
-    async function showContact(){
-        setbtnLoding(true)
-        const result = await viewContact()
-        .then((res) => {
-            console.log(res)
-            toast.success(res.data.message)
-            setbtnLoding(false)
-            //set ==> res.data.contacts ==> map ==> display
-        })
-        .catch((res) => {
-            setbtnLoding(true)
-            console.log(res);
-            toast.error(res.response.data.message)
-            setbtnLoding(false)
-        });
-    }   
-
+    const [btnLoding, setbtnLoding] = useState(false)  
 
     async function sendContact(values) {
         setbtnLoding(true)
@@ -164,7 +146,6 @@ return (
                         <button type="submit" className='w-100 mb-4 btn-contact mt-3'>
                             {btnLoding ? <i className='fas fa-spinner fa-spin'></i> : "Send" }  
                         </button>
-                        <button onClick={() => showContact()}>View Contact</button>
                     </div>
                 </div>
                 </div>
