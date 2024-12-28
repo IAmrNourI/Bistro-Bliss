@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controller/userControllser");
 const { isAuth } = require("../middlewares/auth/isAuth");
+const isRole = require("../middlewares/auth/isRole");
+
 const {
   userValidationRules,
   updateUserValidationRules,
@@ -34,6 +36,8 @@ router.put(
   userController.updateUser
 );
 
-router.post("/search-user", isAuth, userController.searchUser);
+router.post("/search-user", isAuth, isRole("admin"), userController.searchUser);
+
+router.get("/get-all-users", isAuth, isRole("admin"), userController.getAllUsers)
 
 module.exports = router;
