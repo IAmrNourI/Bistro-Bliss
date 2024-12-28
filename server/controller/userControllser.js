@@ -576,3 +576,22 @@ exports.getAllUsers = async (req, res) => {
     });
   }
 };
+
+exports.appointAsAdmin = async (req, res) => {
+  try{
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found", error: true });
+    }
+    if (user.role === "admin") {
+      return res.status(400).json({ message: "User is already an admin", error: true });
+    }
+    const admin = await User.findByIdAndUpdate(userId, { role: "admin" }, { new: true });
+
+
+    return res.status(200).json({message: "User Updated successfully", success: true, data: admin}); 
+  }catch (error) {
+    return res.status(500).json({ message: error.message, error: true });
+  }
+}
