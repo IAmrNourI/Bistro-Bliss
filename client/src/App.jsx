@@ -24,6 +24,7 @@ import Socket from "./Components/SocketTest/Socket";
 import AdminLayout from "./Components/AdminLayout/AdminLayout";
 import AdminMenu from "./Components/AdminMenu/AdminMenu";
 import ReceiveSocket from "./Components/ReceiveSocket/ReceiveSocket";
+import { SocketProvider } from "./Context/SocketContext"; //added
 
 let route = createBrowserRouter([
   {
@@ -73,8 +74,10 @@ function App() {
   return (
     <>
     <UserContextProvider>
-      <RouterProvider router={route}></RouterProvider>
-      <Toaster />
+    <SocketProvider> {/*added: Wrap with SocketProvider*/}
+          <RouterProvider router={route}></RouterProvider>
+          <Toaster />
+        </SocketProvider> {/*added*/}
     </UserContextProvider>
     </>
   );
