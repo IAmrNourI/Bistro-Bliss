@@ -9,7 +9,9 @@ const {
   updateUserValidationRules,
 } = require("../middlewares/validation/UserValidation");
 
-const { valdationResults } = require("../middlewares/validation/validationResult");
+const {
+  valdationResults,
+} = require("../middlewares/validation/validationResult");
 
 router.post(
   "/register",
@@ -38,6 +40,19 @@ router.put(
 
 router.post("/search-user", isAuth, isRole("admin"), userController.searchUser);
 
-router.get("/get-all-users", isAuth, isRole("admin"), userController.getAllUsers)
+router.get(
+  "/get-all-users",
+  isAuth,
+  isRole("admin"),
+  userController.getAllUsers
+);
+
+router.post(
+  "/appoint-as-admin/:userId",
+  isAuth,
+  isRole("admin"),
+  userController.appointAsAdmin
+);
+
 
 module.exports = router;
