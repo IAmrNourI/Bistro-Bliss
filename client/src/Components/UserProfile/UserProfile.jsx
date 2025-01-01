@@ -25,6 +25,7 @@ async function showBooking(){
     const result = await getBooking()
     .then((res) => {
         console.log(res)
+        // toast.success(res.data.message)
         setbooking(res.data.data)
     })
     .catch((res) => {
@@ -141,3 +142,50 @@ return (
 </>
 );
 }
+
+{/* <table className="table table-bordered pb-5 ">
+<thead>
+<tr>
+    <th scope="col">Name</th>
+    <th scope="col">Date</th>
+    <th scope="col">Time</th>
+    <th scope="col">Status</th>
+</tr>
+</thead>
+{booking.map((book) => {
+return (
+    <tbody className="table-row">
+    <tr>
+    <td>
+        {book.user.name}
+        </td>
+        <td>
+        {new Date(book.date_time).toLocaleDateString()}
+        </td>
+        <td>{book.time}</td>
+        <td
+        className={
+            book.status == "Pending" ? "bg-warning" : null
+        }
+        >
+        {book.status}
+        </td>
+        <td>
+        <button
+            onClick={() => accept(book._id, book.user._id)}
+            className="btn btn-outline-success me-2"
+        >
+            Accept
+        </button>
+        <button
+            onClick={() => reject(book._id, book.user._id)}
+            className="btn btn-outline-danger"
+        >
+            Reject
+        </button>
+        </td>
+    </tr>
+    </tbody>
+);
+})}
+</table> */}

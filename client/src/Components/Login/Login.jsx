@@ -27,7 +27,8 @@ export default function Login() {
       })
       .catch((res) => {
       setisLoding(true)
-      toast.error(res.response.data.message)
+      // toast.error(res.response.data.message)
+      console.log(res)
       setisLoding(false)
       });
   }

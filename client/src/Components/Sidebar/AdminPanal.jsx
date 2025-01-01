@@ -20,7 +20,7 @@ return (
                         <li> <Link to="menu" className=''>Menu</Link></li>
                         <li> <Link to="contact" className=''>Contact</Link></li>
                         <li> <Link to="booking" className=''>Booking</Link></li>
-                        <li> <Link to="" className=''>Users</Link></li>
+                        <li> <Link to="users" className=''>Users</Link></li>
                     </ul>
                     
                 </div>

@@ -27,6 +27,7 @@ import ReceiveSocket from "./Components/ReceiveSocket/ReceiveSocket";
 import { SocketProvider } from "./Context/SocketContext"; //added
 import AdminContact from "./Components/AdminContact/AdminContact";
 import BookingAdmin from "./Components/BookingAdmin/BookingAdmin";
+import AdminUsers from "./Components/AdminUsers/AdminUsers";
 
 
 
@@ -57,6 +58,7 @@ let route = createBrowserRouter([
       { path: "menu", element: <AdminMenu /> },
       { path: "contact", element: <AdminContact /> },
       { path: "booking", element: <BookingAdmin /> },
+      { path: "users", element: < AdminUsers/> },
     ],
   },
 
