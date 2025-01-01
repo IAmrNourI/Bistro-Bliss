@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  acceptBooking,
-  getAllBooking,
-  getBooking,
-  rejectBooking,
+
+
+import { acceptBooking, //   getAllBooking,//   getBooking,
+rejectBooking
 } from "../../network/user.api";
 import toast from "react-hot-toast";
 import { useSocket } from "../../Context/SocketContext"; //added
@@ -95,6 +94,7 @@ export default function BookingAdmin() {
                 <table className="table table-bordered pb-5 ">
                   <thead>
                     <tr>
+                      <th scope="col">Name</th>
                       <th scope="col">Date</th>
                       <th scope="col">Time</th>
                       <th scope="col">Status</th>
@@ -104,13 +104,16 @@ export default function BookingAdmin() {
                     return (
                       <tbody className="table-row">
                         <tr>
+                        <td>
+                            {book.user.name}
+                          </td>
                           <td>
                             {new Date(book.date_time).toLocaleDateString()}
                           </td>
                           <td>{book.time}</td>
                           <td
                             className={
-                              book.status == "pending" ? "bg-warning" : null
+                              book.status == "Pending" ? "bg-warning" : null
                             }
                           >
                             {book.status}

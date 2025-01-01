@@ -80,19 +80,11 @@ const getBooking = async() => {
 });
 }
 
-const getAllBooking = async() => {
-    const token = localStorage.getItem("userToken");    
-    return await axiosInstance.get("/booking/get-all-bookings", {
-        withCredentials: true
-});
-}
-
 
 const getUser = async() => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.get("/user/user-details", {
         withCredentials: true
-
 });
 }
 
@@ -107,15 +99,11 @@ const logOut = async() => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.get("/user/logout", {
         withCredentials: true
-
 });
 }
 
-    const cancelRequest = async (id) => {
+const cancelRequest = async (id) => {
     const token = localStorage.getItem("userToken");
-    console.log(id);
-    console.log(token);
-
     return await axiosInstance.post(
         `/booking/cancel-booking/${id}`,
         null, // or {}
@@ -125,27 +113,48 @@ const logOut = async() => {
     );
     };
 
-    const acceptBooking = async (id) => {
-        const token = localStorage.getItem("userToken");
-        return await axiosInstance.post(
-            `/booking/accept-booking/${id}`,
-            null, // or {}
-            {
-            withCredentials: true,
-            }
-        );
-        };
+const acceptBooking = async (id) => {
+    const token = localStorage.getItem("userToken");
+    return await axiosInstance.post(
+        `/booking/accept-booking/${id}`,
+        null, // or {}
+        {
+        withCredentials: true,
+        }
+    );
+    };
 
-        const rejectBooking = async (id) => {
-            const token = localStorage.getItem("userToken");
-            return await axiosInstance.post(
-                `/booking/reject-booking/${id}`,
-                null, // or {}
-                {
-                withCredentials: true,
-                }
-            );
-            };
+const rejectBooking = async (id) => {
+    const token = localStorage.getItem("userToken");
+
+    return await axiosInstance.post(
+        `/booking/reject-booking/${id}`,
+        null, // or {}
+        {
+        withCredentials: true,
+        }
+    );
+    };
+
+            
+const getAllUsers = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/user/get-all-users", {
+        withCredentials: true
+});
+}
+
+const appointAsAdmin = async (id) => {
+    const token = localStorage.getItem("userToken");
+
+    return await axiosInstance.post(
+        `/user/appoint-as-admin/${id}`,
+        null, // or {}
+        {
+        withCredentials: true,
+        }
+    );
+    };
 
 
     // withCredentials: true
@@ -169,5 +178,6 @@ export { register,
         cancelRequest,
         acceptBooking,
         rejectBooking,
-        getAllBooking
+        getAllUsers,
+        appointAsAdmin
     }
