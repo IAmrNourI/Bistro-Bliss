@@ -28,6 +28,8 @@ li {
 
 .bg-register {
     background-color: #F9F9F7;
+    padding-block: 50px;
+    padding-top: 60px;
 }
 
 .register form {
@@ -508,7 +510,7 @@ input {
 }
 
 .menu-item {
-    height: 420px;
+    height: auto;
 }
 
 .menu-item .price {

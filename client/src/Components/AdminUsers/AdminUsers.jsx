@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { appointAsAdmin, getAllUsers } from '../../network/user.api';
+import { appointAsAdmin, getAllUsers, searchUser } from '../../network/user.api';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function AdminUsers() {
     const [users, setusers] = useState([])
@@ -15,17 +17,27 @@ export default function AdminUsers() {
         });
     }
 
-    async function makeAdmin(id){
-        console.log(id);
-        const result = await appointAsAdmin(id)
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((res) => {
-            // toast.error(res.response.data.message)
-        });
+    async function makeAdmin(id) {
+        try {
+            const result = await appointAsAdmin(id)
+            console.log(result)
+            toast.success(result.data.message)
+            getUsers()
+        } catch (error) {
+            toast.error(error.response?.data?.message);
+        }
     }
-
+    
+    async function handleSearch(e){
+        const value = e.target.value
+        try {
+            const result = await searchUser({ email: value })
+            console.log(result);
+            setusers([result.data.data])
+        } catch {
+            getUsers()
+        }
+    }
 
 useEffect(() => {
     getUsers()
@@ -34,6 +46,18 @@ useEffect(() => {
 return (
     <>
         <div className="col-10 mt-3">
+
+        <div className="form-floating mb-3">
+            <input
+                onChange={handleSearch}
+                name="phoneNumber"
+                type="serch"
+                className="form-control"
+                placeholder=""
+            />
+        <label htmlFor="floatingInput">Search (email, name, subject)</label>
+
+    </div>
         <div className="row">
             <div className="col-12">
             <div className="row">
@@ -48,7 +72,7 @@ return (
                         <th scope="col">Appoint As Admin</th>
                     </tr>
                     </thead>
-                    {users.map((user) => {
+                    {users?.map((user) => {
                     return (
                         <tbody className="table-row">
                         <tr>

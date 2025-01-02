@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
-import { addItem } from "../../network/user.api";
+import { addItem, uploadImg } from "../../network/user.api";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -34,8 +34,6 @@ async function addToMenu(values) {
 
 let validationSchema = Yup.object().shape({
     image: Yup.string()
-    .min(3, "Please enter at least 3 characters")
-    .max(100, "Maximum 100 characters allowed")
     .required("img is required"),
 
     name: Yup.string()
@@ -70,24 +68,23 @@ validationSchema,
 onSubmit: addToMenu,
 });
 
+
 return (
 <>
     <div className="bg-register">
     <section className="register">
         <form onSubmit={formik.handleSubmit} action="">
         <div className="register-container">
-            <div className="form-floating mb-3">
+            <div className="mb-3">
             <input
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 name="image"
                 value={formik.values.image}
-                type="text"
+                type="file"
                 id="image"
                 className="form-control"
-                placeholder="image src"
             />
-            <label htmlFor="floatingInput">image src</label>
             {formik.errors.image ? (
                 <span className="alert alert-danger p-0 mt-1 d-block">
                 {formik.errors.image}

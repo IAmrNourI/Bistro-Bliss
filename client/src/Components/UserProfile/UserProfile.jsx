@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 export default function UserProfile() {
-const [user, setuser] = useState(null);
+const [user, setuser] = useState([]);
 const [booking, setbooking] = useState([])
 let navigate = useNavigate();
 
@@ -22,17 +22,30 @@ const result = await getUser()
 }
 
 async function showBooking(){
-    const result = await getBooking()
-    .then((res) => {
-        console.log(res)
-        // toast.success(res.data.message)
-        setbooking(res.data.data)
-    })
-    .catch((res) => {
-        console.log(res);
-        toast.error(res.response.data.message)
-    });
+const result = await getBooking()
+.then((res) => {
+    console.log(res)
+    setbooking(res.data.data)
+    // toast.success(res.data.message)
+    const bookingData = res.data.data.map((book) => {
+        const dateTime = new Date(book.date_time);
+        const hours = dateTime.getHours();
+        const minutes = dateTime.getMinutes();
+        const time = `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
+
+        return {
+            ...book,
+            time,
+        };
+        });
+        setbooking(bookingData);
+})
+.catch((res) => {
+    console.log(res);
+    toast.error(res.response.data.message)
+});
 }
+
 
 function updateData(name, phoneNumber){
     navigate("/updateuser", { state: {name, phoneNumber} });
@@ -98,44 +111,52 @@ return (
             <h3 class="h1">My Booking</h3>
         </div>
 
-        <div className="row">
-        {booking.map((book) => {
-        return ( 
-            <div className="col-6" key={book.id}>
-            <table className="table table-bordered border-primary">
-                <thead>
-                <tr>
-                    <th scope="col" colSpan="2">Details</th>
-                    <th scope="col" colSpan="2">Booking</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Name</td>
-                    <td>{user.name}</td>
-                    <td>Time</td>
-                    <td>{book.time || "22:15:00"}</td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td>{user.email}</td>
-                    <td>Date</td>
-                    <td>{book.date || "2025/15/6"}</td>
-                </tr>
-                <tr className="position-relative">
-                    <td colSpan="4" className="text-center">{book.status}</td>
-                    <button 
-                    onClick={() => cancelBooking(book._id)} 
-                    className="btn-cancle position-absolute ">
-                        Cancle Request
-                    </button>
-                </tr>
-                </tbody>
-            </table>
-            </div>
-        );
-        })}
-</div>
+
+
+                    <div className="row">
+                    <div className="col-12">
+                        <table className="table table-bordered pb-5 ">
+                        <thead>
+                            <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Request</th>
+                            </tr>
+                        </thead>
+                        {booking?.map((book) => {
+                            return (
+                            <tbody className="table-row">
+                                <tr>
+                                <td>{user.name}</td>
+                                <td>
+                                    {new Date(book.date_time).toLocaleDateString()}
+                                </td>
+                                <td>{book.time}</td>
+                                <td
+                                    // className={
+                                    //   book.status == "Pending" ? "bg-warning" : null
+                                    // }
+                                >
+                                    {book.status}
+                                </td>
+                                <td>
+                                <button 
+                                    onClick={() => cancelBooking(book._id)} 
+                                    className="btn btn-outline-danger">
+                                        Cancle
+                                </button>
+                                </td>
+                                </tr>
+                            </tbody>
+                            );
+                        })}
+                        </table>
+                    </div>
+                    </div>
+
+
 
     </div>
     </section>
@@ -189,3 +210,39 @@ return (
 );
 })}
 </table> */}
+
+
+            // <div className="col-6" key={book.id}>
+            // <table className="table table-bordered border-primary">
+            //     <thead>
+            //     <tr>
+            //         <th scope="col" colSpan="2">Name</th>
+            //         <th scope="col" colSpan="2">Email</th>
+            //         {/* <th scope="col" colSpan="2">Time</th>
+            //         <th scope="col" colSpan="2">Date</th> */}
+            //     </tr>
+            //     </thead>
+            //     <tbody>
+            //     <tr>
+            //         <td>Name</td>
+            //         <td>{user.name}</td>
+            //         <td>Time</td>
+            //         <td>{book.time || "22:15:00"}</td>
+            //     </tr>
+            //     <tr>
+            //         <td>Email</td>
+            //         <td>{user.email}</td>
+            //         <td>Date</td>
+            //         <td>{book.date || "2025/15/6"}</td>
+            //     </tr>
+            //     <tr className="position-relative">
+            //         <td colSpan="4" className="text-center">{book.status}</td>
+            //         <button 
+            //         onClick={() => cancelBooking(book._id)} 
+            //         className="btn-cancle position-absolute ">
+            //             Cancle Request
+            //         </button>
+            //     </tr>
+            //     </tbody>
+            // </table>
+            // </div>

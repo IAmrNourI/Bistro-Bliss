@@ -66,20 +66,6 @@ async function getDessertsMenu() {
     });
 }
 
-async function removeItem(id) {
-    const result = await deleteItem({ id })
-        .then((res) => {
-            toast.success(res.data.message)
-            getAllMenu()
-        })
-        .catch((res) => {
-            toast.error(res.response.data.message);
-        });
-}
-
-function editItem(id,name,price,desc,category){
-    navigate("/edit", { state: { id, name, price, desc, category,} });
-}
 
 useEffect(() => {
     getAllMenu();
@@ -166,7 +152,7 @@ return (
         </div>
 
         <div className="row">
-            {menu.map((item) => (
+            {menu?.map((item) => (
             <div key={item._id} className="col-lg-3 col-md-6 gy-5">
                 <div className="menu-item text-center border border-1 rounded-3 overflow-hidden">
                 <div className="overflow-hidden">
@@ -179,21 +165,11 @@ return (
                 <div className="p-2">
                     <p className="price mb-1">${item.price}</p>
                     <p className="name mb-1">{item.name}</p>
-                    <p className="desc mb-0">{item.description}</p>
-                    <button onClick={() => removeItem(item._id)} className="mt-2 btn-register bg-transparent">Delete item</button>
-                    <button onClick={() => editItem(item._id, item.name, item.price, item.description, item.category)} className="d-block m-auto mt-2 btn btn-outline-warning">Edit</button>
-
+                    <p className="desc mb-2">{item.description}</p>
                     </div>
                 </div>
             </div>
             ))}
-            <div className="col-lg-3 col-md-6 gy-5">
-                <Link to={"/Add"}
-                className="text-decoration-none menu-item text-center border border-1 
-                rounded-3 d-flex justify-content-center align-items-center bg-body-secondary">
-                    <i className="fa-solid fa-plus h2"></i>
-                </Link>
-            </div>
         </div>
         </div>
     </section>
