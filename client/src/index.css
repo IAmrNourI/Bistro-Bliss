@@ -510,7 +510,7 @@ input {
 }
 
 .menu-item {
-    height: auto;
+    height: 350px;
 }
 
 .menu-item .price {
