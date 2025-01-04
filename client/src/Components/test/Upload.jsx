@@ -2,37 +2,38 @@
     import { useState } from "react";
 
     export default function UploadFile() {
-    const [image, setimage] = useState("");
-    function handleImage(e) {
-        console.log(e.target.files);
-        setimage(e.target.files[0]);
-    }
-
-    async function handleApi() {
-        const formData = new FormData();
-        const token = localStorage.getItem("userToken");
-
-        formData.append("uploadFile", image);
-        try {
-        const res = await axios.post(
-            "http://localhost:8085/api/menu/upload",
-            formData,
-            {
-            headers: {
-                Authorization: `Bearer ${token}`, // إضافة التوكين في الهيدر
-            },
+        async function uploadImage() {
+            const input = document.getElementById('imageInput');
+            if (input.files.length === 0) {
+                alert('Please select an image.');
+                return;
             }
-        );
-        console.log(res);
-        } catch (error) {
-        console.error("Error uploading file:", error);
+        
+            const formData = new FormData();
+            formData.append('image', input.files[0]); // Key must match the backend key ('image')
+        
+            try {
+                const response = await axios.post('http://localhost:8085/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data', // Required for file uploads
+                    },
+                });
+        
+                if (response.status === 200) {
+                    alert('Image uploaded successfully: ' + JSON.stringify(response.data));
+                } else {
+                    alert('Failed to upload image.');
+                }
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                alert('An error occurred during the upload.');
+            }
         }
-    }
 
     return (
         <>
-        <input type="file" name="file" onChange={handleImage} />
-        <button onClick={handleApi}>submit</button>
+            <input type="file" id="imageInput" accept="image/*" />
+            <button onClick={(() => uploadImage())}>Upload</button>
         </>
     );
     }

@@ -55,7 +55,7 @@ return (
                 className="form-control"
                 placeholder=""
             />
-        <label htmlFor="floatingInput">Search (email, name, subject)</label>
+        <label htmlFor="floatingInput">Search (email)</label>
 
     </div>
         <div className="row">
