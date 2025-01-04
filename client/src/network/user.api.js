@@ -25,6 +25,13 @@ const items = async() => {
     return await axiosInstance.get("/menu/")
 }
 
+const searchMenu = async (data) => {
+    const token = localStorage.getItem("userToken");
+    return await axiosInstance.post("/menu/search-item", data, {
+                withCredentials: true
+    });
+}
+
 const addItem = async(data) => {
     // console.log(localStorage.getItem("userToken"))
     // return await axiosInstance.post("/menu/add-item", data)
@@ -63,7 +70,13 @@ const viewContact = async () => {
     return await axiosInstance.get("/contact/get-contacts", {
         withCredentials: true
 });
+}
 
+const searchContact = async (data) => {
+    const token = localStorage.getItem("userToken");
+    return await axiosInstance.post("/contact/search-contacts", data, {
+                withCredentials: true
+    });
 }
 
 const createBook = async(data) => {
@@ -87,12 +100,25 @@ const getAllBooking = async() => {
 });
 }
 
+const getUpcomingBooking = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/booking/get-upcoming-bookings", {
+        withCredentials: true
+});
+}
+
+const getPendingBooking = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/booking/get-pending-bookings", {
+        withCredentials: true
+});
+}
+
 
 const getUser = async() => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.get("/user/user-details", {
         withCredentials: true
-
 });
 }
 
@@ -107,15 +133,11 @@ const logOut = async() => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.get("/user/logout", {
         withCredentials: true
-
 });
 }
 
-    const cancelRequest = async (id) => {
+const cancelRequest = async (id) => {
     const token = localStorage.getItem("userToken");
-    console.log(id);
-    console.log(token);
-
     return await axiosInstance.post(
         `/booking/cancel-booking/${id}`,
         null, // or {}
@@ -125,27 +147,67 @@ const logOut = async() => {
     );
     };
 
-    const acceptBooking = async (id) => {
-        const token = localStorage.getItem("userToken");
-        return await axiosInstance.post(
-            `/booking/accept-booking/${id}`,
-            null, // or {}
-            {
-            withCredentials: true,
-            }
-        );
-        };
+const acceptBooking = async (id) => {
+    const token = localStorage.getItem("userToken");
+    return await axiosInstance.post(
+        `/booking/accept-booking/${id}`,
+        null, // or {}
+        {
+        withCredentials: true,
+        }
+    );
+    };
 
-        const rejectBooking = async (id) => {
-            const token = localStorage.getItem("userToken");
-            return await axiosInstance.post(
-                `/booking/reject-booking/${id}`,
-                null, // or {}
-                {
-                withCredentials: true,
-                }
-            );
-            };
+const rejectBooking = async (id) => {
+    const token = localStorage.getItem("userToken");
+
+    return await axiosInstance.post(
+        `/booking/reject-booking/${id}`,
+        null, // or {}
+        {
+        withCredentials: true,
+        }
+    );
+    };
+
+            
+const getAllUsers = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/user/get-all-users", {
+        withCredentials: true
+});
+}
+
+const searchUser = async (data) => {
+    const token = localStorage.getItem("userToken");
+    return await axiosInstance.post("/user/email", data, {
+        withCredentials: true
+    });
+};
+
+const appointAsAdmin = async (id) => {
+    const token = localStorage.getItem("userToken"); 
+    return await axiosInstance.post(
+        `/user/appoint-as-admin/${id}`,
+        null,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`, 
+            },
+            withCredentials: true,
+        }
+    );
+};
+
+const uploadImg = async (data) => {
+    const token = localStorage.getItem("userToken");
+    return await axiosInstance.delete("/menu/upload", {
+        data: data,
+        withCredentials: true
+    });
+}
+
+
 
 
     // withCredentials: true
@@ -169,5 +231,13 @@ export { register,
         cancelRequest,
         acceptBooking,
         rejectBooking,
-        getAllBooking
+        getAllUsers,
+        appointAsAdmin,
+        getAllBooking,
+        uploadImg,
+        getUpcomingBooking,
+        getPendingBooking,
+        searchContact,
+        searchUser,
+        searchMenu,
     }

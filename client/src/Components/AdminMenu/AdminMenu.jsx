@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { items, deleteItem } from "../../network/user.api";
+import { items, deleteItem, searchMenu } from "../../network/user.api";
 import { Link, useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 
@@ -79,6 +79,17 @@ async function removeItem(id) {
 
 function editItem(id,name,price,desc,category){
     navigate("/edit", { state: { id, name, price, desc, category,} });
+}
+
+async function handleSearch(e){
+    const value = e.target.value
+    try {
+        const result = await searchMenu({ search: value })
+        console.log(result);
+        setmenu(result.data.data)
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 useEffect(() => {
@@ -163,7 +174,20 @@ return (
                     </div>
                 </div>
                 <div className="row">
+                    <div className="form-floating mb-3">
+                    <input
+                        onChange={handleSearch}
+                        name="phoneNumber"
+                        type="serch"
+                        className="form-control"
+                        placeholder=""
+                    />
+                    <label htmlFor="floatingInput" className="ms-3">Search (name, description, category)</label>
+                    </div>
+
+
                     <div className="col-lg-3 col-md-6 gy-5">
+                        
                         <Link to={"/Add"}
                         className="text-decoration-none position-relative add-item">
                         <div className="menu-item text-center border border-1 rounded-3 overflow-hidden">
@@ -185,7 +209,7 @@ return (
                         </div>
                         </Link>
                     </div>
-                    {menu.map((item) => (
+                    {menu?.map((item) => (
                     <div key={item._id} className="col-lg-3 col-md-6 gy-5">
                         <div className="menu-item text-center border border-1 rounded-3 overflow-hidden position-relative">
                         <div className="overflow-hidden">
@@ -198,7 +222,7 @@ return (
                         <div className="p-2">
                             <p className="price mb-1">${item.price}</p>
                             <p className="name mb-1">{item.name}</p>
-                            <p className="desc mb-0">{item.description}</p>
+                            <p className="desc mb-2">{item.description}</p>
                             </div>
                             <div className="position-absolute layout-btn d-flex justify-content-center flex-column align-items-center ">
                                 <button onClick={() => removeItem(item._id)} className=" mb-2 w-50">Delete item</button>

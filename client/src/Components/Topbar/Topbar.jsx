@@ -25,7 +25,8 @@ export default function Topbar() {
 
   return (
     <>
-      <section className="topBar">
+
+      {userLogin != null ? (      <section className="topBar">
         <div className="container">
           <div className="contact-us d-flex justify-content-between">
             <div className="call-us d-flex">
@@ -62,7 +63,7 @@ export default function Topbar() {
             
           </div>
         </div>
-      </section>
+      </section>) :null}
     </>
   );
 }

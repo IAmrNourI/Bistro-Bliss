@@ -10,8 +10,16 @@ export default function Book() {
     const [btnLoding, setbtnLoding] = useState(false)
 
     async function bookTable(values) {
+        console.log(values)
+        //"2025-01-25T10:12:50.500Z"
+        const dataTime = `${values.date_time}T${values.time}`
+        const newValues = {
+            ...values,
+            date_time: dataTime,
+        };
+        console.log(newValues)
         setbtnLoding(true)
-        const result = await createBook(values)
+        const result = await createBook(newValues)
         
         .then((res) => {
             console.log(res)
@@ -21,37 +29,35 @@ export default function Book() {
         .catch((res) => {
             setbtnLoding(true)
             console.log(res);
-            toast.error(res.response.data.message)
+            toast.error(res.response.data.errors[0].msg)
             setbtnLoding(false)
         });
     }
 
 
-    // let validationSchema = Yup.object().shape({
-    // name: Yup.string()
-    // .min(3, "Please enter at least 3 characters")
-    // .max(10, "Maximum 10 characters allowed")
-    // .required("Name is required"),
-    // email: Yup.string().email("invalid email").required("Email is required"),
-    // subject: Yup.string()
-    // .min(5, "Please enter at least 5 characters")
-    // .max(20, "Maximum 20 characters allowed")
-    //     .required("Subject is erquired"),
-    // message: Yup.string()
-    // .min(5, "Please enter at least 5 characters")
-    // .max(200, "Maximum 200 characters allowed")
-    //     .required("Message is erquired"),
-    // });
+    let validationSchema = Yup.object().shape({
+    name: Yup.string()
+    .min(3, "Please enter at least 3 characters")
+    .max(15, "Maximum 10 characters allowed")
+    .required("Name is required"),
+    phone: Yup.string().matches(/^01[0125][0-9]{8}$/, "invalid phone number")
+    .required("phone is erquired"),
+    date_time: Yup.string()
+    .required("Date is required"), 
+    time: Yup.string()
+    .required("Time is required"),
+    totalPerson: Yup.string()
+    .required("Total person is required"),
+    });
 
     let formik = useFormik({
     initialValues: {
         date_time: "",
-        time: "",
         name: "",
         phone: "",
-        person: "",
+        totalPerson: "",
     },
-    // validationSchema,
+    validationSchema,
     onSubmit: bookTable,
 });
 
@@ -151,20 +157,30 @@ return (
                     <select
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
-                        value={formik.values.person}
-                        name="person"
-                        id="person"
+                        value={formik.values.totalPerson}
+                        name="totalPerson"
+                        id="totalPerson"
                         className='w-100 input-style form-select py-3' 
-                        type="text" 
+                        type="number" 
+                        
                         > 
+                        <option value="" disabled>
+                        Total Person
+                        </option>
                         <option value="1">1 Person</option>
                         <option value="2">2 Person</option>
                         <option value="3">3 Person</option>
                         <option value="4">4 Person</option>
+                        <option value="5">5 Person</option>
+                        <option value="6">6 Person</option>
+                        <option value="7">7 Person</option>
+                        <option value="8">8 Person</option>
+                        <option value="9">9 Person</option>
+                        <option value="10">10 Person</option>
                     </select>
-                        {formik.errors.subject ? (
+                        {formik.errors.totalPerson ? (
                         <span className="alert alert-danger p-0 mt-1 d-block">
-                            {formik.errors.subject}
+                            {formik.errors.totalPerson}
                         </span>
                         ) : null}
                     </div>

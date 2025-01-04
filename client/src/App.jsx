@@ -27,6 +27,8 @@ import ReceiveSocket from "./Components/ReceiveSocket/ReceiveSocket";
 import { SocketProvider } from "./Context/SocketContext"; //added
 import AdminContact from "./Components/AdminContact/AdminContact";
 import BookingAdmin from "./Components/BookingAdmin/BookingAdmin";
+import AdminUsers from "./Components/AdminUsers/AdminUsers";
+import Upload from "./Components/test/Upload";
 
 
 
@@ -47,6 +49,7 @@ let route = createBrowserRouter([
       { path: "admin", element: <Admin /> },
       { path: "socket", element: <Socket /> },
       { path: "receive-socket", element: <ReceiveSocket /> },
+      { path: "upload", element: <Upload /> },
     ],
   },
 
@@ -57,6 +60,7 @@ let route = createBrowserRouter([
       { path: "menu", element: <AdminMenu /> },
       { path: "contact", element: <AdminContact /> },
       { path: "booking", element: <BookingAdmin /> },
+      { path: "users", element: < AdminUsers/> },
     ],
   },
 
