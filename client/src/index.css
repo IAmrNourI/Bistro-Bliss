@@ -101,7 +101,7 @@ input {
 
 .topBar {
     width: 100%;
-    height: 45px;
+    height: auto;
     background-color: #474747;
     color: white;
     display: flex;
@@ -113,6 +113,7 @@ input {
     margin-inline: 2px;
     text-decoration: none;
     background-color: #5a5a5a;
+    border-radius: 5px;
 }
 
 .social a i {
@@ -146,34 +147,94 @@ input {
     display: flex; 
     justify-content: center;
     align-items: center; 
+    
+}
+
+.nav-item:hover .nav-link::before {
+    /* padding: 5px 5px ; */
+    /* position: relative; */
+    width: 100% !important;
 }
 
 .nav-link {
     font-weight: 500 !important;
     color: #2C2F24 !important;
+    position: relative;
+    margin: 0px 5px !important;
+    padding: 2px 2px !important;
 }
 
-.navbar-nav .nav-item .nav-link.active {
-    width: 77px;
-    height: 32px;
-    border-radius: 34px;
-    background-color: #DBDFD0;
-    text-align: center; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
+.navbar-nav .nav-item .nav-link.active::before {
+    content: "";
+    height: 2px;
+    width: 100%;
+    background-color: #AD343E;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.navbar-nav .nav-item .nav-link::before {
+    content: "";
+    height: 2px;
+    width: 0%;
+    background-color: #AD343E;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: 0.5s;
 }
 
 .book-table {
-    border-radius: 118px;
-    border: 1px solid #2C2F24;
-    border-color: #2C2F24;
-    padding: 8px 20px;
+    border-radius: 50px;
+    border: 2px solid #2C2F24;
+    border-color: #AD343E;
+    padding: 8px 19px;
+    display: flex;
+    justify-content: center;
     background-color: transparent;
     color: black;
-    font-weight: 500;
     width: 170px;
     text-decoration: none;
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
+    transition: 1s;
+}
+
+.book-table .wave {
+    position: absolute;
+    background-color: #AD343E;
+    left: 0;
+    top: calc(100% + 22px);
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    transition: 1s;
+}
+
+.book-table .wave:after {
+    content: "";
+    position: absolute;
+    top: -22px;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    background: url(assets/wave2.svg);
+}
+
+.book-table:hover .wave {
+    top: 0;
+}
+
+.book-table:hover {
+    color: white;
+}
+
+@media (max-width: 1000px){
+    .book-table {
+        display: none;
+    }
 }
 
 /* ---------- Hero ---------- */
@@ -202,38 +263,95 @@ input {
     margin-bottom: 20px;
 }
 
-.btns-hero .bt {
-    height: 64px;
-    width: 170px;
-    border-radius: 120px;
-    margin-inline: 10px;
-    font-weight: 500;
+.btns-hero a {
+    border: 2px solid #AD343E;
+    border-radius: 50px;
+    border-color: #AD343E;
+    position: relative;
+    padding: 15px 30px;
+    display: block;
+    text-decoration: none;
+    overflow: hidden;
+    background-color: transparent;
 }
 
-.btns-hero  .book {
+.btns-hero a span {
+    z-index: 1;
+    position: relative;
+    transition: 1s;
+}
+
+.btns-hero a .wave {
+    position: absolute;
+    top: calc(100% + 22px);
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: #00aeff; */
     background-color: #AD343E;
-    border-color: transparent;
-    color: white;
-    transition: all 0.3s;
+    transition: 1s;
 }
 
-.btns-hero  .book:hover {
-    background-color: white;
-    border-color: black;
-    color: black;
+.btns-hero a:hover .wave {
+    top:0;
 }
 
-.btns-hero .menu {
-    background-color: white;
-    transition: all 0.3s;
+.btns-hero a:hover .swave {
+    top: calc(-100% + -22px);
 }
 
-.btns-hero .menu:hover {
-    border-color: transparent;
+.btns-hero a .wave:before {
+    content: "";
+    position: absolute;
+    top: -22px;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    background: url(assets/wave2.svg);
+    animation: animate 1.5s linear infinite;
+}
+
+.btns-hero a .swave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: #00aeff; */
     background-color: #AD343E;
-    color: white;
+    transition: 1s;
+    transform: rotate(180deg);
 }
 
+.btns-hero a .swave:after {
+    content: "";
+    position: absolute;
+    top: -22px;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    background: url(assets/wave2.svg);
+    animation: animate 1.5s linear infinite;
+}
+
+@keyframes animate {
+    0%
+    {
+        background-position-x: 0;
+    }
+    100%{
+        background-position-x: 300px;
+        /* background-position-x: 118px; */
+    }
+}
+
+.bok:hover .textBook{
+    color: white !important;
+}
+
+.menu:hover .textMenu{
+    color: black !important;
+}
 
 /* ---------- Footer ---------- */
 
@@ -260,6 +378,18 @@ input {
 
 .footer-list li{
     padding: 6px 0;
+}
+
+.footer-link {
+    display: flex;
+    padding: 6px 0;
+    text-decoration: none;
+    color: white;
+    transition: 0.2s;
+}
+
+.footer-link:hover {
+    color: red;
 }
 
 .fw-500 {
@@ -328,18 +458,37 @@ input {
     background-color: transparent;
     font-weight: 600;
     margin-block: 10px;
+    position: relative;
+    font-size: 18px;
 }
 
+.browse-btn::after {
+    content: "\00bb";
+    position: absolute;
+    font-size: 28px;
+    top: -8px; 
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.browse-btn:hover:after {
+    opacity: 1;
+    margin-left: 3px;
+}
 
 /* ---------- Fast Food ---------- */
 
 .fast-food {
     background-color: #F9F9F7;
-    padding-block: 80px;
+    padding-block: 100px;
 }
 
 .fast-food img{
     border-radius: 12px;
+}
+
+.fast-pic {
+    transform: translateY(30px);
 }
 
 .fast-list li {
@@ -358,8 +507,8 @@ input {
 }
 
 .fast-list li span {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     background-color: #AD343E;
     display: flex;
     justify-content: center;
@@ -369,9 +518,19 @@ input {
     margin-top: 1px;
 }
 
-.fast-list li span i {
-    font-size: 10px;
+.fast-food img {
+    transition: 0.3s;
 }
+
+.fast-food img:hover {
+    transform: scale(1.05);
+}
+
+.fast-item h1 {
+    font-size: 48px;
+    letter-spacing: 1px;
+}
+
 @media (max-width: 740px) {
     .fimg {
         width: 200px;
@@ -383,6 +542,18 @@ input {
         height: 150px; 
     }
 }
+
+/* @media (max-width: 1400px) {
+    .fimg {
+        width: auto;
+        height: 500px; 
+    }
+    .simg,
+    .timg {
+        width: auto; 
+        height: 220px; 
+    }
+} */
 
 
 
@@ -678,3 +849,4 @@ input {
     border-bottom: 2px solid beige;
     padding-bottom: 20px;
 }
+

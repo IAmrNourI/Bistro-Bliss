@@ -5,6 +5,7 @@ import imgTow from '../../assets/footer-tow.png'
 import imgThree from '../../assets/footer-three.png'
 import imgFour from '../../assets/footer-four.png'
 import footerLogo from '../../assets/footer-logo.png'
+import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
@@ -46,14 +47,11 @@ export default function Footer() {
 
               <div className="col-lg-2 col-md-6">
                 <ul className='footer-list p-0'>
-                  <li className='text-white mb-3 fw-500 '>Pages</li>
-                  <li>Home</li>
-                  <li>About</li>
-                  <li>Menu</li>
-                  <li>Pricing</li>
-                  <li>Blog</li>
-                  <li>Contact</li>
-                  <li>Delibery</li>
+                  <li className='text-white mb-3 fw-500'>Pages</li>
+                  <Link className='footer-link' to="/">Home</Link>
+                  <Link className='footer-link' to="about">About</Link>
+                  <Link className='footer-link' to="menu">Menu</Link>
+                  <Link className='footer-link' to="contact">Contact</Link>
                 </ul>
               </div>
 
@@ -66,7 +64,6 @@ export default function Footer() {
                   <li>404 Not Found</li>
                   <li>Licenses</li>
                   <li>Changeiog</li>
-                  <li>View More</li>
                 </ul>
               </div>
 
@@ -87,7 +84,9 @@ export default function Footer() {
             <div className='but-footer'>
               <span className='line d-flex'></span>
               <div className='d-flex justify-content-center text-center'>
-              <p className='text-footer-color mt-4'>Copyright © 2023 Hashtag Developer. All Rights Reserved</p>
+              <p className='text-footer-color mt-4'>
+              Copyright © 2023 #AmrNour #FathyAbdelhamid. All Rights Reserved
+            </p>
               </div>
             </div>
           </div>

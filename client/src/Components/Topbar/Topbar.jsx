@@ -26,22 +26,22 @@ export default function Topbar() {
   return (
     <>
 
-      {userLogin != null ? (      <section className="topBar">
+
+
+      {userLogin != null ? (      
+      <section className="topBar">
         <div className="container">
-          <div className="contact-us d-flex justify-content-between">
-            <div className="call-us d-flex">
-              <div className="d-flex align-items-center me-4">
+          <div className="row">
+            <div className="col-md-8">
+              <div className="d-flex align-items-center">
                 <i className="fa-solid fa-phone mx-2"></i>
                 <p className="p-e">(414) 857 - 0107</p>
-              </div>
-
-              <div className="d-flex align-items-center">
                 <i className="fa-regular fa-envelope mx-2"></i>
                 <p className="p-e">bisto_bliss@bistrobliss</p>
               </div>
             </div>
-
-            <div className="social d-flex justify-content-center align-items-center">
+            <div className="col-md-4">
+              <div className="social d-flex mt-2 pb-2">
               <a href="#">
                 <i className="fa-brands fa-twitter text-white"></i>
               </a>
@@ -56,12 +56,11 @@ export default function Topbar() {
               </a>
               {/* <span className="ms-3 cursor-pointer"><i class="fa-regular">My profile</i></span> */}
               <Link to="userprofile" className="ms-3 cursor-pointer d-flex align-items-center text-white pe-2"><i class="fa-regular fa-user"></i>My Profile</Link>
-              <span onClick={() => signout()} className="ms-3 cursor-pointer">Sign out <i className="fa-solid fa-arrow-right ms-1"></i></span>
+              <span onClick={() => signout()} className="ms-3 cursor-pointer mt-1">Sign out <i className="fa-solid fa-arrow-right ms-1"></i></span>
             </div>
-
-
-            
+              </div>
           </div>
+
         </div>
       </section>) :null}
     </>
