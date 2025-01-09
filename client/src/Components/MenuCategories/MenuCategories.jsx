@@ -1,6 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function MenuCategories() {
+    const navigate = useNavigate()
+
+    function explore(category){
+        navigate("/menu", { state: {category,} });
+    }
     
     
     
@@ -20,7 +26,7 @@ return (
                             <p className="category-disc">In the new era of technology we look in the future with 
                                 certainty and pride for our life.
                             </p>
-                            <button className="browse-btn">Explore Menu</button>
+                            <button onClick={(() => explore("breakfast"))} className="browse-btn">Explore Menu</button>
                         </div>
                     </div>
                     <div className="col-lg-3 col-md-6 mt-3">
@@ -31,7 +37,7 @@ return (
                             <p className="category-disc">In the new era of technology we look in the future with 
                                 certainty and pride for our life.
                             </p>
-                            <button className="browse-btn">Explore Menu</button>
+                            <button onClick={(() => explore("maindishes"))} className="browse-btn">Explore Menu</button>
                         </div>
                     </div>
                     <div className="col-lg-3 col-md-6 mt-3">
@@ -42,7 +48,7 @@ return (
                             <p className="category-disc">In the new era of technology we look in the future with 
                                 certainty and pride for our life.
                             </p>
-                            <button className="browse-btn">Explore Menu</button>
+                            <button onClick={(() => explore("drinks"))} className="browse-btn">Explore Menu</button>
                         </div>
                     </div>
                     <div className="col-lg-3 col-md-6 mt-3">
@@ -53,7 +59,7 @@ return (
                             <p className="category-disc">In the new era of technology we look in the future with 
                                 certainty and pride for our life.
                             </p>
-                            <button className="browse-btn">Explore Menu</button>
+                            <button onClick={(() => explore("desserts"))} className="browse-btn">Explore Menu</button>
                         </div>
                     </div>
                 </div>

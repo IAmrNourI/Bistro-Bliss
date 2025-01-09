@@ -293,11 +293,7 @@ input {
 }
 
 .btns-hero a:hover .wave {
-    top:0;
-}
-
-.btns-hero a:hover .swave {
-    top: calc(-100% + -22px);
+    top:30px;
 }
 
 .btns-hero a .wave:before {
@@ -307,13 +303,13 @@ input {
     left: 0;
     width: 100%;
     height: 22px;
-    background: url(assets/wave2.svg);
-    animation: animate 1.5s linear infinite;
+    background: url(assets/wave4.svg);
+    /* animation: animate 1.5s linear infinite; */
 }
 
-.btns-hero a .swave {
+.btns-hero a .waveup {
     position: absolute;
-    top: 0;
+    top: calc(-100% + -22px);
     left: 0;
     width: 100%;
     height: 100%;
@@ -323,6 +319,42 @@ input {
     transform: rotate(180deg);
 }
 
+.btns-hero a:hover .waveup {
+    top: -30px;
+}
+
+.btns-hero a .waveup:after {
+    content: "";
+    position: absolute;
+    top: -22px;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    background: url(assets/wave4.svg);
+    /* animation: animate 1.5s linear infinite; */
+}
+
+
+/*------------*/
+
+
+.btns-hero a .swave {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: #00aeff; */
+    background-color: #AD343E;
+    transition: 1s;
+    transform: rotate(180deg);
+}
+
+.btns-hero a:hover .swave {
+    top: calc(-100% + -22px);
+    /* top: -30px; */
+}
+
 .btns-hero a .swave:after {
     content: "";
     position: absolute;
@@ -330,9 +362,36 @@ input {
     left: 0;
     width: 100%;
     height: 22px;
-    background: url(assets/wave2.svg);
-    animation: animate 1.5s linear infinite;
+    background: url(assets/wave4.svg);
 }
+
+.btns-hero a .swavedown {
+    position: absolute;
+    top: calc(100% + -22px);
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: #00aeff; */
+    background-color: #AD343E;
+    transition: 1s;
+}
+
+.btns-hero a:hover .swavedown {
+    top: calc(100% + 22px);
+}
+
+
+.btns-hero a .swavedown::before {
+    content: "";
+    position: absolute;
+    top: -22px;
+    left: 0;
+    width: 100%;
+    height: 22px;
+    background: url(assets/wave4.svg);
+}
+
+
 
 @keyframes animate {
     0%
