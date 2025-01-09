@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { items, deleteItem } from "../../network/user.api";
-import { Link, useNavigate } from "react-router-dom";
+import { items } from "../../network/user.api";
+import { useLocation, useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 
 export default function RecentMenu() {
 const navigate = useNavigate();
 const [menu, setmenu] = useState([]);
 const [activeLink, setactiveLink] = useState("All");
+const location = useLocation()
+
+const {category} = location.state || "";
 
 async function getAllMenu() {
     const result = await items()
@@ -19,7 +21,6 @@ async function getAllMenu() {
         console.log(res);
     });
 }
-
 
 async function getBreakfastMenu() {
     const result = await items()
@@ -42,7 +43,6 @@ async function getMainDishesMenu() {
         console.log(res);
     });
 }
-
 
 async function getDrinksMenu() {
     const result = await items()
@@ -68,7 +68,22 @@ async function getDessertsMenu() {
 
 
 useEffect(() => {
-    getAllMenu();
+    if(category == "breakfast"){
+        getBreakfastMenu()
+        setactiveLink("Breakfast");
+    }else if(category == "maindishes"){
+        getMainDishesMenu()
+        setactiveLink("Main Dishes");
+    }else if (category == "drinks") {
+        getDrinksMenu()
+        setactiveLink("Drinks");
+    }else if (category == "desserts") {
+        getDessertsMenu()
+        setactiveLink("Desserts");
+    }else {
+        getAllMenu()
+        setactiveLink("All");
+    }
 }, []);
 
 return (
