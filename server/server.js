@@ -25,9 +25,9 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
     credentials: true, // Allow credentials
   })
-);
+); 
 
-app.use(express.json());
+app.use(express.json()); 
 app.use(cookiesParser());
 
 const PORT = process.env.PORT || 8080;
