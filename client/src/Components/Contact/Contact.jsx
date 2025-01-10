@@ -1,14 +1,16 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createContact, viewContact } from "../../network/user.api";
 import * as Yup from "yup";
 import toast from 'react-hot-toast';
+import { useLocation } from "react-router-dom";
 
 
 
 
 export default function Contact() {
+    const { pathname } = useLocation();
     const [btnLoding, setbtnLoding] = useState(false)  
 
     async function sendContact(values) {
@@ -28,6 +30,9 @@ export default function Contact() {
         });
     }
 
+    useEffect(() => {
+        window.scrollTo(0,0)
+    }, [pathname]);
 
     let validationSchema = Yup.object().shape({
     name: Yup.string()
