@@ -6,10 +6,6 @@ const NotificationSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "userId is required"],
   },
-  date_time: {
-    type: Date,
-    required: [true, "date is required"],
-  },
   content: {
     type: String,
     required: [true, "content is required"],
@@ -18,9 +14,9 @@ const NotificationSchema = new mongoose.Schema({
     type: String,
     enum: ["Accepted", "Rejected"],
   },
-  seen: {
+  unSeen: {
     type: Boolean,
-    default: false,
+    default: true,
     required: true,
   }
 }, { timestamps: true });
