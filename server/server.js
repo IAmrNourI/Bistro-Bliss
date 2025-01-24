@@ -25,9 +25,9 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
     credentials: true, // Allow credentials
   })
-);
+); 
 
-app.use(express.json());
+app.use(express.json()); 
 app.use(cookiesParser());
 
 const PORT = process.env.PORT || 8080;
@@ -45,7 +45,7 @@ mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => console.log("Database connected!"))
   .catch((err) => console.log(err));
-
+  
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
@@ -55,3 +55,4 @@ app.use("/api/menu", menuRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/booking", bookingRoutes);
 
+ 

@@ -54,13 +54,6 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="nav-item mx-2">
-                <Link className={activeLink === "pages" ? "active nav-link" : "nav-link"}
-                onClick={() => setactiveLink("pages")}
-                to="">
-                  Pages
-                </Link>
-              </li>
-              <li className="nav-item mx-2">
                 <Link className={activeLink === "contact" ? "active nav-link" : "nav-link"} 
                 onClick={() => setactiveLink("contact")}
                 to="contact">
@@ -83,7 +76,7 @@ export default function Navbar() {
               </li>
 
             </ul>
-            <Link to="book" className="book-table">Book A Table</Link> </> :             
+            <Link to="book" className="book-table">Book A Table <div className="wave"></div> </Link> </> :             
             <>
                 <div className="ms-auto">
                 <Link className="pe-3" to="/auth/register">
