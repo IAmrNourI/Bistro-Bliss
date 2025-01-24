@@ -1,5 +1,7 @@
 const { errorMonitor } = require("nodemailer/lib/xoauth2");
 const Booking = require("../models/Booking");
+const Notification = require("../models/Notification");
+const User = require("../models/User");
 
 exports.createBooking = async (req, res) => {
   try {
@@ -37,11 +39,18 @@ exports.cancelBooking = async (req, res) => {
     const booking = await Booking.findById(bookingId);
 
     if (!booking) {
-      return res.status(404).json({ message: "Booking not found", error: true });
+      return res
+        .status(404)
+        .json({ message: "Booking not found", error: true });
     }
 
-    if(booking.status !== "Pending" && booking.status !== "Accepted") {
-      return res.status(400).json({ message: "You can only cancel pending and acepted bookings", error: true });
+    if (booking.status !== "Pending" && booking.status !== "Accepted") {
+      return res
+        .status(400)
+        .json({
+          message: "You can only cancel pending and acepted bookings",
+          error: true,
+        });
     }
 
     booking.status = "Cancelled";
@@ -71,17 +80,31 @@ exports.acceptBooking = async (req, res) => {
   try {
     const { bookingId, userId } = req.params;
     const booking = await Booking.findById(bookingId);
-    console.log(userId)
+
+    console.log(userId);
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    if(booking.status !== "Pending") {
-      return res.status(400).json({ message: "You can Accept only pending bookings", error: true });
+    if (booking.status !== "Pending") {
+      return res
+        .status(400)
+        .json({ message: "You can Accept only pending bookings", error: true });
     }
 
     booking.status = "Accepted";
     await booking.save();
+    const newNotification = await Notification.create({
+      user: userId,
+      content: `Your booking which at ${booking.date_time} has been accepted`,
+      status: "Accepted",
+      unseen: true,
+    });
+    await newNotification.save();
+
+    const user = await User.findById(userId);
+    user.unSeenMessages +=1;
+    await user.save();
     return res
       .status(200)
       .json({ message: "Booking accepted successfully", success: true });
@@ -92,16 +115,31 @@ exports.acceptBooking = async (req, res) => {
 
 exports.rejectBooking = async (req, res) => {
   try {
-    const { bookingId } = req.params;
+    const { bookingId, userId } = req.params;
     const booking = await Booking.findById(bookingId);
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
-    if(booking.status !== "Pending") {
-      return res.status(400).json({ message: "You can Reject only pending bookings", error: true });
+    if (booking.status !== "Pending") {
+      return res
+        .status(400)
+        .json({ message: "You can Reject only pending bookings", error: true });
     }
     booking.status = "Rejected";
     await booking.save();
+
+    const newNotification = await Notification.create({
+      user: userId,
+      content: `Your booking which at ${booking.date_time} has been Rejected`,
+      status: "Rejected",
+      unseen: true,
+    });
+    await newNotification.save();
+
+    const user = await User.findById(userId);
+    user.unSeenMessages +=1;
+    await user.save();
+    
     return res
       .status(200)
       .json({ message: "Booking rejected successfully", success: true });
@@ -139,9 +177,3 @@ exports.getUpcomingBookings = async (req, res) => {
     res.status(500).json({ message: error.message, error: true });
   }
 };
-
-exports.hamada = async (req, res) => {
-  try {
-    const { date_time, totalPerson } = req.body;
-  } catch (error) {}
-}

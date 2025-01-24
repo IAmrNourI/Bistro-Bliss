@@ -274,7 +274,7 @@ exports.forgetPassword = async (req, res) => {
     if (result.messageId) {
       return res
         .status(200)
-        .json({ message: "OTP sent successfully", success: true });
+        .json({ message: "Reset Password OTP sent successfully", success: true });
     }
     
   } catch (error) {
