@@ -69,8 +69,9 @@ exports.getPendingBookings = async (req, res) => {
 
 exports.acceptBooking = async (req, res) => {
   try {
-    const { bookingId } = req.params;
+    const { bookingId, userId } = req.params;
     const booking = await Booking.findById(bookingId);
+    console.log(userId)
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }
