@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { email } from "../../network/user.api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import toast from "react-hot-toast";
 
@@ -27,9 +27,12 @@ export default function Login() {
       })
       .catch((res) => {
       setisLoding(true)
-      // toast.error(res.response.data.message)
+      toast.error(res.response.data.message)
       console.log(res)
       setisLoding(false)
+      if(res.response.data.message == "Pleaser verify your account first"){
+        navigate("/auth/otp", { state: { email: inputValue } });
+      }
       });
   }
 
@@ -57,6 +60,7 @@ export default function Login() {
                 >
                   {isLoding ? <i className='fas fa-spinner fa-spin'></i> : "!Go"}
                 </button>
+                <Link to="/auth/forgetpassword" className="d-flex justify-content-end mt-2">Forget Password</Link>
               </div>
             </form>
           </section>

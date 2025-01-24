@@ -18,7 +18,7 @@ const [isOtpSent, setIsOtpSent] = useState(false);
 const { email } = location.state || {};
 
 useEffect(() => {
-toast.success("otp send successfuly");
+// toast.success("otp send successfuly");
 }, []);
 
 const dataToSend = { email, otp: inputValue };

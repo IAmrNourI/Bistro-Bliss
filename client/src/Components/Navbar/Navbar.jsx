@@ -35,42 +35,42 @@ export default function Navbar() {
               <li className="nav-item mx-2">
                 <Link className={activeLink === "home" ? "active nav-link" : "nav-link"}
                 onClick={() => setactiveLink("home")}
-                aria-current="page" to="">
+                aria-current="page" to="/">
                   Home
                 </Link>
               </li>
               <li className="nav-item mx-2">
                 <Link className={activeLink === "about" ? "active nav-link" : "nav-link"}
                 onClick={() => setactiveLink("about")}
-                to="about">
+                to="/about">
                   About
                 </Link>
               </li>
               <li className="nav-item mx-2">
                 <Link className={activeLink === "menu" ? "active nav-link" : "nav-link"}
                 onClick={() => setactiveLink("menu")}
-                to="menu">
+                to="/menu">
                   Menu
                 </Link>
               </li>
               <li className="nav-item mx-2">
                 <Link className={activeLink === "contact" ? "active nav-link" : "nav-link"} 
                 onClick={() => setactiveLink("contact")}
-                to="contact">
+                to="/contact">
                   Contact
                 </Link>
               </li>
               <li className="nav-item mx-2">
                 <Link className={activeLink === "admin" ? "active nav-link" : "nav-link"} 
                 onClick={() => setactiveLink("admin")}
-                to="admin">
+                to="/admin">
                   Admin
                 </Link>
               </li>
               <li className="nav-item mx-2">
                 <Link className={activeLink === "socket" ? "active nav-link" : "nav-link"} 
                 onClick={() => setactiveLink("socket")}
-                to="socket">
+                to="/socket">
                   Socket
                 </Link>
               </li>
