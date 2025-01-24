@@ -1,10 +1,10 @@
 const User = require("../models/User");
 const bcryptjs = require("bcryptjs");
 // const jwt = require("jsonwebtoken");
-const { generateUniqueOtp } = require("../utils/otpGenerator");
+const { generateUniqueOtp, otpMessage } = require("../utils/otpGenerator");
 const transporter = require("../config/nodemailer");
 // const { trusted } = require("mongoose");
-const { generateToken } = require("../utils/tokenGenerator");
+const { generateToken, generateForgetPasswordToken } = require("../utils/tokenGenerator");
 
 exports.register = async (req, res) => {
   try {
@@ -28,183 +28,7 @@ exports.register = async (req, res) => {
 
     await user.save();
 
-    const mailOptions = {
-      from: process.env.SMTP_USER,
-      to: email,
-      subject: "YOUR OTP CODE",
-      // text: `Your OTP code is ${otp}`,
-      html: `<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Your OTP Code</title>
-  <style>
-    /* Global Styles */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-    }
-
-    table {
-      border-spacing: 0;
-      width: 100%;
-    }
-
-    table td {
-      padding: 0;
-    }
-
-    img {
-      border: 0;
-    }
-
-    /* Container Styles */
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Header Styles */
-    .header {
-      text-align: center;
-      padding: 20px;
-    }
-
-    .header img {
-      max-width: 100px;
-      height: auto;
-    }
-
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-      color: #333333;
-    }
-
-    /* OTP Code Section */
-    .otp-code {
-      text-align: center;
-      padding: 30px 0;
-      font-size: 32px;
-      font-weight: bold;
-      color: #333333;
-      letter-spacing: 4px;
-    }
-
-    /* Message Section */
-    .message {
-      text-align: center;
-      padding: 10px 30px;
-      font-size: 18px;
-      line-height: 1.6;
-      color: #666666;
-    }
-
-    /* Button Styles */
-    .button-container {
-      text-align: center;
-      padding: 30px 0;
-    }
-
-    .button {
-      background-color: #4CAF50;
-      color: #ffffff;
-      padding: 15px 30px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 18px;
-    }
-
-    .button:hover {
-      background-color: #45a049;
-    }
-
-    /* Footer Styles */
-    .footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      color: #999999;
-    }
-
-    .footer a {
-      color: #4CAF50;
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-    @media only screen and (max-width: 600px) {
-      .container {
-        width: 100%;
-        padding: 15px;
-      }
-
-      .header h1 {
-        font-size: 20px;
-      }
-
-      .otp-code {
-        font-size: 28px;
-      }
-
-      .message {
-        font-size: 16px;
-      }
-
-      .button {
-        font-size: 16px;
-        padding: 12px 25px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <table role="presentation" class="container">
-    <tr>
-      <td class="header">
-        <img src="https://yourdomain.com/logo.png" alt="Your Logo">
-        <h1>Your One-Time Password (OTP)</h1>
-      </td>
-    </tr>
-    <tr>
-      <td class="otp-code">
-        <!-- Insert OTP here -->
-        ${otp}
-      </td>
-    </tr>
-    <tr>
-      <td class="message">
-        Use the code above to complete your login. This code is valid for the next 10 minutes.
-      </td>
-    </tr>
-    <tr>
-      <td class="footer">
-        If you didn't request this, please ignore this email or <a href="https://yourdomain.com/contact">contact support</a>.
-        <br>
-        &copy; 2024 Your Company. All rights reserved.
-      </td>
-    </tr>
-  </table>
-</body>
-
-</html>
-`,
-    };
+    const mailOptions = otpMessage(otp, email);
 
     const result = await transporter.sendMail(mailOptions);
     if (result.messageId) {
@@ -213,7 +37,6 @@ exports.register = async (req, res) => {
         .json({ message: "OTP sent successfully", email, success: true });
     }
     return res.status(400).json({ message: "Failed to send OTP" });
-
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -248,188 +71,12 @@ exports.resendOtp = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User Not Found" });
     }
-
     const otp = generateUniqueOtp();
     user.otp = otp;
     user.otpExpires = Date.now() + 10 * 60 * 1000;
     await user.save();
 
-    const mailOptions = {
-      from: process.env.SMTP_USER,
-      to: email,
-      subject: "YOUR OTP CODE",
-      html: `<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Your OTP Code</title>
-  <style>
-    /* Global Styles */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-    }
-
-    table {
-      border-spacing: 0;
-      width: 100%;
-    }
-
-    table td {
-      padding: 0;
-    }
-
-    img {
-      border: 0;
-    }
-
-    /* Container Styles */
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Header Styles */
-    .header {
-      text-align: center;
-      padding: 20px;
-    }
-
-    .header img {
-      max-width: 100px;
-      height: auto;
-    }
-
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-      color: #333333;
-    }
-
-    /* OTP Code Section */
-    .otp-code {
-      text-align: center;
-      padding: 30px 0;
-      font-size: 32px;
-      font-weight: bold;
-      color: #333333;
-      letter-spacing: 4px;
-    }
-
-    /* Message Section */
-    .message {
-      text-align: center;
-      padding: 10px 30px;
-      font-size: 18px;
-      line-height: 1.6;
-      color: #666666;
-    }
-
-    /* Button Styles */
-    .button-container {
-      text-align: center;
-      padding: 30px 0;
-    }
-
-    .button {
-      background-color: #4CAF50;
-      color: #ffffff;
-      padding: 15px 30px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 18px;
-    }
-
-    .button:hover {
-      background-color: #45a049;
-    }
-
-    /* Footer Styles */
-    .footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      color: #999999;
-    }
-
-    .footer a {
-      color: #4CAF50;
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-    @media only screen and (max-width: 600px) {
-      .container {
-        width: 100%;
-        padding: 15px;
-      }
-
-      .header h1 {
-        font-size: 20px;
-      }
-
-      .otp-code {
-        font-size: 28px;
-      }
-
-      .message {
-        font-size: 16px;
-      }
-
-      .button {
-        font-size: 16px;
-        padding: 12px 25px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <table role="presentation" class="container">
-    <tr>
-      <td class="header">
-        <img src="https://yourdomain.com/logo.png" alt="Your Logo">
-        <h1>Your One-Time Password (OTP)</h1>
-      </td>
-    </tr>
-    <tr>
-      <td class="otp-code">
-        <!-- Insert OTP here -->
-        ${otp}
-      </td>
-    </tr>
-    <tr>
-      <td class="message">
-        Use the code above to complete your login. This code is valid for the next 10 minutes.
-      </td>
-    </tr>
-    <tr>
-      <td class="footer">
-        If you didn't request this, please ignore this email or <a href="https://yourdomain.com/contact">contact support</a>.
-        <br>
-        &copy; 2024 Your Company. All rights reserved.
-      </td>
-    </tr>
-  </table>
-</body>
-
-</html>
-`,
-    };
+    const mailOptions = otpMessage(otp, email);
 
     const result = await transporter.sendMail(mailOptions);
     if (result.messageId) {
@@ -477,16 +124,19 @@ exports.verifyPassword = async (req, res) => {
         .status(400)
         .json({ message: "Invalid Credentials", error: true });
     }
-    
-    const tokenDetails = generateToken(user);
-    
-    console.log("Set-Cookie Header:", tokenDetails.cookieOptions);
 
+    const tokenDetails = generateToken(user);
+
+    // console.log("Set-Cookie Header:", tokenDetails.cookieOptions);
 
     return res
       .cookie("token", tokenDetails.token, tokenDetails.cookieOptions)
       .status(200)
-      .json({ message: "Login Successfully", success: true, token: tokenDetails.token });
+      .json({
+        message: "Login Successfully",
+        success: true,
+        token: tokenDetails.token,
+      });
   } catch (error) {
     res.status(500).json({ message: error.message, error: true });
   }
@@ -578,19 +228,99 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.appointAsAdmin = async (req, res) => {
-  try{
+  try {
     const { userId } = req.params;
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found", error: true });
     }
     if (user.role === "admin") {
-      return res.status(400).json({ message: "User is already an admin", error: true });
+      return res
+        .status(400)
+        .json({ message: "User is already an admin", error: true });
     }
-    const admin = await User.findByIdAndUpdate(userId, { role: "admin" }, { new: true });
+    const admin = await User.findByIdAndUpdate(
+      userId,
+      { role: "admin" },
+      { new: true }
+    );
 
+    return res
+      .status(200)
+      .json({
+        message: "User Updated successfully",
+        success: true,
+        data: admin,
+      });
+  } catch (error) {
+    return res.status(500).json({ message: error.message, error: true });
+  }
+};
 
-    return res.status(200).json({message: "User Updated successfully", success: true, data: admin}); 
+exports.forgetPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found", error: true });
+    }
+    const otp = generateUniqueOtp();
+    user.otp = otp;
+    user.otpExpires = Date.now() + 10 * 60 * 1000;
+    await user.save();
+
+    const mailOptions = otpMessage(otp, email);
+    const result = await transporter.sendMail(mailOptions);
+    if (result.messageId) {
+      return res
+        .status(200)
+        .json({ message: "OTP sent successfully", success: true });
+    }
+    
+  } catch (error) {
+    return res.status(500).json({ message: error.message, error: true });
+  }
+};
+
+exports.verifyResetPasswordOtp = async (req, res) => {
+  const { email, otp } = req.body;
+  try {
+    const user = await User.findOne({ email: email, otp });
+    if (!user) {
+      return res.status(404).json({ message: "Invalid OTP" });
+    }
+    if (user.otpExpires < Date.now()) {
+      return res.status(404).json({ message: "OTP expired" });
+    }
+    user.otp = undefined;
+    user.otpExpires = undefined;
+    await user.save();
+
+    const forgetTokenDetails = generateForgetPasswordToken(user);
+    console.log("Cookie: " , forgetTokenDetails.cookieOptions);
+    return res
+      .cookie("token", forgetTokenDetails.token, forgetTokenDetails.cookieOptions)
+      .status(200)
+      .json({
+        message: "You can change your password now",
+        success: true,
+        token: forgetTokenDetails.token,
+      })
+  } catch (error) {
+    return res.status(500).json({ message: error.message, error: true });
+  }
+}
+
+exports.resetPassword = async (req, res) => {
+  try {
+    console.log("resetPassword")
+    const { password } = req.body;
+    const user = await User.findById(req.user.id);
+    console.log(req.user.id)
+    const hashedPassword = await bcryptjs.hashSync(password, 12);
+    user.password = hashedPassword;
+    await user.save();
+    return res.status(200).json({ message: "Password changed successfully", success: true });
   }catch (error) {
     return res.status(500).json({ message: error.message, error: true });
   }

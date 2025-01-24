@@ -37,14 +37,14 @@ router.get(
 );
 
 router.post(
-  "/accept-booking/:bookingId",
+  "/accept-booking/:bookingId/:userId",
   isAuth,
   isRole("admin"),
   bookingController.acceptBooking
 );
 
 router.post(
-  "/reject-booking/:bookingId",
+  "/reject-booking/:bookingId/:userId",
   isAuth,
   isRole("admin"),
   bookingController.rejectBooking
