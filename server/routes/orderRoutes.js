@@ -34,4 +34,10 @@ router.post(
   orderController.cancelOrder
 );
 
+router.get(
+  "/get-user-orders",
+  isAuth,
+  orderController.getUserOrders
+)
+
 module.exports = router;

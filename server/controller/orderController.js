@@ -33,7 +33,7 @@ exports.checkout = async (req, res) => {
 
 exports.getAllorders = async (req, res) => {
   try {
-    const order = await Order.find();
+    const order = await Order.find().populate("menuItems.menuItem","-createdAt -updatedAt -__v");
     console.log(order);
     if (!order) {
       return res.status(404).json({ message: "No Orders found", error: true });
@@ -156,3 +156,17 @@ exports.cancelOrder = async (req, res) => {
     }
 }
 
+
+exports.getUserOrders = async (req, res) => {
+    try{
+        const orders = await Order.find({ user: req.user.id }).populate("menuItems.menuItem", "-createdAt -updatedAt -__v");
+        if(!orders){
+            return res.status(404).json({ message: "No Orders found", error: true });
+        }
+        return res
+        .status(200)
+        .json({ message: "The Order found successfully", orders, success: true });
+    }catch(error){
+        return res.status(404).json({ messeage: error.message, error: true });
+    }
+}
