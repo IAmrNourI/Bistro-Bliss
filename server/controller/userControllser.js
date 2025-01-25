@@ -5,6 +5,7 @@ const { generateUniqueOtp, otpMessage } = require("../utils/otpGenerator");
 const transporter = require("../config/nodemailer");
 // const { trusted } = require("mongoose");
 const { generateToken, generateForgetPasswordToken } = require("../utils/tokenGenerator");
+const Notification = require("../models/Notification");
 
 exports.register = async (req, res) => {
   try {
@@ -322,6 +323,32 @@ exports.resetPassword = async (req, res) => {
     await user.save();
     return res.status(200).json({ message: "Password changed successfully", success: true });
   }catch (error) {
+    return res.status(500).json({ message: error.message, error: true });
+  }
+}
+
+exports.getUserNotifications = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if(!user){
+      return res.status(404).json({ message: "User not found", error: true });
+    }
+    user.unSeenMessages = 0;
+    await user.save();
+    
+    const notifications = await Notification.find({user: req.user.id});
+    res.status(200).json({ message: "All notifications", data: notifications, success: true });
+
+    notifications.map((noti) =>{
+      noti.unSeen = false;
+      noti.save();
+    })
+
+
+    return;
+
+  }catch(error) {
     return res.status(500).json({ message: error.message, error: true });
   }
 }

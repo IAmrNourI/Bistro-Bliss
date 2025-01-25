@@ -9,6 +9,8 @@ const userRoutes = require('./routes/userRoutes')
 const menuRoutes = require('./routes/menuRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
+const wishlistRoutes = require('./routes/wishListRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 
 
 const { createServer } = require("http");
@@ -54,5 +56,8 @@ app.use("/api/user", userRoutes);
 app.use("/api/menu", menuRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/booking", bookingRoutes);
+app.use("/api/wishlist", wishlistRoutes);
+app.use("/api/cart", cartRoutes);
+
 
  
