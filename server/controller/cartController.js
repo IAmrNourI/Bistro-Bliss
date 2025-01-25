@@ -10,7 +10,6 @@ exports.addToCart = async (req, res) => {
             return res.status(404).json({ message: "Menu item not found", success: false });
         }
         itemPrice = menuItemData.price;
-        console.log(itemPrice)
         const cart = await Cart.findOne({ user: req.user.id });
         if (cart) {
             let itemFound = false;

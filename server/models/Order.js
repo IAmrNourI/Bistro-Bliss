@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema(
     },
     menuItems: [
       {
-        MenuItem: {
+        menuItem: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Menu_Item",
           required: true,
@@ -27,7 +27,7 @@ const orderSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["pending", "shipped", "delivered", "Cancelled"],
+      enum: ["pending", "pereparing", "shipping", "delivered", "cancelled"],
       default: "Pending",
     },
   },
