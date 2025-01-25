@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controller/userControllser");
-const { isAuth, isVerifyResetPasswordOtp } = require("../middlewares/auth/isAuth");
+const {
+  isAuth,
+  isVerifyResetPasswordOtp,
+} = require("../middlewares/auth/isAuth");
 const isRole = require("../middlewares/auth/isRole");
 
 const {
@@ -54,12 +57,20 @@ router.post(
   userController.appointAsAdmin
 );
 
-
 router.post("/forget-password", userController.forgetPassword);
 
 router.post("/verify-reset-password", userController.verifyResetPasswordOtp);
 
-router.post("/reset-password", isVerifyResetPasswordOtp, userController.resetPassword);
+router.post(
+  "/reset-password",
+  isVerifyResetPasswordOtp,
+  userController.resetPassword
+);
 
+router.get(
+  "/get-user-notifications",
+  isAuth,
+  userController.getUserNotifications
+)
 
 module.exports = router;
