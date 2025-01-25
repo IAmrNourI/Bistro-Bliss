@@ -29,6 +29,8 @@ import AdminContact from "./Components/AdminContact/AdminContact";
 import BookingAdmin from "./Components/BookingAdmin/BookingAdmin";
 import AdminUsers from "./Components/AdminUsers/AdminUsers";
 import Upload from "./Components/test/Upload";
+import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
+import NewPassword from "./Components/NewPassword/NewPassword";
 
 
 
@@ -71,6 +73,8 @@ let route = createBrowserRouter([
       {path: "register", element: <Register />},
       {path: "login", element: <Login />},
       {path: "loginpassword", element: <LoginPassword />},
+      {path: "forgetpassword", element: <ForgetPassword />},
+      {path: "newpassword", element: <NewPassword />},
       {path: "otp", element: <Otp />},
     ]
   }
