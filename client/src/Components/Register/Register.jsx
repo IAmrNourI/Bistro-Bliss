@@ -17,6 +17,7 @@ export default function Register() {
     
     .then((res) => {
         console.log(res)
+        // localStorage.setItem("resetPassword", false);
         navigate("/auth/otp", { state: { email: values.email } });
         setbtnLoding(false)
       })

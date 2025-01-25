@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { resendOtp, verify } from "../../network/user.api";
+import { resendOtp, verify, verifyResetPassword } from "../../network/user.api";
+import * as Yup from "yup";
 import toast from "react-hot-toast";
+
 
 export default function Otp() {
 const navigate = useNavigate();
@@ -15,10 +17,17 @@ const [reLoding, setReLoding] = useState(false);
 const [countdown, setCountdown] = useState(60);
 const [isOtpSent, setIsOtpSent] = useState(false); 
 
-const { email } = location.state || {};
+
+const { email,name } = location.state || {};
+
+
 
 useEffect(() => {
 // toast.success("otp send successfuly");
+console.log("ResetPassword: ", localStorage.getItem("resetPassword"));
+
+console.log(name);
+
 }, []);
 
 const dataToSend = { email, otp: inputValue };
@@ -34,17 +43,35 @@ timeout();
 }
 
 async function otpVerify() {
-setIsLoding(true);
-const result = await verify(dataToSend)
+
+// setIsLoding(true);
+if(!localStorage.getItem("resetPassword")){
+    console.log("verify after Register")
+    const result = await verify(dataToSend)
     .then((res) => {
     navigate("/auth/login");
-    setIsLoding(false);
+    setIsLoding(false);    
     })
     .catch((res) => {
     setIsLoding(true);
     toast.error(res.response.data.message);
     setIsLoding(false);
     });
+}
+
+if(localStorage.getItem("resetPassword")){
+    console.log("verify after Reset")
+    const resultReset = await verifyResetPassword(dataToSend)
+    .then((res) => {
+    navigate("/auth/newpassword");
+    setIsLoding(false);    
+    })
+    .catch((res) => {
+    setIsLoding(true);
+    toast.error(res.response.data.message);
+    setIsLoding(false);
+    });
+}
 }
 
 async function sendOtp() {

@@ -54,5 +54,3 @@ app.use("/api/user", userRoutes);
 app.use("/api/menu", menuRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/booking", bookingRoutes);
-
- 
