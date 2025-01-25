@@ -21,6 +21,20 @@ const password = async(data) => {
     return await axiosInstance.post("/user/password", data, { withCredentials: true })
 }
 
+const forgetPassword = async(data) => {
+    return await axiosInstance.post("/user/forget-password", data, { withCredentials: true })
+}
+
+const verifyResetPassword = async(data) => {
+    return await axiosInstance.post("/user/verify-reset-password", data, { withCredentials: true })
+}
+
+const resetPassword = async(data) => {
+    return await axiosInstance.post("/user/reset-password", data, { withCredentials: true })
+}
+
+
+
 const items = async() => {
     return await axiosInstance.get("/menu/")
 }
@@ -37,7 +51,6 @@ const addItem = async(data) => {
     // return await axiosInstance.post("/menu/add-item", data)
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.post("/menu/add-item", data, {
-        
     withCredentials: true
 });
 }
@@ -240,4 +253,7 @@ export { register,
         searchContact,
         searchUser,
         searchMenu,
+        forgetPassword,
+        verifyResetPassword,
+        resetPassword,
     }
