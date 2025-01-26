@@ -18,7 +18,7 @@ export default function Home() {
     //   window.location.reload(true)
     //   localStorage.removeItem("notReloaded");
     // }
-    socket
+    // socket
   }, []);
   
 
