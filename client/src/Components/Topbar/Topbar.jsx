@@ -83,7 +83,7 @@ export default function Topbar() {
                 <i className="fa-brands fa-github text-white border-1 border border-secondary"></i>
               </a>
               <a className="position-relative" onClick={getUserNotification} href="#">
-                <span className="notificationsNumber">{user.unSeenMessages}</span>
+                <span className="notificationsNumber">{user?.unSeenMessages}</span>
                 <div className="notfication-container position-absolute p-2">
                     <span className="text-white p-2 d-inline-block h6">Notification</span>
 

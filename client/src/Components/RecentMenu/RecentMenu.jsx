@@ -41,12 +41,12 @@ async function addItemToWishlist(id){
     .then((res) => {
     console.log(res);
     setheart(true)
-    // toast.success(res.data.message)
+    toast.success(res.data.message)
     setIsLoding(false);    
     })
     .catch((res) => {
     setIsLoding(true);
-    // toast.error(res.response.data.message);
+    toast.error(res.response.data.message);
     console.log(res)
     setIsLoding(false);
     });

@@ -20,6 +20,7 @@ export default function LoginPassword() {
       // console.log(res);
       setuserLogin(res.data.token);
       localStorage.setItem("userToken", res.data.token);
+      localStorage.setItem("notReloaded", true);
       navigate("/")
       setisLoding(false)
       toast.success("Welcome back")

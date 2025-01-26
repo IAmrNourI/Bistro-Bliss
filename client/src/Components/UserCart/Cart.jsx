@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { addToCart, getCart, deleteCartItem } from '../../network/user.api';
+import { addToCart, getCart, deleteCartItem, checkout } from '../../network/user.api';
 import toast from 'react-hot-toast';
 
 export default function Cart() {
     const [isLoding, setIsLoding] = useState(false);
     const [items, setitems] = useState([])
+    const [cartId, setcartId] = useState()
 
     async function getUserCart(){
         // console.log("hello")
         setIsLoding(true);
         const result = await getCart()
         .then((res) => {
-        // console.log(res.data.data.menuItems);        
-        setitems(res.data.data.menuItems);        
+        // console.log(res.data.data.menuItems);    
+        console.log(res); 
+        setitems(res.data.data.menuItems);  
+        setcartId(res.data.data._id)
         console.log(items); 
         // setitems(res.data.data.menuItems)
         // toast.success(res.data.message)
@@ -70,8 +73,22 @@ export default function Cart() {
         });
     }
 
-    function checkOut(){
-        console.log("helllo")
+    async function UserCheckout(id){
+        // console.log(id);
+        
+        setIsLoding(true);
+        const result = await checkout({cartId:id})
+        .then((res) => {
+        console.log(res); 
+        toast.success(res.data.message)
+        getUserCart()
+        setIsLoding(false);    
+        })
+        .catch((res) => {
+        console.log(res)
+        toast.error(res.response.data.message);
+        setIsLoding(false); 
+        });
     }
 
     useEffect(() => {
@@ -84,7 +101,7 @@ return (
     <>
 <div className="row">
     {items?.map((item) => (
-        <div key={item._id} className="col-3"> 
+        <div key={item._id} className="col-3 mb-2"> 
             <div className="bg-success text-white p-3">
             <p>{item.menuItem.name}</p> 
             <p>{item.menuItem.category}</p>
@@ -97,10 +114,11 @@ return (
                 <button onClick={() => addItemToCart({menuItemId:item.menuItem._id,quantity:-1,quan:item.quantity})}>-</button>
             </div>
             <button onClick={() => deleteitemFromCart(item.menuItem._id)} >Delete</button>
-            <button onClick={() => checkOut()} >Check Out</button>
             </div>
         </div>
     ))}
+                <button onClick={() => UserCheckout(cartId)} >Check Out</button>
+
 </div>
     </>
 
