@@ -3,6 +3,8 @@ import { password } from "../../network/user.api";
 import { UserContext } from "../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { io } from "socket.io-client";
+
 
 export default function LoginPassword() {
   let navigate = useNavigate();
@@ -21,6 +23,7 @@ export default function LoginPassword() {
       setuserLogin(res.data.token);
       localStorage.setItem("userToken", res.data.token);
       localStorage.setItem("notReloaded", true);
+
       navigate("/")
       setisLoding(false)
       toast.success("Welcome back")
