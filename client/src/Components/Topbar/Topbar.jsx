@@ -1,13 +1,39 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
-import { logOut } from "../../network/user.api";
+import { getNotifications, getUser, logOut } from "../../network/user.api";
 import toast from "react-hot-toast";
 
 export default function Topbar() {
   let navigate = useNavigate()
+  const [user, setuser] = useState([]);
+  const [getNotification, setgetNotification] = useState([])
   let { userLogin, setuserLogin } = useContext(UserContext);
-  
+
+
+  async function getUserNotification(){
+    const result = await getNotifications()
+    .then((res) => {
+        console.log(res)
+        getUserDate()
+        setgetNotification(res.data.data)
+        console.log(getNotification);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  }
+
+    async function getUserDate() {
+      const result = await getUser()
+          .then((res) => {
+          setuser(res.data.data);
+          console.log(res);
+          })
+          .catch((res) => {
+          console.log(res);
+          });
+      }
 
   async function signout(){
     const result = await logOut()
@@ -23,11 +49,13 @@ export default function Topbar() {
       });
   }
 
+
+  useEffect(() => {
+    getUserDate()
+  }, []);
+
   return (
     <>
-
-
-
       {userLogin != null ? (      
       <section className="topBar">
         <div className="container">
@@ -54,8 +82,24 @@ export default function Topbar() {
               <a href="#">
                 <i className="fa-brands fa-github text-white border-1 border border-secondary"></i>
               </a>
+              <a className="position-relative" onClick={getUserNotification} href="#">
+                <span className="notificationsNumber">{user.unSeenMessages}</span>
+                <div className="notfication-container position-absolute p-2">
+                    <span className="text-white p-2 d-inline-block h6">Notification</span>
+
+                    {getNotification.map((messsage) => {
+                            return (
+                              <div className="message bg-white mt-3 p-1 text-black">
+                                <h6 className="m-0 fw-bold px-2 pb-1">Message</h6>
+                                <p className="px-2 m-0">{messsage.content}</p>
+                              </div>
+                            );
+                        })}
+                </div>
+                <i className="fa-regular fa-bell text-white border-1 border border-secondary"></i>
+              </a>
               {/* <span className="ms-3 cursor-pointer"><i class="fa-regular">My profile</i></span> */}
-              <Link to="userprofile" className="ms-3 cursor-pointer d-flex align-items-center text-white border-1 border border-secondary pe-2"><i class="fa-regular fa-user"></i>My Profile</Link>
+              <Link to="/userprofile" className="ms-3 cursor-pointer d-flex align-items-center text-white border-1 border border-secondary pe-2"><i class="fa-regular fa-user"></i>My Profile</Link>
               <span onClick={() => signout()} className="ms-3 cursor-pointer mt-1">Sign out <i className="fa-solid fa-arrow-right ms-1"></i></span>
             </div>
               </div>
