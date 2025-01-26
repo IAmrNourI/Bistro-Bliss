@@ -279,7 +279,7 @@ const checkout = async(data) => {
 
 const getOrder = async() => {
     const token = localStorage.getItem("userToken");    
-    return await axiosInstance.get("/cart/get-cart", {
+    return await axiosInstance.get("/order/get-all-orders", {
     withCredentials: true
 });
 }
@@ -326,4 +326,5 @@ export { register,
         deleteCartItem,
         delteWishItem,
         checkout,
+        getOrder,
     }
