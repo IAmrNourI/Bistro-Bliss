@@ -270,6 +270,15 @@ const delteWishItem = async (id) => {
     );
 };
 
+
+const checkout = async(data) => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.post("/order/checkout", data,  {
+    withCredentials: true
+});
+}
+
+
     // withCredentials: true
 
 export { register, 
@@ -310,4 +319,5 @@ export { register,
         getWishlist,
         deleteCartItem,
         delteWishItem,
+        checkout,
     }
