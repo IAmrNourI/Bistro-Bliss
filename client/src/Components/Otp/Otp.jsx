@@ -44,7 +44,7 @@ timeout();
 
 async function otpVerify() {
 
-// setIsLoding(true);
+setIsLoding(true);
 if(!localStorage.getItem("resetPassword")){
     console.log("verify after Register")
     const result = await verify(dataToSend)
@@ -64,7 +64,8 @@ if(localStorage.getItem("resetPassword")){
     const resultReset = await verifyResetPassword(dataToSend)
     .then((res) => {
     navigate("/auth/newpassword");
-    setIsLoding(false);    
+    setIsLoding(false);  
+    localStorage.removeItem("resetPassword")
     })
     .catch((res) => {
     setIsLoding(true);

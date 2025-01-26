@@ -33,7 +33,9 @@ const resetPassword = async(data) => {
     return await axiosInstance.post("/user/reset-password", data, { withCredentials: true })
 }
 
-
+const getNotifications = async(data) => {
+    return await axiosInstance.get("/user/get-user-notifications", { withCredentials: true })
+}
 
 const items = async() => {
     return await axiosInstance.get("/menu/")
@@ -149,7 +151,7 @@ const logOut = async() => {
 });
 }
 
-const cancelRequest = async (id) => {
+const cancelRequest = async (id,) => {
     const token = localStorage.getItem("userToken");
     return await axiosInstance.post(
         `/booking/cancel-booking/${id}`,
@@ -160,10 +162,10 @@ const cancelRequest = async (id) => {
     );
     };
 
-const acceptBooking = async (id) => {
+const acceptBooking = async (id,userId) => {
     const token = localStorage.getItem("userToken");
     return await axiosInstance.post(
-        `/booking/accept-booking/${id}`,
+        `/booking/accept-booking/${id}/${userId}`,
         null, // or {}
         {
         withCredentials: true,
@@ -171,11 +173,11 @@ const acceptBooking = async (id) => {
     );
     };
 
-const rejectBooking = async (id) => {
+const rejectBooking = async (id,userId) => {
     const token = localStorage.getItem("userToken");
 
     return await axiosInstance.post(
-        `/booking/reject-booking/${id}`,
+        `/booking/reject-booking/${id}/${userId}`,
         null, // or {}
         {
         withCredentials: true,
@@ -220,8 +222,53 @@ const uploadImg = async (data) => {
     });
 }
 
+const addToCart = async(data) => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.post("/cart/add-to-cart", data, {
+    withCredentials: true
+});
+}
 
+const getCart = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/cart/get-cart", {
+    withCredentials: true
+});
+}
 
+const addToWishlist = async(data) => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.post("/wishlist/add-to-wishlist", data, {
+    withCredentials: true
+});
+}
+
+const deleteCartItem = async (id) => {
+    const token = localStorage.getItem("userToken"); 
+    return await axiosInstance.delete(
+        `/cart/remove-from-cart/${id}`,
+        {
+            withCredentials: true,
+        }
+    );
+};
+
+const getWishlist = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/wishlist/get-wishlist", {
+    withCredentials: true
+});
+}
+
+const delteWishItem = async (id) => {
+    const token = localStorage.getItem("userToken"); 
+    return await axiosInstance.delete(
+        `/wishlist/delete-from-wishlist/${id}`,
+        {
+            withCredentials: true,
+        }
+    );
+};
 
     // withCredentials: true
 
@@ -256,4 +303,11 @@ export { register,
         forgetPassword,
         verifyResetPassword,
         resetPassword,
+        getNotifications,
+        addToCart,
+        getCart,
+        addToWishlist,
+        getWishlist,
+        deleteCartItem,
+        delteWishItem,
     }
