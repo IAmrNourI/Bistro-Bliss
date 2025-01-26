@@ -12,15 +12,15 @@ export default function Hero() {
             welcoming, culinary haven.
           </p>
           <div className="btns-hero d-flex justify-content-center">
-            <Link to="book" className="bt bok me-3">
-              <span className="text-black textBook">Book A Table</span>
-              <div className="wave"></div>
-              <div className="waveup"></div>
+            <Link to="book" className="bt bok me-3 text-decoration-none">
+              <button className="bookBtn">
+                Book A Table
+                <span></span>
+                <span></span>
+                </button>
             </Link>
             <Link to="menu" className="bt menu">
-              <span className="text-white textMenu">Explore Menu</span>
-              <div className="swave"></div>
-              <div className="swavedown"></div>
+              <button className="">Explore Menu</button>
             </Link>
           </div>
         </div>
