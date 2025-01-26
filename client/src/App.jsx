@@ -31,6 +31,9 @@ import AdminUsers from "./Components/AdminUsers/AdminUsers";
 import Upload from "./Components/test/Upload";
 import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 import NewPassword from "./Components/NewPassword/NewPassword";
+import Cart from "./Components/UserCart/Cart";
+import Wishlist from "./Components/WishList/Wishlist";
+// import CartContextProvider from "./Context/CartContext";
 
 
 
@@ -52,6 +55,8 @@ let route = createBrowserRouter([
       { path: "socket", element: <Socket /> },
       { path: "receive-socket", element: <ReceiveSocket /> },
       { path: "upload", element: <Upload /> },
+      { path: "cart", element: <Cart /> },
+      { path: "wishlist", element: <Wishlist /> },
     ],
   },
 
@@ -89,8 +94,10 @@ function App() {
     <>
     <UserContextProvider>
     <SocketProvider> {/*added: Wrap with SocketProvider*/}
-          <RouterProvider router={route}></RouterProvider>
-          <Toaster />
+          {/* <CartContextProvider> */}
+            <RouterProvider router={route}></RouterProvider>
+            <Toaster />
+          {/* </CartContextProvider> */}
         </SocketProvider> {/*added*/}
     </UserContextProvider>
     </>

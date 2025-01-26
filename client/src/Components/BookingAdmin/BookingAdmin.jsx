@@ -37,7 +37,7 @@ export default function BookingAdmin() {
   }
 
   async function accept(id, userId) {
-    const result = await acceptBooking(id)
+    const result = await acceptBooking(id,userId)
       .then((res) => {
         showBooking();
         //---------------------
@@ -58,7 +58,7 @@ export default function BookingAdmin() {
   }
 
   async function reject(id, userId) {
-    const result = await rejectBooking(id)
+    const result = await rejectBooking(id, userId)
       .then((res) => {
         console.log(userId);
 
