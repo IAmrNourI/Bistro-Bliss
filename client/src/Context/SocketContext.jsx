@@ -31,6 +31,8 @@ export const SocketProvider = ({ children }) => {
         toast.success(data.msg); 
       } else if(data.msg === "Your booking has been rejected.") {
         toast.error(data.msg);
+      }else{
+        toast.success(data.msg);
       }
     });
 
