@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Hero from '../Hero/Hero'
 import MenuCategories from '../MenuCategories/MenuCategories'
 import FastFood from '../FastFood/FastFood'
@@ -14,12 +14,13 @@ export default function Home() {
   }, [pathname]);
 
   useEffect(() => {
-    if(localStorage.getItem("notReloaded")){
-      window.location.reload(true)
-      localStorage.removeItem("notReloaded");
-
-    }
+    // if(localStorage.getItem("notReloaded")){
+    //   window.location.reload(true)
+    //   localStorage.removeItem("notReloaded");
+    // }
+    socket
   }, []);
+  
 
   return (
       <>

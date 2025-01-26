@@ -270,10 +270,16 @@ const delteWishItem = async (id) => {
     );
 };
 
-
 const checkout = async(data) => {
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.post("/order/checkout", data,  {
+    withCredentials: true
+});
+}
+
+const getOrder = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/cart/get-cart", {
     withCredentials: true
 });
 }
