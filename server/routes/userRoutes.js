@@ -73,4 +73,6 @@ router.get(
   userController.getUserNotifications
 )
 
+
+
 module.exports = router;
