@@ -263,76 +263,88 @@ input {
     margin-bottom: 20px;
 }
 
-.btns-hero a {
-    border: 2px solid #AD343E;
-    border-radius: 50px;
-    border-color: #AD343E;
-    position: relative;
-    padding: 15px 30px;
-    display: block;
-    text-decoration: none;
-    overflow: hidden;
+/* ---------- Amr Button ---------- */
+
+.bookBtn {
     background-color: transparent;
-}
-
-.btns-hero a span {
-    z-index: 1;
+    color: #AD343E;
+    border: 2px solid #AD343E;
+    padding: 8px 19px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50px;
+    text-decoration: none;
     position: relative;
-    transition: 1s;
+    z-index: 5;
+    width: 200px;
+    overflow: hidden;
 }
 
-.btns-hero a .wave {
-    position: absolute;
-    top: calc(100% + 22px);
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* background-color: #00aeff; */
+.bookBtn::before,
+.bookBtn::after,
+.bookBtn span {
     background-color: #AD343E;
-    transition: 1s;
-}
-
-.btns-hero a:hover .wave {
-    top:30px;
-}
-
-.btns-hero a .wave:before {
     content: "";
     position: absolute;
-    top: -22px;
-    left: 0;
-    width: 100%;
-    height: 22px;
-    background: url(assets/wave4.svg);
-    /* animation: animate 1.5s linear infinite; */
+    z-index: -1;
+    width: 54px;
+    height: 80px;
+    border-radius: 28px;
+    bottom: -80px;          
+    transition: bottom 0.5s; 
 }
 
-.btns-hero a .waveup {
-    position: absolute;
-    top: calc(-100% + -22px);
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* background-color: #00aeff; */
-    background-color: #AD343E;
-    transition: 1s;
-    transform: rotate(180deg);
+
+.bookBtn::before {
+    left: -2px;
+    transition-delay: 0s; 
 }
 
-.btns-hero a:hover .waveup {
-    top: -30px;
+.bookBtn span:nth-child(1) {
+    left: 25%;
+    transition-delay: 0.08s; 
 }
 
-.btns-hero a .waveup:after {
-    content: "";
-    position: absolute;
-    top: -22px;
-    left: 0;
-    width: 100%;
-    height: 22px;
-    background: url(assets/wave4.svg);
-    /* animation: animate 1.5s linear infinite; */
+.bookBtn span:nth-child(2) {
+    right: 25%;
+    transition-delay: 0.16s; 
 }
+
+.bookBtn::after {
+    right: -2px;
+    transition-delay: 0.24s; 
+}
+
+.bookBtn:hover {
+    color: white;
+}
+
+.bookBtn:hover::before {
+    bottom: -20px; 
+    transition-delay: 0s;
+}
+
+.bookBtn:hover span:nth-child(1) {
+    bottom: -20px; 
+    transition-delay: 0.08s;
+}
+
+.bookBtn:hover span:nth-child(2) {
+    bottom: -20px; 
+    transition-delay: 0.16s;
+}
+
+.bookBtn:hover::after {
+    bottom: -20px; 
+    transition-delay: 0.24s;
+}
+
+/* ---------- Amr Button ---------- */
+
+
+
+
+
 
 
 /*------------*/
