@@ -14,10 +14,12 @@ export default function Home() {
   }, [pathname]);
 
   useEffect(() => {
-    // if(localStorage.getItem("notReloaded")){
-    //   window.location.reload(true)
-    //   localStorage.removeItem("notReloaded");
-    // }
+    if(localStorage.getItem("notReloaded")){
+      setTimeout(() => {
+        window.location.reload(true);
+        localStorage.removeItem("notReloaded");
+      }, 1000);
+    }
     // socket
   }, []);
   
