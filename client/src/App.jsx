@@ -1,6 +1,5 @@
 import { useState } from "react";
 import viteLogo from "/vite.svg";
-import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import Home from "./Components/Home/Home";
@@ -33,6 +32,7 @@ import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 import NewPassword from "./Components/NewPassword/NewPassword";
 import Cart from "./Components/UserCart/Cart";
 import Wishlist from "./Components/WishList/Wishlist";
+import AdminOrder from "./Components/Order/AdminOrder";
 // import CartContextProvider from "./Context/CartContext";
 
 
@@ -68,6 +68,7 @@ let route = createBrowserRouter([
       { path: "contact", element: <AdminContact /> },
       { path: "booking", element: <BookingAdmin /> },
       { path: "users", element: < AdminUsers/> },
+      { path: "order", element: < AdminOrder/> },
     ],
   },
 
