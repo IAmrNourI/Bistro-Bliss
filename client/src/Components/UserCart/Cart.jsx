@@ -106,6 +106,7 @@ return (
             <p>{item.menuItem.name}</p> 
             <p>{item.menuItem.category}</p>
             <p>{item.menuItem.price} $</p>
+            <p>{item.menuItem.description}</p>
 
             <div className='d-flex justify-content-centera align-items-sm-center'>
                 <button onClick={() => addItemToCart({menuItemId:item.menuItem._id,quantity:1})}>+</button>

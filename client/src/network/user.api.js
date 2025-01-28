@@ -284,6 +284,43 @@ const getOrder = async() => {
 });
 }
 
+const acceptOrder = async(data) => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.post("/order/accept-order", data, {
+    withCredentials: true
+});
+}
+
+const cancelOrder = async(data) => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.post("/order/cancel-order", data, {
+    withCredentials: true
+});
+}
+
+const deliverOrder = async(data) => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.post("/order/deliver-order", data, {
+    withCredentials: true
+});
+}
+
+const shipOrder = async(data) => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.post("/order/ship-order", data, {
+    withCredentials: true
+});
+}
+
+const getUserOrder = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/order/get-user-orders", {
+    withCredentials: true
+});
+}
+
+
+
 
     // withCredentials: true
 
@@ -327,4 +364,9 @@ export { register,
         delteWishItem,
         checkout,
         getOrder,
+        acceptOrder,
+        cancelOrder,
+        deliverOrder,
+        shipOrder,
+        getUserOrder
     }

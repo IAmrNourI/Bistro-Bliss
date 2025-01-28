@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { cancelRequest, getBooking, getUser } from "../../network/user.api";
+import { cancelRequest, getBooking, getUser, getUserOrder } from "../../network/user.api";
 import userpic from "../../assets/userpic.jpg";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 
+
 export default function UserProfile() {
 const [user, setuser] = useState([]);
 const [booking, setbooking] = useState([])
 let navigate = useNavigate();
+const [order, setorder] = useState([])
 
 async function getUserDate() {
 const result = await getUser()
@@ -72,9 +74,28 @@ async function cancelBooking(id){
     // console.log(res);
 }
 
+async function getAllOrder(){
+    const result = await getUserOrder()
+    .then((res) => {
+    // console.log(res.data.data.menuItems);    
+    console.log(res);
+    toast.success(res.data.message);    
+    setorder(res.data.orders);
+    console.log("heloo");
+    console.log(order);
+    console.log("heloo");
+    
+    })
+    .catch((res) => {
+    toast.error(res.response.data.message);
+    console.log(res)
+    });
+}
+
 useEffect(() => {
 getUserDate();
 showBooking();
+getAllOrder();
 }, []);
 
 return (
@@ -157,9 +178,25 @@ return (
                     </div>
 
 
+                    {/* {order?.map((orederItem) => (
+                        <div className='bg-dark' key={orederItem._id}>
+                            <div className="row">
+                            {orederItem.menuItems.map((menu) => (
+                                <div className='col-2 bg-success' key={menu.menuItem._id}>
+                                    <p>{menu.menuItem.name}</p> 
+                                    <p>{menu.menuItem.category}</p>
+                                    <p>{menu.menuItem.price} $</p>
+                                    <p>{menu.menuItem.description}</p>
+                                </div>
+                            ))}
+                            </div>
+                        </div>
+                    ))} */}
+
 
     </div>
     </section>
+
 </>
 );
 }
