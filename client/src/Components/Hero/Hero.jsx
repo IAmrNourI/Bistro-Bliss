@@ -19,8 +19,12 @@ export default function Hero() {
                 <span></span>
                 </button>
             </Link>
-            <Link to="menu" className="bt menu">
-              <button className="">Explore Menu</button>
+            <Link to="menu" className="bt bok me-3 text-decoration-none">
+              <button className="bookBtn exploreBtn">
+                Explore Menu
+                <span></span>
+                <span></span>
+                </button>
             </Link>
           </div>
         </div>
