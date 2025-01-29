@@ -82,7 +82,7 @@ export default function Topbar() {
               <a href="#">
                 <i className="fa-brands fa-github text-white border-1 border border-secondary"></i>
               </a>
-              <a className="position-relative" onClick={getUserNotification} href="#">
+              <a className="position-relative ms-3" onClick={getUserNotification} href="#">
                 <span className="notificationsNumber">{user?.unSeenMessages}</span>
                 <div className="notfication-container position-absolute p-2">
                     <span className="text-white p-2 d-inline-block h6">Notification</span>
@@ -99,7 +99,7 @@ export default function Topbar() {
                 <i className="fa-regular fa-bell text-white border-1 border border-secondary"></i>
               </a>
               {/* <span className="ms-3 cursor-pointer"><i class="fa-regular">My profile</i></span> */}
-              <Link to="/userprofile" className="ms-3 cursor-pointer d-flex align-items-center text-white border-1 border border-secondary pe-2"><i class="fa-regular fa-user"></i>My Profile</Link>
+              <Link to="/userprofile" className="cursor-pointer d-flex align-items-center text-white border-1 border rounded-0 border-secondary"><i class="fa-regular fa-user"></i></Link>
               <span onClick={() => signout()} className="ms-3 cursor-pointer mt-1">Sign out <i className="fa-solid fa-arrow-right ms-1"></i></span>
             </div>
               </div>
