@@ -48,8 +48,10 @@ function createSocketIo(server) {
     socket.on("notification", (data) => {
       const targetUserId = data.targetUserId; 
       const message = data.msg; 
+      console.log("Server")
 
       if (targetUserId) { 
+        console.log(targetUserId);
         io.to(targetUserId).emit("receiveNotification", { msg: message }); 
       } else {
         console.log("No targetUserId provided"); 
