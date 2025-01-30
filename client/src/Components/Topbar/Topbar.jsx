@@ -60,7 +60,7 @@ export default function Topbar() {
       <section className="topBar">
         <div className="container">
           <div className="row">
-            <div className="col-md-8">
+            <div className="col-xl-6">
               <div className="d-flex align-items-center">
                 <i className="fa-solid fa-phone mx-2"></i>
                 <p className="p-e">(414) 857 - 0107</p>
@@ -68,8 +68,8 @@ export default function Topbar() {
                 <p className="p-e">bisto_bliss@bistrobliss</p>
               </div>
             </div>
-            <div className="col-md-4">
-              <div className="social d-flex mt-2 pb-2">
+            <div className="col-xl-6">
+              <div className="social d-flex mt-2 pb-2 d-flex justify-content-end">
               <a href="#">
                 <i className="fa-brands fa-twitter text-white border-1 border border-secondary"></i>
               </a>
@@ -85,7 +85,7 @@ export default function Topbar() {
               <a className="position-relative ms-3" onClick={getUserNotification} href="#">
                 <span className="notificationsNumber">{user?.unSeenMessages}</span>
                 <div className="notfication-container position-absolute p-2">
-                    <span className="text-white p-2 d-inline-block h6">Notification</span>
+                    {/* <span className="text-white p-2 d-inline-block h6">Notification</span> */}
 
                     {getNotification.map((messsage) => {
                             return (
@@ -98,8 +98,11 @@ export default function Topbar() {
                 </div>
                 <i className="fa-regular fa-bell text-white border-1 border border-secondary"></i>
               </a>
+              <Link to="/wishlist" className="cursor-pointer d-flex align-items-center text-white border-1 border rounded-0 border-secondary"><i class="fa-regular fa-heart"></i></Link>
+              <Link to="/cart" className="cursor-pointer d-flex align-items-center text-white border-1 border rounded-0 border-secondary"><i class="fa-solid fa-cart-shopping"></i></Link>
               {/* <span className="ms-3 cursor-pointer"><i class="fa-regular">My profile</i></span> */}
               <Link to="/userprofile" className="cursor-pointer d-flex align-items-center text-white border-1 border rounded-0 border-secondary"><i class="fa-regular fa-user"></i></Link>
+              <Link to="/admin" className="cursor-pointer d-flex align-items-center text-white border-1 border rounded-0 border-secondary"><i class="fa-solid fa-user-tie"></i></Link>
               <span onClick={() => signout()} className="ms-3 cursor-pointer mt-1">Sign out <i className="fa-solid fa-arrow-right ms-1"></i></span>
             </div>
               </div>
