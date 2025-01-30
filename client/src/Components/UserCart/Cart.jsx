@@ -36,8 +36,13 @@ export default function Cart() {
             setIsLoding(false);
         })
         .catch((res) => {
-        // toast.error(res.response.data.message);
-        console.log(res)
+        console.log(res);
+        console.log(res.response.data.message)
+        if(res.response.data.message == "Cart is Empty"){
+            setitems([]);
+            settotal(0);
+        }
+
         setIsLoding(false); 
         });
     }
