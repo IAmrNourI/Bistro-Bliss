@@ -1,0 +1,60 @@
+.add-btn {
+    background-color: #AD343E;
+    color: white;
+    padding: 3px 20px;
+    border: 1px solid #AD343E;
+    border-radius: 20px;
+    font-size: 13px;
+    transition: 0.5s;
+}
+
+.add-btn:hover {
+    background-color: transparent;
+    color: black;
+}
+
+.createdAt {
+    font-size: 12px;
+    color: gray;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.quantity-input {
+    width: 40px !important;
+    border: none;
+    outline: none;
+    margin-left: 20px;
+    text-align: center;
+    border-bottom: 2px solid gray;
+}
+
+.price {
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+    font-family: serif;
+    font-size: 16px;
+}
+
+.bg-price{
+    background-color: #FFFFD9;
+}
+
+.discount {
+    background-color: white !important;
+    text-decoration: line-through;
+    font-size: 13px;
+} 
+
+.wish-icon {
+    font-size: 25px;
+    color: #AD343E;
+}
+
+.quantity {
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid #AD343E;
+    outline: none;
+    height: auto;
+    width: 23px;
+}

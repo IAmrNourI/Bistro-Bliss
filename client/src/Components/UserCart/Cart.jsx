@@ -5,21 +5,35 @@ import toast from 'react-hot-toast';
 export default function Cart() {
     const [isLoding, setIsLoding] = useState(false);
     const [items, setitems] = useState([])
-    const [cartId, setcartId] = useState()
+    const [total, settotal] = useState("")
+    const [cartId, setcartId] = useState("")
+
 
     async function getUserCart(){
         // console.log("hello")
         setIsLoding(true);
         const result = await getCart()
         .then((res) => {
-        // console.log(res.data.data.menuItems);    
-        console.log(res); 
-        setitems(res.data.data.menuItems);  
-        setcartId(res.data.data._id)
-        console.log(items); 
-        // setitems(res.data.data.menuItems)
-        // toast.success(res.data.message)
-        setIsLoding(false);    
+            console.log(res);
+            const updatedItems = res.data.data.menuItems.map((item) => {
+                const date = new Date(item.menuItem.createdAt);
+                const monthName = date.toLocaleString("en-US", { month: "long" });
+                const monthNumber = date.getMonth() + 1;
+                const year = date.getFullYear();
+                const newCreatedAt = `${monthName} ${monthNumber}, ${year}`;
+                return { 
+                    ...item, 
+                    menuItem: {
+                        ...item.menuItem,
+                        createdAt: newCreatedAt
+                    }
+                };
+            });
+            setitems(updatedItems);
+            settotal(res.data.data.totalPrice)
+            setcartId(res.data.data._id)
+            console.log(updatedItems);
+            setIsLoding(false);
         })
         .catch((res) => {
         // toast.error(res.response.data.message);
@@ -99,28 +113,62 @@ export default function Cart() {
 return (
 
     <>
-<div className="row">
-    {items?.map((item) => (
-        <div key={item._id} className="col-3 mb-2"> 
-            <div className="bg-success text-white p-3">
-            <p>{item.menuItem.name}</p> 
-            <p>{item.menuItem.category}</p>
-            <p>{item.menuItem.price} $</p>
-            <p>{item.menuItem.description}</p>
+    <section className='p-y'>
+        <div className="container">
+            <div className="section-header text-center pb-4 mb-5">
+                <h3 className="h1">My Cart</h3>
+            </div>
+            
+            <div className="row border-bottom ps-5">
+                <div className="col-4">
+                    <h5 className=''>Product name</h5>
+                </div>
+                <div className="col-2">
+                    <h5>Unit price</h5>
+                </div>
+                <div className="col-4">
+                    <h5>Quantity</h5>
+                </div>
+            </div>
 
-            <div className='d-flex justify-content-centera align-items-sm-center'>
-                <button onClick={() => addItemToCart({menuItemId:item.menuItem._id,quantity:1})}>+</button>
-                {/* <button className="d-block m-auto" onClick={() => addItemToCart(item.menuItem._id)} >Add To Cart</button> */}
-                <p className='mt-3 mx-2'>{item.quantity}</p>
-                <button onClick={() => addItemToCart({menuItemId:item.menuItem._id,quantity:-1,quan:item.quantity})}>-</button>
+            {items.map((item, index) => (
+            <div className="row border-bottom ps-5">
+                <div className="col-4">
+                    <div className="d-flex align-items-center py-3 h-100">
+                        <img src={item.menuItem.image} width="60px" alt="" />
+                        <p className='m-0 ms-3'>{item.menuItem.name}</p>
+                    </div>
+                </div>
+                <div className="col-2">
+                    <div className="d-flex align-items-center py-3 h-100">
+                        {index === 0 && <span className='discount'>$14.99</span>}
+                        {index === 3 && <span className='discount'>$10,50</span>}
+                        <p className={index == 0 || index == 3 ? "m-0 ms-1 price bg-price": "m-0 ms-3 price"}>${item.menuItem.price}</p>
+                    </div>
+                </div>
+                <div className="col-3">
+                    <div className="d-flex align-items-center py-3 h-100">
+                        <button className='quantity' onClick={() => addItemToCart({menuItemId:item.menuItem._id,quantity:1})}>+</button>
+                            <p className='mt-3 mx-2'>{item.quantity}</p>
+                        <button className='quantity' onClick={() => addItemToCart({menuItemId:item.menuItem._id,quantity:-1,quan:item.quantity})}>-</button>
+                    </div>
+                </div>
+                <div className="col-md-3 col-12">
+                    <div className="d-flex flex-column align-items-center py-3 h-100">
+                        <p className='createdAt'>Added on: {item.menuItem.createdAt} </p>
+                        <button onClick={() => deleteitemFromCart(item.menuItem._id)} className='add-btn'>Delete</button>
+                    </div>
+                </div>
+                
             </div>
-            <button onClick={() => deleteitemFromCart(item.menuItem._id)} >Delete</button>
-            </div>
+
+            ))}
+                <p className=' mt-3 h5 text-center'>Total Price: {total.toString().slice(0, 5)}$</p>
+                <div className='text-center'>
+                <button onClick={() => UserCheckout(cartId)} className='add-btn'>Check Out</button>
+                </div>
         </div>
-    ))}
-                <button onClick={() => UserCheckout(cartId)} >Check Out</button>
-
-</div>
+    </section>
     </>
 
 )
@@ -131,4 +179,3 @@ return (
 
 
 
-    

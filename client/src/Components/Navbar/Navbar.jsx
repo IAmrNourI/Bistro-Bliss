@@ -61,19 +61,26 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="nav-item mx-2">
-                <Link className={activeLink === "admin" ? "active nav-link" : "nav-link"} 
-                onClick={() => setactiveLink("admin")}
-                to="/admin">
-                  Admin
+                <Link className={activeLink === "cart" ? "active nav-link" : "nav-link"} 
+                onClick={() => setactiveLink("cart")}
+                to="/cart">
+                  Cart
                 </Link>
               </li>
               <li className="nav-item mx-2">
+                <Link className={activeLink === "wishList" ? "active nav-link" : "nav-link"} 
+                onClick={() => setactiveLink("wishList")}
+                to="/wishList">
+                  WishList
+                </Link>
+              </li>
+              {/* <li className="nav-item mx-2">
                 <Link className={activeLink === "socket" ? "active nav-link" : "nav-link"} 
                 onClick={() => setactiveLink("socket")}
                 to="/socket">
                   Socket
                 </Link>
-              </li>
+              </li> */}
 
             </ul>
             <Link to="book" className="book-table">Book A Table <div className="wave"></div> </Link> </> :             
