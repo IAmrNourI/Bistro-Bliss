@@ -133,7 +133,7 @@ return (
         <div className="container">
         <div className="section-header text-center pb-4">
             <h3 className="fs-menu">Our Menu</h3>
-            <p className="m-auto fade-up">
+            <p className="m-auto">
             We consider all the drivers of change gives you the components{" "}
             <br /> you need to change to create a truly happens.
             </p>
@@ -222,14 +222,10 @@ return (
                     <p className="price mb-1">${item.price}</p>
                     <p className="name mb-1">{item.name}</p>
                     <p className="desc mb-2">{item.description}</p>
-                    <div className="sub-container">
-                        <span></span>
-                        <button className="" onClick={() => addItemToCart(item._id)} >Add To Cart</button>
-                        <span onClick={() => addItemToWishlist(item._id)} className=" h5 mt-2 cursor-pointer mt-3">
-                        <i class="fa-regular fa-heart"></i>
-                        </span>      
-                    </div>
-
+                    <button className="d-block m-auto" onClick={() => addItemToCart(item._id)} >Add To Cart</button>
+                    <span onClick={() => addItemToWishlist(item._id)} className=" h5 mt-2 cursor-pointer mt-3">
+                    <i class="fa-regular fa-heart"></i>
+                    </span>
                 </div>
                 </div>
             </div>

@@ -47,7 +47,7 @@ export default function Footer() {
 
               <div className="col-lg-2 col-md-6">
                 <ul className='footer-list p-0'>
-                  <li className='text-white mb-3 fw-500 pages'>Pages</li>
+                  <li className='text-white mb-3 fw-500'>Pages</li>
                   <Link className='footer-link' to="/">Home</Link>
                   <Link className='footer-link' to="about">About</Link>
                   <Link className='footer-link' to="menu">Menu</Link>
