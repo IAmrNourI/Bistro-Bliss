@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { addToCart, addToWishlist, items } from "../../network/user.api";
+import { addToCart, addToWishlist, delteWishItem, items } from "../../network/user.api";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 
@@ -10,52 +10,83 @@ const navigate = useNavigate();
 const [menu, setmenu] = useState([]);
 const [activeLink, setactiveLink] = useState("All");
 const location = useLocation()
-const [isLoding, setIsLoding] = useState(false);
+const [isLoadingCart, setisLoadingCart] = useState(false);
 const [heart, setheart] = useState(false)
+const [currentId, setcurrentId] = useState(0)
 
 const {category} = location.state || "";
 
 // let {addItemToCart} = useContext(CartContext)
 
 async function addItemToCart(id){
-    // console.log("hello")
-    setIsLoding(true);
+    setcurrentId(id)
+    setisLoadingCart(true);
     const result = await addToCart({menuItemId:id,quantity:1})
     .then((res) => {
     console.log(res);
     toast.success(res.data.message)
-    setIsLoding(false);    
+    setisLoadingCart(false);    
     })
     .catch((res) => {
-    setIsLoding(true);
-    // toast.error(res.response.data.message);
     console.log(res)
-    setIsLoding(false);
+    toast.error(res.response.data.message);
+    setisLoadingCart(false);
     });
 }
 
 async function addItemToWishlist(id){
-    // console.log("hello")
-    setIsLoding(true);
+    try {
     const result = await addToWishlist({menuItemId:id})
-    .then((res) => {
-    console.log(res);
-    setheart(true)
-    toast.success(res.data.message)
-    setIsLoding(false);    
-    })
-    .catch((res) => {
-    setIsLoding(true);
-    toast.error(res.response.data.message);
-    console.log(res)
-    setIsLoding(false);
-    });
+    if(result.data.message == "Item added to wishlist" ){
+        toast(
+            <span>
+                {result.data.message} <i className="fa-solid fa-heart cursor-pointer"></i>
+            </span>
+        );
+
+        // toast(
+        //     <span>
+        //     {result.data.message} <i className="fa-solid fa-heart cursor-pointer"></i>
+        // </span>,
+        // {
+        //     style: {
+        //     border: '1px solid #AD343E',
+        //     color: '#AD343E',
+        //     backgroundColor: '#A9A9A9'
+        //     },
+        //     iconTheme: {
+        //     primary: '#AD343E',
+        //     secondary: '#AD343E',
+        //     },
+        // }
+        // );
+
+        setheart(prev => ({ ...prev, [id]: !prev[id] }));
+    }
+    }catch(error){
+        if(error.response.data.message == "Item already in wishlist" ){
+            const result = await delteWishItem(id)        
+            .then((res) => {            
+                toast(
+                    <span>
+                        {res.data.message} <i className="fa-solid fa-heart-crack cursor-pointer"></i> 
+                    </span>
+                );
+                setheart(prev => ({ ...prev, [id]: !prev[id] }));
+                })
+                .catch((res) => {
+                toast.error(res.response.data.message);
+                setheart(prev => ({ ...prev, [id]: !prev[id] }));
+                });
+        }
+    }
 }
+
 
 async function getAllMenu() {
     const result = await items()
     .then((res) => {
-        console.log(res.data.items);
+        console.log("menu",res.data.items);
         setmenu(res.data.items);
     })
     .catch((res) => {
@@ -222,10 +253,13 @@ return (
                     <p className="price mb-1">${item.price}</p>
                     <p className="name mb-1">{item.name}</p>
                     <p className="desc mb-2">{item.description}</p>
-                    <button className="d-block m-auto" onClick={() => addItemToCart(item._id)} >Add To Cart</button>
-                    <span onClick={() => addItemToWishlist(item._id)} className=" h5 mt-2 cursor-pointer mt-3">
-                    <i class="fa-regular fa-heart"></i>
-                    </span>
+                    <button className="d-block m-auto position-relative" onClick={() => addItemToCart(item._id)} >
+                        {isLoadingCart && currentId == item._id ? <i className='fas fa-spinner fa-spin'></i> : "Add To Cart" }  
+                    </button>
+                    <button onClick={() => addItemToWishlist(item._id)} className=" h5 mt-2 mt-3">
+                    <i class={heart[item._id] ? "fa-solid fa-heart text-danger ": 
+                        "fa-solid fa-heart"}></i>
+                    </button>
                 </div>
                 </div>
             </div>

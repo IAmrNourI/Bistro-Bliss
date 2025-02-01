@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from '../../assets/logo.png'
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
@@ -6,7 +6,17 @@ import { UserContext } from "../../Context/UserContext";
 
 export default function Navbar() {
   const [activeLink, setactiveLink] = useState("home")
-  let {userLogin} = useContext(UserContext)
+  let {userLogin,setuserLogin} = useContext(UserContext)
+
+  useEffect(() => {
+    const token = localStorage.getItem("userToken");
+    if (token) {
+      setuserLogin(true); 
+    } else {
+      setuserLogin(null); 
+    }
+
+  }, [])
   
   return (
     <>
@@ -30,7 +40,7 @@ export default function Navbar() {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            {userLogin != null ? <>            
+            {userLogin == true ? <>            
             <ul className="navbar-nav ms-5 w-100  mb-2 mb-lg-0">
               <li className="nav-item mx-2">
                 <Link className={activeLink === "home" ? "active nav-link" : "nav-link"}
@@ -74,14 +84,6 @@ export default function Navbar() {
                   WishList
                 </Link>
               </li>
-              {/* <li className="nav-item mx-2">
-                <Link className={activeLink === "socket" ? "active nav-link" : "nav-link"} 
-                onClick={() => setactiveLink("socket")}
-                to="/socket">
-                  Socket
-                </Link>
-              </li> */}
-
             </ul>
             <Link to="book" className="book-table">Book A Table <div className="wave"></div> </Link> </> :             
             <>

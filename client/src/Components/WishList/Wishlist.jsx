@@ -127,7 +127,6 @@ return (
                 </div>
                 <div className="col-2">
                     <div className="d-flex align-items-center py-3 h-100">
-                        {/* <input className='quantity-input' defaultValue={1} disabled type="number" name="" id="" /> */}
                         <span style={{ marginLeft: "35px" }}>1</span>
                     </div>
                 </div>
