@@ -82,13 +82,13 @@ export default function Wishlist() {
 return (
 
     <>
-    <section className='p-y wish-list'>
+    <section className='p-y'>
         <div className="container">
             <div className="section-header text-center pb-4 mb-5">
                 <h3 className="h1">My Wishlist</h3>
             </div>
             
-            <div className="row border-bottom ps-5 titles">
+            <div className="row border-bottom ps-5">
                 <div className="col-5 ps-5">
                     <h5 className='ps-5'>Product name</h5>
                 </div>
