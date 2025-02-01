@@ -10,7 +10,7 @@ exports.checkout = async (req, res) => {
       return res.status(404).json({ message: "Cart not found", error: true });
     }
     if (!cart.menuItems) {
-      console.log(cart);
+      // console.log(cart);
       return res.status(404).json({ message: "Cart is Empty", error: true });
     }
 
@@ -31,7 +31,7 @@ exports.checkout = async (req, res) => {
       });
       await newNotification.save();
 
-    console.log(cart);
+    // console.log(cart);
     return res
       .status(200)
       .json({ message: "The Order Created successfully", cart, success: true });
@@ -46,7 +46,7 @@ exports.getAllorders = async (req, res) => {
       "menuItems.menuItem",
       "-createdAt -updatedAt -__v"
     );
-    console.log(order);
+    // console.log(order);
     if (!order) {
       return res.status(404).json({ message: "No Orders found", error: true });
     }
