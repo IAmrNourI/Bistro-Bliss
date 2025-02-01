@@ -77,14 +77,10 @@ async function cancelBooking(id){
 async function getAllOrder(){
     const result = await getUserOrder()
     .then((res) => {
-    // console.log(res.data.data.menuItems);    
     console.log(res);
     toast.success(res.data.message);    
     setorder(res.data.orders);
-    console.log("heloo");
     console.log(order);
-    console.log("heloo");
-    
     })
     .catch((res) => {
     toast.error(res.response.data.message);
@@ -132,8 +128,6 @@ return (
             <h3 class="h1">My Booking</h3>
         </div>
 
-
-
                     <div className="row">
                     <div className="col-12">
                         <table className="table table-bordered pb-5 ">
@@ -178,20 +172,112 @@ return (
                     </div>
 
 
-                    {order?.map((orederItem) => (
-                        <div className='bg-dark' key={orederItem._id}>
-                            <div className="row">
-                            {orederItem.menuItems.map((menu) => (
-                                <div className='col-2 bg-success' key={menu.menuItem._id}>
-                                    <p>{menu.menuItem.name}</p> 
-                                    <p>{menu.menuItem.category}</p>
-                                    <p>{menu.menuItem.price} $</p>
-                                    <p>{menu.menuItem.description}</p>
-                                </div>
-                            ))}
-                            </div>
+
+<section className="p-y">
+{/* {order?.map((orederItem) => (
+    <div className='' key={orederItem._id}>
+            <div className="row border-bottom">
+                <div className="col-4">
+                    <h5 className=''>Product name</h5>
+                </div>
+                <div className="col-4">
+                    <h5>Unit price</h5>
+                </div>
+                <div className="col-4">
+                    <h5>Quantity</h5>
+                </div>
+            </div>
+        <div className="row pb-5">
+        {orederItem.menuItems.map((menu) => (
+            <>
+                    <div className="col-4 border-bottom">
+                        <div className="d-flex align-items-center py-3 h-100">
+                            <img src={menu.menuItem.image} width="60px" alt="" />
+                            <p className='m-0 ms-3'>{menu.menuItem.name}</p>
                         </div>
-                    ))}
+                    </div>
+                    <div className="col-4 border-bottom">
+                        <div className="d-flex align-items-center py-3 h-100">
+                            <p className="m-0 ms-3 price">${menu.menuItem.price}</p>
+                        </div>
+                    </div>
+                    <div className="col-4 border-bottom">
+                        <div className="d-flex align-items-center py-3 h-100">
+                                <p className='mt-3 mx-2'>{menu.quantity}</p>
+                        </div>
+                    </div>
+            </>
+        ))}
+        </div>
+        <div className="row">
+            <div className="col-6">
+                <p>{orederItem.updatedAt}</p>
+                <p className=''>Total Price: {orederItem.totalPrice.toString().slice(0, 5)}$</p>
+            </div>
+            <div className="col-6">
+            <p>{orederItem.status}</p>
+            </div>
+        </div>
+    </div>
+))} */}
+</section>
+
+<section>
+{order?.map((orederItem) => (
+    <>
+        <div className="row border-bottom">
+            <div className="col-3">
+                <h5 className=''>Product name</h5>
+            </div>
+            <div className="col-3">
+                <h5>Unit price</h5>
+            </div>
+            <div className="col-3">
+                <h5>Quantity</h5>
+            </div>
+            <div className="col-3">
+                <h5>details</h5>
+            </div>
+        </div>
+                
+        <div className="row mb-5">
+            <div className="col-8">
+                <div className="row">
+                {orederItem.menuItems.map((menu) => (
+            <>
+                    <div className="col-4 border-bottom">
+                        <div className="d-flex align-items-center py-3 h-100">
+                            <img src={menu.menuItem.image} width="60px" alt="" />
+                            <p className='m-0 ms-3'>{menu.menuItem.name}</p>
+                        </div>
+                    </div>
+                    <div className="col-4 border-bottom">
+                        <div className="d-flex align-items-center py-3 h-100">
+                            <p className="m-0 ms-3 price">${menu.menuItem.price}</p>
+                        </div>
+                    </div>
+                    <div className="col-4 border-bottom">
+                        <div className="d-flex align-items-center py-3 h-100">
+                                <p className='mt-3 mx-2'>{menu.quantity}</p>
+                        </div>
+                    </div>
+            </>
+        ))}
+                </div>
+            </div>  
+            <div className="col-4">
+                <div className="bg-dark h-100 d-flex flex-column text-center justify-content-center">
+                    <p className="text-white">Lorem, ipsum.</p>
+                    <p className="text-white">Lorem, ipsum.</p>
+                </div>
+            </div>
+        </div>
+    </>
+))}
+</section>
+
+
+
 
 
     </div>
@@ -201,85 +287,8 @@ return (
 );
 }
 
-{/* <table className="table table-bordered pb-5 ">
-<thead>
-<tr>
-    <th scope="col">Name</th>
-    <th scope="col">Date</th>
-    <th scope="col">Time</th>
-    <th scope="col">Status</th>
-</tr>
-</thead>
-{booking.map((book) => {
-return (
-    <tbody className="table-row">
-    <tr>
-    <td>
-        {book.user.name}
-        </td>
-        <td>
-        {new Date(book.date_time).toLocaleDateString()}
-        </td>
-        <td>{book.time}</td>
-        <td
-        className={
-            book.status == "Pending" ? "bg-warning" : null
-        }
-        >
-        {book.status}
-        </td>
-        <td>
-        <button
-            onClick={() => accept(book._id, book.user._id)}
-            className="btn btn-outline-success me-2"
-        >
-            Accept
-        </button>
-        <button
-            onClick={() => reject(book._id, book.user._id)}
-            className="btn btn-outline-danger"
-        >
-            Reject
-        </button>
-        </td>
-    </tr>
-    </tbody>
-);
-})}
-</table> */}
 
 
-            // <div className="col-6" key={book.id}>
-            // <table className="table table-bordered border-primary">
-            //     <thead>
-            //     <tr>
-            //         <th scope="col" colSpan="2">Name</th>
-            //         <th scope="col" colSpan="2">Email</th>
-            //         {/* <th scope="col" colSpan="2">Time</th>
-            //         <th scope="col" colSpan="2">Date</th> */}
-            //     </tr>
-            //     </thead>
-            //     <tbody>
-            //     <tr>
-            //         <td>Name</td>
-            //         <td>{user.name}</td>
-            //         <td>Time</td>
-            //         <td>{book.time || "22:15:00"}</td>
-            //     </tr>
-            //     <tr>
-            //         <td>Email</td>
-            //         <td>{user.email}</td>
-            //         <td>Date</td>
-            //         <td>{book.date || "2025/15/6"}</td>
-            //     </tr>
-            //     <tr className="position-relative">
-            //         <td colSpan="4" className="text-center">{book.status}</td>
-            //         <button 
-            //         onClick={() => cancelBooking(book._id)} 
-            //         className="btn-cancle position-absolute ">
-            //             Cancle Request
-            //         </button>
-            //     </tr>
-            //     </tbody>
-            // </table>
-            // </div>
+
+
+
