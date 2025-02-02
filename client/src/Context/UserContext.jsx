@@ -5,8 +5,8 @@ export let UserContext = createContext()
 
 export default function UserContextProvider(props){
 
-    const [userLogin, setuserLogin] = useState(localStorage.getItem("userToken") || null
-    );
+    const [userLogin, setuserLogin] = useState(localStorage.getItem("userToken") || null);
+
 
     const [userId, setuserId] = useState(localStorage.getItem("userId" || null)
     );
