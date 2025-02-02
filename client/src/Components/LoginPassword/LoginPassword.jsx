@@ -23,7 +23,7 @@ export default function LoginPassword() {
       setuserLogin(res.data.token);
       localStorage.setItem("userToken", res.data.token);
       localStorage.setItem("notReloaded", true);
-
+      // localStorage.setItem("userToken", true);
       navigate("/")
       setisLoding(false)
       toast.success("Welcome back")
