@@ -67,7 +67,7 @@ return (
         <section className='contact p-y'>
                 <div className="section-header text-center pb-4 mb-5">
                     <h3 className="fs-menu">Contact Us</h3>
-                    <p className="m-auto">We consider all the drivers of change gives you the components{" "}
+                    <p className="m-auto fade-up">We consider all the drivers of change gives you the components{" "}
                     <br /> you need to change to create a truly happens.
                     </p>
                 </div>
