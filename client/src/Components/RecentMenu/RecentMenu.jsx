@@ -164,7 +164,7 @@ return (
         <div className="container">
         <div className="section-header text-center pb-4">
             <h3 className="fs-menu">Our Menu</h3>
-            <p className="m-auto">
+            <p className="m-auto fade-up">
             We consider all the drivers of change gives you the components{" "}
             <br /> you need to change to create a truly happens.
             </p>
@@ -253,13 +253,13 @@ return (
                     <p className="price mb-1">${item.price}</p>
                     <p className="name mb-1">{item.name}</p>
                     <p className="desc mb-2">{item.description}</p>
-                    <button className="d-block m-auto position-relative" onClick={() => addItemToCart(item._id)} >
-                        {isLoadingCart && currentId == item._id ? <i className='fas fa-spinner fa-spin'></i> : "Add To Cart" }  
-                    </button>
-                    <button onClick={() => addItemToWishlist(item._id)} className=" h5 mt-2 mt-3">
-                    <i class={heart[item._id] ? "fa-solid fa-heart text-danger ": 
-                        "fa-solid fa-heart"}></i>
-                    </button>
+                    <div className="sub-container">
+                        <span></span>
+                        <button className="" onClick={() => addItemToCart(item._id)} >Add To Cart</button>
+                        <span onClick={() => addItemToWishlist(item._id)} className=" h5 mt-2 cursor-pointer mt-3">
+                        <i class="fa-regular fa-heart"></i>
+                        </span>      
+                    </div>
                 </div>
                 </div>
             </div>
