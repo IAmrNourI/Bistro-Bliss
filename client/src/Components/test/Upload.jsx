@@ -13,14 +13,15 @@
             formData.append('image', input.files[0]); // Key must match the backend key ('image')
         
             try {
-                const response = await axios.post('http://localhost:8085/upload', formData, {
+                const response = await axios.post('http://localhost:8085/api/menu/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data', // Required for file uploads
                     },
                 });
         
                 if (response.status === 200) {
-                    alert('Image uploaded successfully: ' + JSON.stringify(response.data));
+                    // alert('Image uploaded successfully: ' + JSON.stringify(response.data));
+                    console.log('Image uploaded successfully: ' + JSON.stringify(response.data));
                 } else {
                     alert('Failed to upload image.');
                 }
