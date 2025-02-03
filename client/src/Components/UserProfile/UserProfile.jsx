@@ -125,10 +125,7 @@ return (
                     src={userpic}
                     alt=""
                 />
-                <div className="test">
-                    {/* <div className="">Name: <span className="fw-500 ms-1">{user.name}</span> </div>
-                    <div className="">Email: <span className="fw-500 ms-1">{user.email}</span></div>
-                    <div className="">Phone: <span className="fw-500 ms-1">{user.phoneNumber}</span></div> */}
+                <div className="profile-details">
                     <h6 className="price-order bg">Name : 
                         <span className="fw-500 text-black">{user.name}</span>
                     </h6>
