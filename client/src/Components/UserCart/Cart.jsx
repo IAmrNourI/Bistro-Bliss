@@ -113,13 +113,13 @@ export default function Cart() {
 return (
 
     <>
-    <section className='p-y'>
+    <section className='p-y cart wish-list'>
         <div className="container">
             <div className="section-header text-center pb-4 mb-5">
                 <h1>My Cart</h1>
             </div>
             
-            <div className="row border-bottom ps-5">
+            <div className="row border-bottom ps-5 titles">
                 <div className="col-4">
                     <h5 className=''>Product name</h5>
                 </div>
