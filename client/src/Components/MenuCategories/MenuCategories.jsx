@@ -15,7 +15,7 @@ return (
             <section className="browse-menu">
             <div className="container">
                 <div className="section-header text-center pb-4">
-                    <h3 className="h1">Browse Our Menu</h3>
+                    <h3 className="h1"> Browse Our Menu </h3>
                 </div>
                 
                 <div className="row">

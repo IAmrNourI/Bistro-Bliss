@@ -95,7 +95,7 @@
   transform: translateY(-65px);
 }
 
-.test {
+.profile-details {
   width: 100%;
   transform: translateY(-30px);
 }
@@ -118,6 +118,28 @@
   cursor: pointer;
   border: solid 1px #ffc107;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @media (max-width: 960px) { 
