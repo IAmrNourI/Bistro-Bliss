@@ -94,12 +94,15 @@ exports.uploadFile = async (req, res) => {
       //req.file without s if single file in routes
       return res.status(400).json({ message: "No file uploaded" });
     }
+
+    const normalizedPath = req.file.path.replace(/\\+/g, '/').replace(/\/+/g, '/');
     return res
       .status(200)
       .json({
         message: "File Successfully Uploaded",
         //file: req.file,
         path: req.file.path,
+        normalizedPath: normalizedPath,
       }); //file if single file
   } catch (error) {
     return res.status(500).json({ message: error.message });

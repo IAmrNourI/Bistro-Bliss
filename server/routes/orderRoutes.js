@@ -40,4 +40,15 @@ router.get(
   orderController.getUserOrders
 )
 
+router.get(
+  "/get-active-orders",
+  isAuth,
+  orderController.getActiveOrders
+)
+
+router.get(
+  "/get-orders-history",
+  isAuth,
+  orderController.getOrdersHistory
+)
 module.exports = router;

@@ -26,6 +26,8 @@ export const SocketProvider = ({ children }) => {
 
    
     newSocket.on("receiveNotification", (data) => { 
+      
+
       console.log("From server:", data); 
       if(data.msg === "Your booking has been accepted.") {
         toast.success(data.msg); 
