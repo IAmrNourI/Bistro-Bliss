@@ -36,13 +36,8 @@ export default function Cart() {
             setIsLoding(false);
         })
         .catch((res) => {
-        console.log(res);
-        console.log(res.response.data.message)
-        if(res.response.data.message == "Cart is Empty"){
-            setitems([]);
-            settotal(0);
-        }
-
+        // toast.error(res.response.data.message);
+        console.log(res)
         setIsLoding(false); 
         });
     }
@@ -118,13 +113,13 @@ export default function Cart() {
 return (
 
     <>
-    <section className='p-y cart wish-list'>
+    <section className='p-y'>
         <div className="container">
             <div className="section-header text-center pb-4 mb-5">
-                <h3 className="h1">My Cart</h3>
+                <h1>My Cart</h1>
             </div>
             
-            <div className="row border-bottom ps-5 titles">
+            <div className="row border-bottom ps-5">
                 <div className="col-4">
                     <h5 className=''>Product name</h5>
                 </div>
@@ -168,7 +163,7 @@ return (
             </div>
 
             ))}
-                <p className=' mt-3 h5 text-center'>Total Price: {total.toString().slice(0, 5)}$</p>
+                <p className=' mt-3 h5 text-center'>Total Price: {total.toString().slice(0, 4)}</p>
                 <div className='text-center'>
                 <button onClick={() => UserCheckout(cartId)} className='add-btn'>Check Out</button>
                 </div>
