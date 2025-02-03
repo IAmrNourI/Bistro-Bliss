@@ -85,7 +85,7 @@ return (
     <section className='p-y wish-list'>
         <div className="container">
             <div className="section-header text-center pb-4 mb-5">
-                <h3 className="h1">My Wishlist</h3>
+                <h1>My Wishlist</h1>
             </div>
             
             <div className="row border-bottom ps-5 titles">

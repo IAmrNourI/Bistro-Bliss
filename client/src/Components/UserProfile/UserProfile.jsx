@@ -11,6 +11,9 @@ const [user, setuser] = useState([]);
 const [booking, setbooking] = useState([])
 let navigate = useNavigate();
 const [order, setorder] = useState([])
+const [activeLink, setactiveLink] = useState("My Orders");
+const [autoOrders, setautoOrders] = useState(true)
+
 
 async function getUserDate() {
 const result = await getUser()
@@ -78,9 +81,20 @@ async function getAllOrder(){
     const result = await getUserOrder()
     .then((res) => {
     console.log(res);
-    toast.success(res.data.message);    
-    setorder(res.data.orders);
-    console.log(order);
+    // toast.success(res.data.message); 
+        const updatedItems = res.data.orders.map((order) => {
+            const date = new Date(order.updatedAt);
+            const monthName = date.toLocaleString("en-US", { month: "long" });
+            const monthNumber = date.getMonth() + 1;
+            const year = date.getFullYear();
+            const newCreatedAt = `${monthName} ${monthNumber}, ${year}`;
+            return{
+                ...order,
+                updatedAt: newCreatedAt
+            }
+        })
+    setorder(updatedItems);
+    console.log(updatedItems);
     })
     .catch((res) => {
     toast.error(res.response.data.message);
@@ -90,33 +104,44 @@ async function getAllOrder(){
 
 useEffect(() => {
 getUserDate();
-showBooking();
-getAllOrder();
+// showBooking();
+if(autoOrders == true){
+    getAllOrder();
+}
 }, []);
 
 return (
 <>
-    <section className="profile bg">
+    <section className="bg">
     <div className="container">
-        <div className="row">
+        <div className="p-y w-100">
         {user ? (
             <>
-            <div className="col-12 bg-body-secondary mt-3 border border-3 rounded-2">
-                <div className="user-profile text-center mt-5 d-flex justify-content-center align-items-center">
+            <div className="user-information">
+                {/* <div className=""> */}
                 <img
-                    width="110px"
-                    className="rounded-circle mb-3"
+                    width="100px"
+                    className="rounded-circle mb-3 image-profile"
                     src={userpic}
                     alt=""
                 />
-                <div className="user-details d-flex flex-column text-start ms-3">
-                    <div className="">Name: <span className="fw-500 ms-1">{user.name}</span> </div>
+                <div className="test">
+                    {/* <div className="">Name: <span className="fw-500 ms-1">{user.name}</span> </div>
                     <div className="">Email: <span className="fw-500 ms-1">{user.email}</span></div>
-                    <div className="">Phone: <span className="fw-500 ms-1">{user.phoneNumber}</span></div>
+                    <div className="">Phone: <span className="fw-500 ms-1">{user.phoneNumber}</span></div> */}
+                    <h6 className="price-order bg">Name : 
+                        <span className="fw-500 text-black">{user.name}</span>
+                    </h6>
+                    <h6 className="price-order bg">Email : 
+                        <span className="fw-500 text-black">{user.email}</span>
+                    </h6>
+                    <h6 className="price-order bg">Phone : 
+                        <span className="fw-500 text-black">{user.phoneNumber}</span>
+                    </h6>
                 </div>
+                <button onClick={() => updateData(user.name, user.phoneNumber)} className="button-edit">Edit</button>
                 </div>
-                <button onClick={() => updateData(user.name, user.phoneNumber)} className="d-flex justify-content-center m-auto btn btn-warning px-5 mb-3">Edit</button>
-            </div>
+            {/* </div> */}
             </>
         ) : (
             <>
@@ -124,13 +149,41 @@ return (
             </>
         )}
         </div>
-        <div class="section-header text-center pb-4 mt-3">
-            <h3 class="h1">My Booking</h3>
+
+        <div className="row d-flex justify-content-center mt-4 ">
+            <div
+            onClick={() => {
+                setactiveLink("My Orders");
+                getAllOrder();
+            }}
+            className={
+                activeLink === "My Orders"
+                ? "col-lg-6 mb-3 btn-category active-menu"
+                : "col-lg-6 mb-3 btn-category bg-white cursor-pointer" 
+            }
+            >
+            <span>My Orders</span>
+            </div>
+            <div
+            onClick={() => 
+                {setactiveLink("My Booking")
+                showBooking()
+            }}
+            className={
+                activeLink === "My Booking"
+                ? "col-lg-6 mb-3 btn-category active-menu"
+                : "col-lg-6 mb-3 btn-category bg-white cursor-pointer"
+            }
+            >
+            <span>My Booking</span>
+            </div>
         </div>
 
+        <section className="mt-4">
+                {activeLink == "My Booking" ? (
                     <div className="row">
                     <div className="col-12">
-                        <table className="table table-bordered pb-5 ">
+                        <table className="table table-bordered pb-5 ">                      
                         <thead>
                             <tr>
                             <th scope="col">Name</th>
@@ -140,6 +193,7 @@ return (
                             <th scope="col">Request</th>
                             </tr>
                         </thead>
+
                         {booking?.map((book) => {
                             return (
                             <tbody className="table-row">
@@ -170,115 +224,75 @@ return (
                         </table>
                     </div>
                     </div>
+                ): null}
+        </section>
 
-
-
-<section className="p-y">
-{/* {order?.map((orederItem) => (
-    <div className='' key={orederItem._id}>
-            <div className="row border-bottom">
-                <div className="col-4">
-                    <h5 className=''>Product name</h5>
-                </div>
-                <div className="col-4">
-                    <h5>Unit price</h5>
-                </div>
-                <div className="col-4">
-                    <h5>Quantity</h5>
-                </div>
-            </div>
-        <div className="row pb-5">
-        {orederItem.menuItems.map((menu) => (
-            <>
-                    <div className="col-4 border-bottom">
-                        <div className="d-flex align-items-center py-3 h-100">
-                            <img src={menu.menuItem.image} width="60px" alt="" />
-                            <p className='m-0 ms-3'>{menu.menuItem.name}</p>
+        <section className="mt-4">
+            {activeLink == "My Orders" ? (
+            order?.map((orederItem) => (
+                <>
+                    <div className="row border-bottom">
+                        <div className="col-lg-3 col-md-4 col-sm-4 col-4">
+                            <h5 className=''>Product name</h5>
+                        </div>
+                        <div className="col-lg-3 col-md-4 col-sm-4 col-4 ps-5">
+                            <h5>Unit price</h5>
+                        </div>
+                        <div className="col-lg-3 col-md-4 col-sm-4 col-4">
+                            <h5>Quantity</h5>
                         </div>
                     </div>
-                    <div className="col-4 border-bottom">
-                        <div className="d-flex align-items-center py-3 h-100">
-                            <p className="m-0 ms-3 price">${menu.menuItem.price}</p>
+                            
+                    <div className="row mb-5">
+                        <div className="col-md-8">
+                            <div className="row">
+                            {orederItem.menuItems.map((menu) => (
+                        <>
+                                <div className="col-5 border-bottom">
+                                    <div className="d-flex align-items-center py-3 h-100">
+                                        <img src={menu.menuItem.image} width="60px" alt="" />
+                                        <p className='m-0 ms-3'>{menu.menuItem.name}</p>
+                                    </div>
+                                </div>
+                                <div className="col-4 border-bottom">
+                                    <div className="d-flex align-items-center py-3 h-100">
+                                        <p className="m-0 ms-3 price">${menu.menuItem.price}</p>
+                                    </div>
+                                </div>
+                                <div className="col-3 border-bottom">
+                                    <div className="d-flex align-items-center py-3 h-100">
+                                            <p className='mt-3 ps-4'>{menu.quantity}</p>
+                                    </div>
+                                </div>
+                        </>
+                    ))}
+                            </div>
+                        </div>  
+                        <div className="col-md-4 px-0">
+                            <div className="h-100 bg-white border border-1 border-success d-flex flex-column justify-content-center p-3">
+                                    
+                                <span className="confirmed mb-3"><i className="fa-solid fa-check h6 m-0"></i></span>
+                                <h4>Order Confirmed</h4>
+                                <h6 style={{fontSize: "13px"}} className="text-secondary border-bottom border-2 pb-2">we hope you enjoy your food</h6>
+                                <h6 className="price-order mt-3 bg ">Subtotal : <span className="fw-500 text-black">
+                                    {orederItem.totalPrice.toString().slice(0, 5)}$</span>
+                                </h6>
+                                <h6 className="price-order bg">Shipping : 
+                                    <span className="fw-500 text-black">15$</span>
+                                </h6>
+                                <h6 className="price-order bg border-2">Total : <span className="fw-500 text-black">
+                                    {(orederItem.totalPrice + 15).toString().slice(0, 5)}$</span>
+                                </h6>
+            
+                                    <h6 className=" mt-1 text-center">{orederItem.status}</h6>
+                                    <span class="loader"></span>
+                            </div>
                         </div>
                     </div>
-                    <div className="col-4 border-bottom">
-                        <div className="d-flex align-items-center py-3 h-100">
-                                <p className='mt-3 mx-2'>{menu.quantity}</p>
-                        </div>
-                    </div>
-            </>
-        ))}
-        </div>
-        <div className="row">
-            <div className="col-6">
-                <p>{orederItem.updatedAt}</p>
-                <p className=''>Total Price: {orederItem.totalPrice.toString().slice(0, 5)}$</p>
-            </div>
-            <div className="col-6">
-            <p>{orederItem.status}</p>
-            </div>
-        </div>
-    </div>
-))} */}
-</section>
-
-<section>
-{order?.map((orederItem) => (
-    <>
-        <div className="row border-bottom">
-            <div className="col-3">
-                <h5 className=''>Product name</h5>
-            </div>
-            <div className="col-3">
-                <h5>Unit price</h5>
-            </div>
-            <div className="col-3">
-                <h5>Quantity</h5>
-            </div>
-            <div className="col-3">
-                <h5>details</h5>
-            </div>
-        </div>
-                
-        <div className="row mb-5">
-            <div className="col-8">
-                <div className="row">
-                {orederItem.menuItems.map((menu) => (
-            <>
-                    <div className="col-4 border-bottom">
-                        <div className="d-flex align-items-center py-3 h-100">
-                            <img src={menu.menuItem.image} width="60px" alt="" />
-                            <p className='m-0 ms-3'>{menu.menuItem.name}</p>
-                        </div>
-                    </div>
-                    <div className="col-4 border-bottom">
-                        <div className="d-flex align-items-center py-3 h-100">
-                            <p className="m-0 ms-3 price">${menu.menuItem.price}</p>
-                        </div>
-                    </div>
-                    <div className="col-4 border-bottom">
-                        <div className="d-flex align-items-center py-3 h-100">
-                                <p className='mt-3 mx-2'>{menu.quantity}</p>
-                        </div>
-                    </div>
-            </>
-        ))}
-                </div>
-            </div>  
-            <div className="col-4">
-                <div className="bg-dark h-100 d-flex flex-column text-center justify-content-center">
-                    <p className="text-white">Lorem, ipsum.</p>
-                    <p className="text-white">Lorem, ipsum.</p>
-                </div>
-            </div>
-        </div>
-    </>
-))}
-</section>
-
-
-
-
+                </>
+            ))
+            ): null}
+        </section>
 
     </div>
     </section>
