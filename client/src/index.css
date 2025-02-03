@@ -1265,14 +1265,14 @@ input {
 }
 
 /* ------------------- Cart ----------------- */
-.cart .container .section-header h3 {
+.cart .container .section-header h1 {
     animation: zoomIn 0.5s ease;
 
 }
 
 /* ----------------- Wishlist ----------------- */
 
-.wish-list .container .section-header h3 {
+.wish-list .container .section-header h1 {
     animation: zoomIn 0.5s ease;
 
 }

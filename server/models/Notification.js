@@ -12,7 +12,7 @@ const NotificationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Accepted", "Rejected", "Pending", "Pereparing", "Shipping", "Delivered", "Cancelled"],
+    enum: ["Accepted", "Rejected", "Pending", "Preparing", "Shipping", "Delivered", "Cancelled"],
   },
   unSeen: {
     type: Boolean,

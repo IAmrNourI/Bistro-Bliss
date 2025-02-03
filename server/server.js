@@ -59,6 +59,6 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/booking", bookingRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/cart", cartRoutes);
-app.use("/api/order", orderRoutes);
+app.use("/api/order", orderRoutes); 
 
 
