@@ -1,6 +1,8 @@
 const Cart = require("../models/cart");
 const Notification = require("../models/Notification");
 const Order = require("../models/Order");
+const User = require("../models/User");
+
 
 exports.checkout = async (req, res) => {
   try {
@@ -13,6 +15,19 @@ exports.checkout = async (req, res) => {
       // console.log(cart);
       return res.status(404).json({ message: "Cart is Empty", error: true });
     }
+    // const order = await Order.findOne({
+    //   user: req.user.id,
+    //   $or: [
+    //     { status: "pending" },
+    //     { status: "preparing" },
+    //     { status: "shipping" }
+    //   ]
+    // });
+
+    // console.log(order);
+    // if (order) {
+    //   return res.status(400).json({ message: "You already have an active order", error: true });
+    // }
 
     const newOrder = Order({
       user: req.user.id,
@@ -24,12 +39,12 @@ exports.checkout = async (req, res) => {
     await Cart.findByIdAndDelete(cartId);
 
     const newNotification = await Notification.create({
-        user: newOrder.user,
-        content: `Your created at ${newOrder.createdAt} your estimated time is 35min`,
-        status: "Pending",
-        unseen: true,
-      });
-      await newNotification.save();
+      user: newOrder.user,
+      content: `Your created at ${newOrder.createdAt} your estimated time is 35min`,
+      status: "Pending",
+      unseen: true,
+    });
+    await newNotification.save();
 
     // console.log(cart);
     return res
@@ -71,16 +86,20 @@ exports.acceptOrder = async (req, res) => {
         error: true,
       });
     }
-    order.status = "pereparing";
+    order.status = "preparing";
     await order.save();
 
     const newNotification = await Notification.create({
       user: order.user,
-      content: `We Just Recived your Order that you created at ${order.createdAt}, We are pereparing it`,
-      status: "Pereparing",
+      content: `We Just Recived your Order that you created at ${order.createdAt}, We are preparing it`,
+      status: "Preparing",
       unseen: true,
     });
     await newNotification.save();
+
+    const user = await User.findById(order.user);
+    user.unSeenMessages +=1;
+    await user.save();
 
     return res.status(200).json({
       message: "The Order accepted successfully",
@@ -99,9 +118,9 @@ exports.shipOrder = async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: "Order not found", error: true });
     }
-    if (order.status !== "pereparing") {
+    if (order.status !== "preparing") {
       return res.status(404).json({
-        message: `Order is already ${order.status}, you can't deliver it, you can only deliver pereparing orders`,
+        message: `Order is already ${order.status}, you can't deliver it, you can only deliver preparing orders`,
         error: true,
       });
     }
@@ -115,6 +134,10 @@ exports.shipOrder = async (req, res) => {
       unseen: true,
     });
     await newNotification.save();
+
+    const user = await User.findById(order.user);
+    user.unSeenMessages +=1;
+    await user.save();
 
     return res.status(200).json({
       message: "The Order is being shipping successfully",
@@ -150,6 +173,10 @@ exports.deliverOrder = async (req, res) => {
     });
     await newNotification.save();
 
+    const user = await User.findById(order.user);
+    user.unSeenMessages +=1;
+    await user.save();
+
     return res.status(200).json({
       message: "The Order delivered successfully",
       order,
@@ -183,6 +210,10 @@ exports.cancelOrder = async (req, res) => {
       unseen: true,
     });
     await newNotification.save();
+    
+    const user = await User.findById(order.user);
+    user.unSeenMessages +=1;
+    await user.save();
 
     return res.status(200).json({
       message: "The Order canceled successfully",
@@ -211,3 +242,51 @@ exports.getUserOrders = async (req, res) => {
   }
 };
 
+exports.getActiveOrders = async (req, res) => {
+  try {
+    const activeOrders = await Order.find({
+      user: req.user.id,
+      $or: [
+        { status: "pending" },
+        { status: "preparing" },
+        { status: "shipping" },
+      ],
+    });
+
+    if (!activeOrders) {
+      return res
+        .status(404)
+        .json({ message: "No active Order found", error: true });
+    }
+    return res.status(200).json({
+      message: "The active Order found successfully",
+      activeOrders,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(404).json({ messeage: error.message, error: true });
+  }
+};
+
+exports.getOrdersHistory = async (req, res) => {
+  try {
+    const historyOrders = await Order.find({
+      user: req.user.id,
+      $or: [{ status: "delivered" }, { status: "cancelled" }],
+    }).sort({ createdAt: -1 });
+
+    if (!historyOrders) {
+      return res
+        .status(404)
+        .json({ message: "No Orders History found", error: true });
+    }
+
+    return res.status(200).json({
+      message: "The Orders History found successfully",
+      historyOrders,
+      sucess: true,
+    });
+  } catch (error) {
+    return res.status(404).json({ messeage: error.message, error: true });
+  }
+};
