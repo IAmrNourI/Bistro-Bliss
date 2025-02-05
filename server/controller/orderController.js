@@ -3,7 +3,6 @@ const Notification = require("../models/Notification");
 const Order = require("../models/Order");
 const User = require("../models/User");
 
-
 exports.checkout = async (req, res) => {
   try {
     const { cartId } = req.body;
@@ -60,7 +59,7 @@ exports.getAllorders = async (req, res) => {
     const order = await Order.find().populate(
       "menuItems.menuItem",
       "-createdAt -updatedAt -__v"
-    );
+    ).sort({ createdAt: -1 });
     // console.log(order);
     if (!order) {
       return res.status(404).json({ message: "No Orders found", error: true });
@@ -98,7 +97,7 @@ exports.acceptOrder = async (req, res) => {
     await newNotification.save();
 
     const user = await User.findById(order.user);
-    user.unSeenMessages +=1;
+    user.unSeenMessages += 1;
     await user.save();
 
     return res.status(200).json({
@@ -136,7 +135,7 @@ exports.shipOrder = async (req, res) => {
     await newNotification.save();
 
     const user = await User.findById(order.user);
-    user.unSeenMessages +=1;
+    user.unSeenMessages += 1;
     await user.save();
 
     return res.status(200).json({
@@ -174,7 +173,7 @@ exports.deliverOrder = async (req, res) => {
     await newNotification.save();
 
     const user = await User.findById(order.user);
-    user.unSeenMessages +=1;
+    user.unSeenMessages += 1;
     await user.save();
 
     return res.status(200).json({
@@ -210,9 +209,9 @@ exports.cancelOrder = async (req, res) => {
       unseen: true,
     });
     await newNotification.save();
-    
+
     const user = await User.findById(order.user);
-    user.unSeenMessages +=1;
+    user.unSeenMessages += 1;
     await user.save();
 
     return res.status(200).json({
@@ -251,7 +250,9 @@ exports.getActiveOrders = async (req, res) => {
         { status: "preparing" },
         { status: "shipping" },
       ],
-    });
+    })
+      .sort({ createdAt: -1 })
+      .populate("menuItems.menuItem", "-createdAt -updatedAt -__v");
 
     if (!activeOrders) {
       return res
@@ -273,7 +274,9 @@ exports.getOrdersHistory = async (req, res) => {
     const historyOrders = await Order.find({
       user: req.user.id,
       $or: [{ status: "delivered" }, { status: "cancelled" }],
-    }).sort({ createdAt: -1 });
+    })
+      .sort({ createdAt: -1 })
+      .populate("menuItems.menuItem", "-createdAt -updatedAt -__v");
 
     if (!historyOrders) {
       return res
