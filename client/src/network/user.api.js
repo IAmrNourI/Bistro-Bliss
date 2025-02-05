@@ -319,6 +319,19 @@ const getUserOrder = async() => {
 });
 }
 
+const getActiveOrder = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/order/get-active-orders", {
+    withCredentials: true
+});
+}
+
+const getHistoryOrder = async() => {
+    const token = localStorage.getItem("userToken");    
+    return await axiosInstance.get("/order/get-orders-history", {
+    withCredentials: true
+});
+}
 
 
 
@@ -368,5 +381,7 @@ export { register,
         cancelOrder,
         deliverOrder,
         shipOrder,
-        getUserOrder
+        getUserOrder,
+        getActiveOrder,
+        getHistoryOrder,
     }
