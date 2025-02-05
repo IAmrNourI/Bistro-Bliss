@@ -37,6 +37,10 @@ export default function Cart() {
         })
         .catch((res) => {
         // toast.error(res.response.data.message);
+        if(res.response.data.message == "Cart is Empty"){
+            setitems([]);
+            settotal(0)
+        }
         console.log(res)
         setIsLoding(false); 
         });
@@ -163,9 +167,9 @@ return (
             </div>
 
             ))}
-                <p className=' mt-3 h5 text-center'>Total Price: {total.toString().slice(0, 4)}</p>
+                <p className=' mt-3 h5 text-center'>Total Price: {total.toString().slice(0, 6)}$</p>
                 <div className='text-center'>
-                <button onClick={() => UserCheckout(cartId)} className='add-btn'>Check Out</button>
+                <button onClick={() => UserCheckout(cartId)} className='add-btn' disabled={items.length == 0} >Check Out</button>
                 </div>
         </div>
     </section>

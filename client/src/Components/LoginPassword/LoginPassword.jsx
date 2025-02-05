@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { password } from "../../network/user.api";
 import { UserContext } from "../../Context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
@@ -61,6 +61,7 @@ export default function LoginPassword() {
                   {isLoding ? <i className='fas fa-spinner fa-spin'></i> : "!Go"}
                   
                 </button>
+                <Link to="/auth/forgetpassword" className="d-flex justify-content-end mt-2">Forget Password</Link>
               </div>
             </form>
           </section>
