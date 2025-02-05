@@ -7,7 +7,7 @@
             if (input.files.length === 0) {
                 alert('Please select an image.');
                 return;
-            }
+            } //validate
         
             const formData = new FormData();
             formData.append('image', input.files[0]); // Key must match the backend key ('image')
@@ -21,6 +21,8 @@
         
                 if (response.status === 200) {
                     // alert('Image uploaded successfully: ' + JSON.stringify(response.data));
+                    console.log(response);
+                    
                     console.log('Image uploaded successfully: ' + JSON.stringify(response.data));
                 } else {
                     alert('Failed to upload image.');

@@ -9,7 +9,7 @@ export default function HealthyFood() {
 return (
 
     <>
-        <section className='healthy-food p-y '>
+        <section className='healthy-food p-y'>
             <div className="container py-3">
                 <div className="row">
                     <div className="col-lg-6 col-md-12">

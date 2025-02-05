@@ -10,6 +10,41 @@ export default function Add() {
 const navigate = useNavigate();
 const [btnLoding, setbtnLoding] = useState(false);
 
+
+    async function uploadImage() {
+        const input = document.getElementById('image');
+        if (input.files.length === 0) {
+            alert('Please select an image.');
+            return;
+        } //validate
+    
+        const formData = new FormData();
+        formData.append('image', input.files[0]); // Key must match the backend key ('image')
+    
+        try {
+            const response = await axios.post('http://localhost:8085/api/menu/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Required for file uploads
+                },
+            });
+    
+            if (response.status === 200) {
+                // alert('Image uploaded successfully: ' + JSON.stringify(response.data));
+                console.log(response);
+                console.log(response.data.path);
+                console.log(response.data.normalizedPath);
+                
+                console.log('Image uploaded successfully: ' + JSON.stringify(response.data));
+            } else {
+                alert('Failed to upload image.');
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            alert('An error occurred during the upload.');
+        }
+    }
+
+
 async function addToMenu(values) {
     setbtnLoding(true);
     const result = await addItem(values)
@@ -25,18 +60,10 @@ async function addToMenu(values) {
     toast.error(res.response.data.message);
     setbtnLoding(false);
     });
-
-
-// // console.log(result);
-// let res = await axios.post(`http://localhost:8085/api/register`, values);
-// console.log(res);
 }
 
 let validationSchema = Yup.object().shape({
-    image: Yup.string()
-    .min(3, "Please enter at least 3 characters")
-    .max(100, "Maximum 100 characters allowed")
-    .required("img is required"),
+    image: Yup.mixed().required("Image is required"), 
 
     name: Yup.string()
     .min(3, "Please enter at least 3 characters")
@@ -76,24 +103,25 @@ return (
     <section className="register">
         <form onSubmit={formik.handleSubmit} action="">
         <div className="register-container">
-            <div className="form-floating mb-3">
+
+            <div className="mb-3">
             <input
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 name="image"
                 value={formik.values.image}
-                type="text"
+                type="file"
+                accept="image/*"
                 id="image"
                 className="form-control"
-                placeholder="image src"
             />
-            <label htmlFor="floatingInput">image src</label>
             {formik.errors.image ? (
                 <span className="alert alert-danger p-0 mt-1 d-block">
                 {formik.errors.image}
                 </span>
             ) : null}
             </div>
+
 
             <div className="form-floating mb-3">
             <input
@@ -188,6 +216,7 @@ return (
         </form>
     </section>
     </div>
+    <button onClick={(() => uploadImage())} className="text-center btn btn-danger ms-5">test file</button>
 </>
 );
 }

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { cancelRequest, getBooking, getUser, getUserOrder } from "../../network/user.api";
+import { cancelRequest, getActiveOrder, getBooking, getHistoryOrder, getUser, getUserOrder } from "../../network/user.api";
 import userpic from "../../assets/userpic.jpg";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-
 
 export default function UserProfile() {
 const [user, setuser] = useState([]);
 const [booking, setbooking] = useState([])
 let navigate = useNavigate();
 const [order, setorder] = useState([])
+const [activeOrder, setactiveOrder] = useState([])
 const [activeLink, setactiveLink] = useState("My Orders");
 const [autoOrders, setautoOrders] = useState(true)
 
@@ -102,8 +102,22 @@ async function getAllOrder(){
     });
 }
 
+async function getUserActiveOrder(){
+    const result = await getActiveOrder()
+    .then((res) => {
+    console.log("active order",res);
+    // toast.success(res.data.message); 
+    setactiveOrder(res.data.activeOrders);
+    })
+    .catch((res) => {
+    toast.error(res.response.data.message);
+    console.log(res)
+    });
+}
+
 useEffect(() => {
 getUserDate();
+getUserActiveOrder()
 // showBooking();
 if(autoOrders == true){
     getAllOrder();
@@ -125,10 +139,7 @@ return (
                     src={userpic}
                     alt=""
                 />
-                <div className="test">
-                    {/* <div className="">Name: <span className="fw-500 ms-1">{user.name}</span> </div>
-                    <div className="">Email: <span className="fw-500 ms-1">{user.email}</span></div>
-                    <div className="">Phone: <span className="fw-500 ms-1">{user.phoneNumber}</span></div> */}
+                <div className="profile-details">
                     <h6 className="price-order bg">Name : 
                         <span className="fw-500 text-black">{user.name}</span>
                     </h6>
@@ -293,6 +304,73 @@ return (
             ))
             ): null}
         </section>
+
+        {/* <section className="mt-4 bg-info-subtle">
+            {activeLink == "My Orders" ? (
+            activeOrder?.map((orederItem) => (
+                <>
+                    <div className="row border-bottom">
+                        <div className="col-lg-3 col-md-4 col-sm-4 col-4">
+                            <h5 className=''>Product name</h5>
+                        </div>
+                        <div className="col-lg-3 col-md-4 col-sm-4 col-4 ps-5">
+                            <h5>Unit price</h5>
+                        </div>
+                        <div className="col-lg-3 col-md-4 col-sm-4 col-4">
+                            <h5>Quantity</h5>
+                        </div>
+                    </div>
+                            
+                    <div className="row mb-5">
+                        <div className="col-md-8">
+                            <div className="row">
+                            {orederItem.menuItems.map((menu) => (
+                        <>
+                                <div className="col-5 border-bottom">
+                                    <div className="d-flex align-items-center py-3 h-100">
+                                        <img src={menu.menuItem.image} width="60px" alt="" />
+                                        <p className='m-0 ms-3'>{menu.menuItem.name}</p>
+                                    </div>
+                                </div>
+                                <div className="col-4 border-bottom">
+                                    <div className="d-flex align-items-center py-3 h-100">
+                                        <p className="m-0 ms-3 price">${menu.menuItem.price}</p>
+                                    </div>
+                                </div>
+                                <div className="col-3 border-bottom">
+                                    <div className="d-flex align-items-center py-3 h-100">
+                                            <p className='mt-3 ps-4'>{menu.quantity}</p>
+                                    </div>
+                                </div>
+                        </>
+                    ))}
+                            </div>
+                        </div>  
+                        <div className="col-md-4 px-0">
+                            <div className="h-100 bg-white border border-1 border-success d-flex flex-column justify-content-center p-3">
+                                    
+                                <span className="confirmed mb-3"><i className="fa-solid fa-check h6 m-0"></i></span>
+                                <h4>Order Confirmed</h4>
+                                <h6 style={{fontSize: "13px"}} className="text-secondary border-bottom border-2 pb-2">we hope you enjoy your food</h6>
+                                <h6 className="price-order mt-3 bg ">Subtotal : <span className="fw-500 text-black">
+                                    {orederItem.totalPrice.toString().slice(0, 5)}$</span>
+                                </h6>
+                                <h6 className="price-order bg">Shipping : 
+                                    <span className="fw-500 text-black">15$</span>
+                                </h6>
+                                <h6 className="price-order bg border-2">Total : <span className="fw-500 text-black">
+                                    {(orederItem.totalPrice + 15).toString().slice(0, 5)}$</span>
+                                </h6>
+            
+                                    <h6 className=" mt-1 text-center">{orederItem.status}</h6>
+                                    <span class="loader"></span>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            ))
+            ): null}
+        </section> */}
 
     </div>
     </section>

@@ -3,6 +3,7 @@ import HealthyFood from "../healthyFood/healthyFood";
 import Guest from "../Guest/Guest";
 import Feedback from "../Feedback/Feedback";
 import { useLocation } from "react-router-dom";
+import Vedio from "../AboutVedio/Vedio";
 
 
 
@@ -14,6 +15,7 @@ export default function About() {
   return (
     <>
       <HealthyFood />
+      <Vedio />
       <Guest />
       <Feedback  />
     </>
