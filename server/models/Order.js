@@ -30,6 +30,11 @@ const orderSchema = new mongoose.Schema(
       enum: ["pending", "preparing", "shipping", "delivered", "cancelled"],
       default: "Pending",
     },
+    estimatedTime: {
+      type: Date,
+      default: Date.now(),
+      required: true,
+    }
   },
   { timestamps: true }
 );
