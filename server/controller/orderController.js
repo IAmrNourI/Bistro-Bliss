@@ -37,9 +37,19 @@ exports.checkout = async (req, res) => {
     await newOrder.save();
     await Cart.findByIdAndDelete(cartId);
 
+    const createdAt = new Date(newOrder.createdAt);
+    const formattedDate = createdAt.toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
     const newNotification = await Notification.create({
       user: newOrder.user,
-      content: `Your created at ${newOrder.createdAt} your estimated time is 35min`,
+      content: `Your created Order at ${formattedDate} your estimated time is 35min`,
       status: "Pending",
       unseen: true,
     });
@@ -56,10 +66,9 @@ exports.checkout = async (req, res) => {
 
 exports.getAllorders = async (req, res) => {
   try {
-    const order = await Order.find().populate(
-      "menuItems.menuItem",
-      "-createdAt -updatedAt -__v"
-    ).sort({ createdAt: -1 });
+    const order = await Order.find()
+      .populate("menuItems.menuItem", "-createdAt -updatedAt -__v")
+      .sort({ createdAt: -1 });
     // console.log(order);
     if (!order) {
       return res.status(404).json({ message: "No Orders found", error: true });
@@ -74,7 +83,7 @@ exports.getAllorders = async (req, res) => {
 
 exports.acceptOrder = async (req, res) => {
   try {
-    const { orderId } = req.body;
+    const { orderId, hours, minutes } = req.body;
     const order = await Order.findOne({ _id: orderId });
     if (!order) {
       return res.status(404).json({ message: "Order not found", error: true });
@@ -86,11 +95,34 @@ exports.acceptOrder = async (req, res) => {
       });
     }
     order.status = "preparing";
+    estimatedTime =
+      new Date(Date.now() + (hours) * 1000 * 60 * 60 + minutes * 1000 * 60);
+    order.estimatedTime = estimatedTime;
     await order.save();
+    console.log("estimated time", estimatedTime);
+    
+
+    formatedEstimatedTime = estimatedTime.toLocaleString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    console.log( "form Estimated", formatedEstimatedTime);
+    const createdAt = new Date(order.createdAt);
+    const formattedDate = createdAt.toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    console.log("order. createdAt: ", order.createdAt);
+    console.log("formattedDate: ", formattedDate);
+    console.log("createdAt: ", createdAt);
 
     const newNotification = await Notification.create({
       user: order.user,
-      content: `We Just Recived your Order that you created at ${order.createdAt}, We are preparing it`,
+      content: `We Just Recived your Order that you created at ${formattedDate}, We are preparing it, Your Estimated time is ${formatedEstimatedTime}`,
       status: "Preparing",
       unseen: true,
     });
@@ -126,9 +158,19 @@ exports.shipOrder = async (req, res) => {
     order.status = "shipping";
     await order.save();
 
+    const createdAt = new Date(order.createdAt);
+    const formattedDate = createdAt.toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
     const newNotification = await Notification.create({
       user: order.user,
-      content: `Your Order you created at ${order.createdAt} is Shipping to you`,
+      content: `Your Order you created at ${formattedDate} is Shipping to you`,
       status: "Shipping",
       unseen: true,
     });
@@ -164,9 +206,19 @@ exports.deliverOrder = async (req, res) => {
     order.status = "delivered";
     await order.save();
 
+    const createdAt = new Date(order.createdAt);
+    const formattedDate = createdAt.toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
     const newNotification = await Notification.create({
       user: order.user,
-      content: `Your Order you created at ${order.createdAt} is Delivered to you`,
+      content: `Your Order created on ${formattedDate} is Delivered to you`,
       status: "Delivered",
       unseen: true,
     });
@@ -202,9 +254,19 @@ exports.cancelOrder = async (req, res) => {
     order.status = "cancelled";
     await order.save();
 
+    const createdAt = new Date(order.createdAt);
+    const formattedDate = createdAt.toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
     const newNotification = await Notification.create({
       user: order.user,
-      content: `Your Order you created at ${order.createdAt} has been cancelled`,
+      content: `Your Order you created at ${formattedDate} has been cancelled`,
       status: "Cancelled",
       unseen: true,
     });
