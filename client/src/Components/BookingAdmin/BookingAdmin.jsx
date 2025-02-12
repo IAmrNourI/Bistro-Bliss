@@ -9,6 +9,7 @@ import {
 import toast from "react-hot-toast";
 import { useSocket } from "../../Context/SocketContext"; //added
 
+
 export default function BookingAdmin() {
   // const [selectFilter, setselectFilter] = useState('All')
   const [booking, setbooking] = useState([]);
@@ -35,6 +36,7 @@ export default function BookingAdmin() {
         console.log(res);
       });
   }
+
 
   async function accept(id, userId) {
     const result = await acceptBooking(id,userId)

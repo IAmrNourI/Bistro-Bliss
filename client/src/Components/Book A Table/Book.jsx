@@ -94,7 +94,7 @@ return (
                         type="date" 
                         />
                         {formik.errors.date_time ? (
-                        <span className="alert alert-danger p-0 mt-1 d-block">
+                        <span className="alert text-start text-danger mb-0 p-0  d-block">
                             {formik.errors.date_time}
                         </span>
                         ) : null}
@@ -111,7 +111,7 @@ return (
                         type="time" 
                         />
                         {formik.errors.time ? (
-                        <span className="alert alert-danger p-0 mt-1 d-block">
+                        <span className="alert text-start text-danger mb-0 p-0  d-block">
                             {formik.errors.time}
                         </span>
                         ) : null}
@@ -128,7 +128,7 @@ return (
                         type="name" 
                         placeholder='Enter your name ' />
                         {formik.errors.name ? (
-                        <span className="alert alert-danger p-0 mt-1 d-block">
+                        <span className="alert text-start text-danger mb-0 p-0  d-block">
                             {formik.errors.name}
                         </span>
                         ) : null}
@@ -145,7 +145,7 @@ return (
                         type="text" 
                         placeholder='x-xxx-xxx-xxxx' />
                         {formik.errors.phone ? (
-                        <span className="alert alert-danger p-0 mt-1 d-block">
+                        <span className="alert text-start text-danger mb-0 p-0  d-block">
                             {formik.errors.phone}
                         </span>
                         ) : null}
@@ -179,7 +179,7 @@ return (
                         <option value="10">10 Person</option>
                     </select>
                         {formik.errors.totalPerson ? (
-                        <span className="alert alert-danger p-0 mt-1 d-block">
+                        <span className="alert text-start text-danger mb-0 p-0  d-block">
                             {formik.errors.totalPerson}
                         </span>
                         ) : null}
