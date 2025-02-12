@@ -79,7 +79,7 @@ export default function Register() {
                 />
                 <label htmlFor="floatingInput">Enter your name</label>
                 {formik.errors.name ? (
-                  <span className="alert alert-danger p-0 mt-1 d-block">
+                  <span className="alert text-start text-danger mb-0 p-0 mt-1 d-block">
                     {formik.errors.name}
                   </span>
                 ) : null}
@@ -98,7 +98,7 @@ export default function Register() {
                 />
                 <label htmlFor="floatingInput">Email address</label>
                 {formik.errors.email ? (
-                  <span className="alert alert-danger p-0 mt-1 d-block">
+                  <span className="alert text-start text-danger mb-0 p-0 mt-1 d-block">
                     {formik.errors.email}
                   </span>
                 ) : null}
@@ -117,7 +117,7 @@ export default function Register() {
                 />
                 <label htmlFor="floatingInput">Phone</label>
                 {formik.errors.phoneNumber ? (
-                  <span className="alert alert-danger p-0 mt-1 d-block">
+                  <span className="alert text-start text-danger mb-0 p-0 mt-1 d-block">
                     {formik.errors.phoneNumber}
                   </span>
                 ) : null}
@@ -136,7 +136,7 @@ export default function Register() {
                 />
                 <label htmlFor="floatingInput">Password</label>
                 {formik.errors.password ? (
-                  <span className="alert alert-danger p-0 mt-1 d-block">
+                  <span className="alert text-start text-danger mb-0 p-0 mt-1 d-block">
                     {formik.errors.password}
                   </span>
                 ) : null}

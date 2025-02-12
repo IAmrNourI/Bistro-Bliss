@@ -1,3 +1,7 @@
+.bg-notfication {
+  background-color: #f1f1f1;
+}
+
 .add-btn {
     background-color: #AD343E;
     color: white;
@@ -62,7 +66,6 @@
 .price-order {
     display: flex;
     justify-content: space-between;
-
 }
 
 .confirmed {
@@ -182,21 +185,34 @@
 
 .notfication-container {
   width: 400px;
-  height: auto;
+  /* height: auto; */
   z-index: 500;
   background-color: white;
   margin-top: 39px;
   border-radius: 5px;
   right: -290px;
-  
+  max-height: 520px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
+@keyframes shake {
+  0% { transform: rotate(20deg); }
+  20% { transform: rotate(-20deg); }
+  40% { transform: rotate(20deg); }
+  60% { transform: rotate(-20deg); }
+  80% { transform: rotate(20deg); }
+  100% { transform: rotate(0deg); }
+}
 
+.shaking {
+  transform: rotate(180deg);
+  animation: shake 1s ease-in-out;
+}
 
-
-
-
-
+.shak:hover {
+  animation: shake 1s ease-in-out;
+}
 
 
 
