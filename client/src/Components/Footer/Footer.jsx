@@ -52,6 +52,8 @@ export default function Footer() {
                   <Link className='footer-link' to="about">About</Link>
                   <Link className='footer-link' to="menu">Menu</Link>
                   <Link className='footer-link' to="contact">Contact</Link>
+                  <Link className='footer-link' to="cart">Cart</Link>
+                  <Link className='footer-link' to="wishlist">WishList</Link>
                 </ul>
               </div>
 

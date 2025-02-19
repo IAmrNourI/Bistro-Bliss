@@ -33,9 +33,8 @@ import NewPassword from "./Components/NewPassword/NewPassword";
 import Cart from "./Components/UserCart/Cart";
 import Wishlist from "./Components/WishList/Wishlist";
 import AdminOrder from "./Components/AdminOrder/AdminOrder";
+import Notfound from "./Components/NotFound/Notfound";
 // import CartContextProvider from "./Context/CartContext";
-
-
 
 let route = createBrowserRouter([
   {
@@ -57,7 +56,7 @@ let route = createBrowserRouter([
       { path: "upload", element: <Upload /> },
       { path: "cart", element: <Cart /> },
       { path: "wishlist", element: <Wishlist /> },
-
+      { path: "*", element: <Notfound /> },
     ],
   },
 

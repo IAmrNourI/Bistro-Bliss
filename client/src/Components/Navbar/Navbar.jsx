@@ -17,6 +17,10 @@ export default function Navbar() {
     }
 
   }, [])
+
+  function scrollToTop(){
+    window.scrollTo(0,0)
+  }
   
   return (
     <>
@@ -85,7 +89,7 @@ export default function Navbar() {
                 </Link>
               </li>
             </ul>
-            <Link to="book" className="book-table">Book A Table <div className="wave"></div> </Link> </> :             
+            <Link to="/book" className="book-table">Book A Table <div className="wave"></div> </Link> </> :             
             <>
                 <div className="ms-auto">
                 <Link className="pe-3" to="/auth/register">
@@ -103,6 +107,9 @@ export default function Navbar() {
 
         
       </nav>
+      <button onClick={scrollToTop} className="scroll-btn">
+        <i className="fa-solid fa-arrow-up"></i>
+      </button>
       </header>
     </>
   );
