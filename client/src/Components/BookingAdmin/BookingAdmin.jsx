@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import {
   acceptBooking,
   getAllBooking,
+  getNotifications,
   getPendingBooking,
   getUpcomingBooking,
   rejectBooking,
 } from "../../network/user.api";
 import toast from "react-hot-toast";
 import { useSocket } from "../../Context/SocketContext"; //added
-
 
 export default function BookingAdmin() {
   // const [selectFilter, setselectFilter] = useState('All')
@@ -49,6 +49,7 @@ export default function BookingAdmin() {
             msg: "Your booking has been accepted.",
           });
           toast.success("Notification sent!");
+          
         } else {
           toast.error("Socket not connected.");
         }

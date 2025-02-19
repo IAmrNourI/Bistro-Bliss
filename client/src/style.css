@@ -206,7 +206,6 @@
 }
 
 .shaking {
-  transform: rotate(180deg);
   animation: shake 1s ease-in-out;
 }
 
@@ -214,7 +213,29 @@
   animation: shake 1s ease-in-out;
 }
 
+.fw-700 {
+  font-weight: 700;
+}
 
+
+.triangle {
+  position: relative;
+}
+
+.triangle::after{
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-top: 0;
+  margin-left: 4px;
+  border-color: transparent transparent white transparent;
+}
+
+.upload-alert {
+  bottom: -10px;
+}
 
 
 
@@ -230,8 +251,26 @@
   }
 }
 
+.scroll-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: #AD343E;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 50%;
+  font-size: 1rem;
+  scroll-behavior: smooth;
+  transition: all 1s;
+  color: white;
+}
 
-
+.body {
+  background-color: red !important;
+}
 
 
 

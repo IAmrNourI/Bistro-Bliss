@@ -36,7 +36,7 @@ export default function ForgetPassword() {
       <section className="login-email">
         <div className="bg-register">
           <section className="register">
-            <form action="">
+            <form onSubmit={(e) => {e.preventDefault(); resetPassword()}}  action="">
               <div className="register-container">
                 <div className="form-floating mb-3">
                   <input

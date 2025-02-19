@@ -10,7 +10,7 @@ export default function Topbar() {
   const [getNotification, setgetNotification] = useState([]);
   const [showNotification, setshowNotification] = useState(false);
   const [isAdmin, setisAdmin] = useState("");
-  const [unSeen, setunSeen] = useState(null)
+  const [unSeen, setunSeen] = useState(null);
   const [shake, setShake] = useState(false);
   let { userLogin, setuserLogin } = useContext(UserContext);
 
@@ -18,9 +18,29 @@ export default function Topbar() {
     const result = await getNotifications()
       .then((res) => {
         setshowNotification(true);
-        // console.log(res)
-        // getUserDate()
+        console.log(res);
+        getUserDate();
         const notificationTime = res.data.data.map((time) => {
+          let newContent;
+          newContent = time.content.split(" ");
+          if (newContent[1] == "booking") {
+            const bookingStatus =
+              time.status === "Accepted" ? "Accepted" : "Rejected";
+
+            const newTime = newContent.slice(4, 9).join(" ");
+            const date = new Date(newTime);
+            const formattedDate = date.toLocaleString("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            });
+            time.content = `Your booking which at ${formattedDate} has been ${bookingStatus}`;
+          }
+
           const dateTime = new Date(time.createdAt);
           const now = new Date();
           const diffInSeconds = Math.floor((now - dateTime) / 1000);
@@ -53,7 +73,7 @@ export default function Topbar() {
     const result = await getUser()
       .then((res) => {
         setuser(res.data.data);
-        setunSeen(res.data.data.unSeenMessages)
+        setunSeen(res.data.data.unSeenMessages);
         console.log(res);
         setisAdmin(res.data.data.role);
       })
@@ -87,7 +107,7 @@ export default function Topbar() {
       const interval = setInterval(() => {
         setShake(true);
         setTimeout(() => setShake(false), 1500);
-      }, 3000); 
+      }, 3000);
 
       return () => clearInterval(interval);
     }
@@ -107,8 +127,8 @@ export default function Topbar() {
                   <p className="p-e">bisto_bliss@bistrobliss</p>
                 </div>
               </div>
-              <div className="col-xl-6">
-                <div className="social d-flex mt-2 pb-2 d-flex justify-content-end">
+              <div className="col-xl-6 d-flex align-items-center justify-content-xl-end justify-content-md-start">
+                <div className="social d-flex mt-2 pb-2 d-flex">
                   <a href="#">
                     <i className="fa-brands fa-twitter text-white "></i>
                   </a>
@@ -122,14 +142,20 @@ export default function Topbar() {
                     <i className="fa-brands fa-github text-white "></i>
                   </a>
                   <a
-                    className="position-relative ms-3"
+                    className={`position-relative ms-3 ${
+                      showNotification ? "triangle" : ""
+                    }`}
                     onClick={() => {
                       if (!showNotification) getUserNotification();
                       setshowNotification((prev) => !prev);
                     }}
                     href="#"
                   >
-                    <span className={user.unSeenMessages > 0 ? "notificationsNumber" : null}>
+                    <span
+                      className={
+                        user.unSeenMessages > 0 ? "notificationsNumber " : null
+                      }
+                    >
                       {unSeen > 0 ? user?.unSeenMessages : null}
                     </span>
                     {showNotification && (
@@ -139,7 +165,11 @@ export default function Topbar() {
                         </h5>
                         {[...getNotification].reverse().map((message) => {
                           return (
-                            <div className="message bg-white text-black mt-2">
+                            <div
+                              className={`message bg-white text-black mt-2 border`}
+                            >
+                              {" "}
+                              {/* ${message.status == "Accepted" ? "border-success": "border-danger"} */}
                               <div
                                 className={
                                   message.unSeen
@@ -147,10 +177,30 @@ export default function Topbar() {
                                     : "p-1 rounded-2"
                                 }
                               >
-                                <p className="px-2 m-0">{message.content}</p>
+                                <p
+                                  className="px-2 m-0"
+                                  dangerouslySetInnerHTML={{
+                                    __html: message.content.replace(
+                                      /(Accepted|Rejected|Shipping|Delivered|cancelled|preparing)/g,
+                                      (match) =>
+                                        `<span class="fw-700 text-decoration-underline text-${
+                                          match === "Accepted"
+                                            ? "success"
+                                            : match === "Rejected"
+                                            ? "danger"
+                                            : match === "Shipping"
+                                            ? "warning"
+                                            : match === "Delivered"
+                                            ? "primary"
+                                            : match === "cancelled"
+                                            ? "black"
+                                            : "secondary"
+                                        }">${match}</span>`
+                                    ),
+                                  }}
+                                />
                                 <span className="px-2 text-secondary fw-500 d-block">
                                   {message.createdAt}
-                                  {/* <hr className="p-0 m-0 mt-2" /> */}
                                 </span>
                               </div>
                             </div>
@@ -158,7 +208,11 @@ export default function Topbar() {
                         })}
                       </div>
                     )}
-                      <i className={`fa-regular fa-bell text-white shak ${shake ? "shaking" : ""}`}></i>
+                    <i
+                      className={`fa-regular fa-bell text-white shak ${
+                        shake ? "shaking" : ""
+                      }`}
+                    ></i>
                   </a>
                   <Link
                     to="/wishlist"
@@ -180,15 +234,14 @@ export default function Topbar() {
                     <i class="fa-regular fa-user"></i>
                   </Link>
 
-                  {isAdmin == "admin" ?                   
-                  <Link
-                    to="/admin"
-                    className="cursor-pointer d-flex align-items-center text-white"
-                  >
-                    <i class="fa-solid fa-user-tie"></i>
-                  </Link>: null}
-
-
+                  {isAdmin == "admin" ? (
+                    <Link
+                      to="/admin"
+                      className="cursor-pointer d-flex align-items-center text-white"
+                    >
+                      <i class="fa-solid fa-user-tie"></i>
+                    </Link>
+                  ) : null}
 
                   <span
                     onClick={() => signout()}

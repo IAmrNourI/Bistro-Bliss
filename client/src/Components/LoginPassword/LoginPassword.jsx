@@ -41,7 +41,7 @@ export default function LoginPassword() {
       <section className="login-email">
         <div className="bg-register">
           <section className="register">
-            <form action="">
+            <form onSubmit={(e) => {e.preventDefault(); verifyPassword()}} action="">
               <div className="register-container">
                 <div className="form-floating mb-3">
                   <input

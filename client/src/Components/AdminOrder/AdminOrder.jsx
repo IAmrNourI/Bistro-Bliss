@@ -24,10 +24,11 @@ export default function AdminOrder() {
         });
     }
 
-    async function accept(id, userId){
+    async function accept(id, userId, index){
         // console.log(id);
-        
-        const result = await acceptOrder({orderId:id, userId})
+        console.log(index);
+
+        const result = await acceptOrder({orderId:id,userId})
         .then((res) => {
         console.log(res); 
         toast.success(res.data.message);    
@@ -139,7 +140,7 @@ return (
 
 
     <div className="col-10 bg-dark">
-        {order?.map((orederItem) => (
+        {order?.map((orederItem,index) => (
             <div className='bg-dark' key={orederItem._id}>
                 <div className="row">
                 {orederItem.menuItems.map((menu) => (
@@ -151,7 +152,7 @@ return (
                     </div>
                 ))}
                 <div className="bg-danger">{orederItem.status}</div>
-                <button onClick={() => accept(orederItem._id, orederItem.user)} className='btn btn-warning w-25 mb-5'>Accept Order</button>
+                <button onClick={() => accept(orederItem._id, orederItem.user,index)} className='btn btn-warning w-25 mb-5'>Accept Order</button>
                 <button onClick={() => cancel(orederItem._id, orederItem.user)} className='btn btn-secondary w-25 mb-5'>Cancel Order</button>
                 <button onClick={() => deliver(orederItem._id, orederItem.user)} className='btn btn-info w-25 mb-5'>Deliver Order</button>
                 <button onClick={() => ship(orederItem._id, orederItem.user)} className='btn btn-light w-25 mb-5'>ship Order</button>

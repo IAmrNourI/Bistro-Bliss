@@ -10,12 +10,46 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function Edit() {
 const navigate = useNavigate()
 const [btnLoding, setbtnLoding] = useState(false);
+const [imagePath, setImagePath] = useState(""); // لحفظ مسار الصورة بعد الرفع
+
 
 const location = useLocation()
-const { phoneNumber,name } = location.state || {};
+const { phoneNumber, name, profilePic } = location.state || {};
 
 
+    
+async function uploadImage() {
+    const input = document.getElementById("image");
+    if (input.files.length === 0) {
+        toast.error("Please select an image and upload.");
+        return;
+    }
 
+    const formData = new FormData();
+    formData.append("image", input.files[0]);
+
+    try {
+        const response = await axios.post(
+            "http://localhost:8085/api/menu/upload",
+            formData,
+            {
+                headers: { "Content-Type": "multipart/form-data" },
+            }
+        );
+        if (response.status === 200) {
+            const uploadedPath = response.data.path;
+            setImagePath(uploadedPath); // حفظ المسار بعد الرفع
+            formik.setFieldValue("profilePic", uploadedPath); // تحديث قيمة الصورة في فورميك
+            toast.success("Image uploaded successfully!");
+            // console.log(uploadedPath)
+        } else {
+            toast.error("Failed to upload image.");
+        }
+    } catch (error) {
+        console.error("Error uploading image:", error);
+        toast.error("An error occurred during the upload.");
+    }
+}
 
 async function update(values) {    
     // console.log(values);
@@ -52,6 +86,7 @@ let validationSchema = Yup.object().shape({
 
 let formik = useFormik({
 initialValues: {
+    profilePic: profilePic || "",
     name: name || "",
     phoneNumber: phoneNumber || "",
 },
@@ -65,6 +100,30 @@ return (
     <section className="register">
         <form onSubmit={formik.handleSubmit} action="">
         <div className="register-container">
+
+        <div className="mb-3 d-flex position-relative pb-3">
+            <input
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                name="image"
+                type="file"
+                accept="image/*"
+                id="image"
+                className="form-control"
+            />
+            <button
+                type="button"
+                onClick={uploadImage}
+                className="upload-btn border px-2 ms-1 rounded-2"
+            >
+                Upload
+            </button>
+            {formik.errors.image ? (
+                <span className="alert text-start text-danger mb-0 p-0 d-block position-absolute upload-alert">
+                    {formik.errors.image}
+                </span>
+            ) : null}
+        </div>
 
             <div className="form-floating mb-3">
             <input

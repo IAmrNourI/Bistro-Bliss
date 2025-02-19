@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { addToCart, getCart, deleteCartItem, checkout } from '../../network/user.api';
 import toast from 'react-hot-toast';
+import { useLocation } from 'react-router-dom';
 
 export default function Cart() {
     const [isLoding, setIsLoding] = useState(false);
     const [items, setitems] = useState([])
     const [total, settotal] = useState("")
     const [cartId, setcartId] = useState("")
+    const { pathname } = useLocation();
 
 
     async function getUserCart(){
@@ -16,6 +18,7 @@ export default function Cart() {
         .then((res) => {
             console.log(res);
             const updatedItems = res.data.data.menuItems.map((item) => {
+                const picture = item.menuItem.image.slice(9)
                 const date = new Date(item.menuItem.createdAt);
                 const monthName = date.toLocaleString("en-US", { month: "long" });
                 const monthNumber = date.getMonth() + 1;
@@ -25,7 +28,8 @@ export default function Cart() {
                     ...item, 
                     menuItem: {
                         ...item.menuItem,
-                        createdAt: newCreatedAt
+                        createdAt: newCreatedAt,
+                        image: picture
                     }
                 };
             });
@@ -93,13 +97,13 @@ export default function Cart() {
 
     async function UserCheckout(id){
         // console.log(id);
-        
         setIsLoding(true);
         const result = await checkout({cartId:id})
         .then((res) => {
         console.log(res); 
         toast.success(res.data.message)
         getUserCart()
+
         setIsLoding(false);    
         })
         .catch((res) => {
@@ -112,6 +116,12 @@ export default function Cart() {
     useEffect(() => {
         getUserCart()
     }, [])
+
+
+    useEffect(() => {
+        window.scrollTo(0,0)
+    }, [pathname]);
+
 
 
 return (
@@ -139,7 +149,7 @@ return (
             <div className="row border-bottom ps-5">
                 <div className="col-4">
                     <div className="d-flex align-items-center py-3 h-100">
-                        <img src={item.menuItem.image} width="60px" alt="" />
+                        <img src={`http://localhost:5173/${item.menuItem.image}`} width="60px" alt="" />
                         <p className='m-0 ms-3'>{item.menuItem.name}</p>
                     </div>
                 </div>
