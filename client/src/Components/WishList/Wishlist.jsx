@@ -42,6 +42,9 @@ export default function Wishlist() {
                 setIsLoding(false);
             })
             .catch((error) => {
+                if(error.response.data.message == "Wishlist is Empty"){
+                    setitems([]);
+                }
                 console.log(error);
                 setIsLoding(false);
             });
@@ -54,6 +57,9 @@ export default function Wishlist() {
         .then((res) => {            
         console.log(res); 
         toast.success(res.data.message)
+        const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]")
+        const updateWishlist = wishlist.filter((item) => item !== id);
+        localStorage.setItem("wishlist", JSON.stringify(updateWishlist))
         getWishCart()
         setIsLoding(false);    
         })

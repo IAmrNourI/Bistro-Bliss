@@ -268,9 +268,44 @@
   color: white;
 }
 
-.body {
-  background-color: red !important;
+.wish-menu-icon {
+  top: 10px;
+  left: 10px;
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
 }
+
+.add-menu {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50px;
+  border: 1px solid #AD343E;
+  /* padding: 8px 18px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: black;
+  font-weight: 600;
+  width: 140px;
+  padding-block: 8px;
+  font-size: 14px;
+}
+
+.add-menu  i {
+  color: #AD343E;
+  padding-right: 10px;
+}
+
 
 
 
