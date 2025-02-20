@@ -11,9 +11,9 @@ const [menu, setmenu] = useState([]);
 const [activeLink, setactiveLink] = useState("All");
 const location = useLocation()
 const [isLoadingCart, setisLoadingCart] = useState(false);
-const [heart, setheart] = useState(false)
-const [currentId, setcurrentId] = useState(0)
 const [subCategory, setsubCategory] = useState([])
+const [currentId, setcurrentId] = useState("")
+
 
 const {category} = location.state || "";
 
@@ -36,15 +36,18 @@ async function addItemToCart(id){
 }
 
 async function addItemToWishlist(id){
+    const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]"); 
     try {
     const result = await addToWishlist({menuItemId:id})
     if(result.data.message == "Item added to wishlist" ){
+            wishlist.push(id);
+            localStorage.setItem("wishlist", JSON.stringify(wishlist))
+            getAllMenu()
         toast(
             <span>
                 {result.data.message} <i className="fa-solid fa-heart cursor-pointer"></i>
             </span>
         );
-
         // toast(
         //     <span>
         //     {result.data.message} <i className="fa-solid fa-heart cursor-pointer"></i>
@@ -62,22 +65,22 @@ async function addItemToWishlist(id){
         // }
         // );
 
-        setheart(prev => ({ ...prev, [id]: !prev[id] }));
     }
     }catch(error){
         if(error.response.data.message == "Item already in wishlist" ){
             const result = await delteWishItem(id)        
-            .then((res) => {            
+            .then((res) => {     
+                const updateWishlist = wishlist.filter((item) => item !== id);
+                localStorage.setItem("wishlist", JSON.stringify(updateWishlist))
+                getAllMenu()
                 toast(
                     <span>
                         {res.data.message} <i className="fa-solid fa-heart-crack cursor-pointer"></i> 
                     </span>
                 );
-                setheart(prev => ({ ...prev, [id]: !prev[id] }));
                 })
                 .catch((res) => {
                 toast.error(res.response.data.message);
-                setheart(prev => ({ ...prev, [id]: !prev[id] }));
                 });
         }
     }
@@ -91,7 +94,7 @@ async function getAllMenu() {
         // setmenu(res.data.items);
         const updateImgSrc = res.data.items.map((img) => {
             let currectSrc = img.image.slice(9);
-            console.log(currectSrc);
+            // console.log(currectSrc);
             return {
                 ...img,
                 image: currectSrc
@@ -251,9 +254,9 @@ return (
         </div>
 
         <div className="row">
-            {menu?.map((item) => (
+            {menu?.map((item ,index) => (
             <div key={item._id} className="col-lg-3 col-md-6 gy-5">
-                <div className="menu-item text-center border border-1 rounded-3 overflow-hidden">
+                <div className="menu-item text-center border border-1 rounded-3 overflow-hidden position-relative">
                 <div className="overflow-hidden">
                     <img
                     className="w-100 img-border"
@@ -261,18 +264,28 @@ return (
                     alt="food"
                     />
                 </div>
-                <div className="p-2">
-                    <p className="price mb-1">${item.price}</p>
+                <div className="p-2 position-relative">
+                    <p className="price mb-1 pt-4">${item.price}</p>
                     <p className="name mb-1">{item.name}</p>
                     <p className="desc mb-2">{item.description}</p>
                     <div className="sub-container">
                         <span></span>
-                        <button className="" onClick={() => addItemToCart(item._id)} >Add To Cart</button>
-                        <span onClick={() => addItemToWishlist(item._id)} className=" h5 mt-2 cursor-pointer mt-3">
-                        <i class="fa-regular fa-heart"></i>
-                        </span>      
+                        {/* <button className="" onClick={() => addItemToCart(item._id)} >Add To Cart</button>    */}
                     </div>
+                    <button className="position-absolute add-menu" onClick={() => addItemToCart(item._id)}> <i className="fa-solid fa-cart-shopping"></i> Add To Cart</button>   
                 </div>
+                    <span onClick={() => addItemToWishlist(item._id)} className="wish-menu-icon position-absolute"
+                        onMouseEnter={() => setcurrentId(item._id)} 
+                        onMouseLeave={() => setcurrentId(null)}
+                        >
+                        {/* <i className="fa-regular fa-heart"></i> */}
+                        <i 
+                            className={` ${JSON.parse(localStorage.getItem("wishlist") || "[]").includes(item._id) 
+                            ? (currentId == item._id ? "fa-solid fa-heart-crack text-danger" : "fa-solid fa-heart text-danger") 
+                            : "fa-regular fa-heart text-black"}`}
+                        >
+                        </i>
+                    </span>   
                 </div>
             </div>
             ))}
