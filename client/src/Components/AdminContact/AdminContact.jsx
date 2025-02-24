@@ -74,7 +74,6 @@ return (
                         <td>{contact.subject}</td>
                         <td>
                             {contact.message}{" "}
-                            <input className="test" type="checkbox" />
                         </td>
                     </tr>
                 </tbody>

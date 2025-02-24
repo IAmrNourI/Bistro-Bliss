@@ -12,7 +12,8 @@ let navigate = useNavigate();
 const [order, setorder] = useState([])
 const [activeOrder, setactiveOrder] = useState([])
 const [activeLink, setactiveLink] = useState("My Orders");
-const [autoOrders, setautoOrders] = useState(true)
+const [historyOrders, sethistoryOrders] = useState([])
+const [profilePic, setprofilePic] = useState("")
 
 
 async function getUserDate() {
@@ -20,6 +21,9 @@ const result = await getUser()
     .then((res) => {
     console.log(res);
     setuser(res.data.data);
+    const picture = res.data.data.profilePic.slice(9)
+    setprofilePic(picture)
+    console.log(picture);
     })
     .catch((res) => {
     console.log(res);
@@ -77,24 +81,50 @@ async function cancelBooking(id){
     // console.log(res);
 }
 
-async function getAllOrder(){
-    const result = await getUserOrder()
+// async function getAllOrder(){
+//     const result = await getUserOrder()
+//     .then((res) => {
+//     console.log(res);
+//     // toast.success(res.data.message); 
+//         const updatedItems = res.data.orders.map((order) => {
+//             const date = new Date(order.updatedAt);
+//             const monthName = date.toLocaleString("en-US", { month: "long" });
+//             const monthNumber = date.getMonth() + 1;
+//             const year = date.getFullYear();
+//             const newCreatedAt = `${monthName} ${monthNumber}, ${year}`;
+//             return{
+//                 ...order,
+//                 updatedAt: newCreatedAt
+//             }
+//         })
+//     setorder(updatedItems);
+//     console.log(updatedItems);
+//     })
+//     .catch((res) => {
+//     toast.error(res.response.data.message);
+//     console.log(res)
+//     });
+// }
+
+async function getUserActiveOrder(){
+    const result = await getActiveOrder()
     .then((res) => {
-    console.log(res);
+    console.log("active order",res);
     // toast.success(res.data.message); 
-        const updatedItems = res.data.orders.map((order) => {
-            const date = new Date(order.updatedAt);
-            const monthName = date.toLocaleString("en-US", { month: "long" });
-            const monthNumber = date.getMonth() + 1;
-            const year = date.getFullYear();
-            const newCreatedAt = `${monthName} ${monthNumber}, ${year}`;
-            return{
-                ...order,
-                updatedAt: newCreatedAt
-            }
-        })
-    setorder(updatedItems);
-    console.log(updatedItems);
+    const updatedItems = res.data.activeOrders.map((order) => {
+        const updatedMenuItems = order.menuItems.map((menuItem) => {
+            const imgSrc = menuItem.menuItem.image.slice(9)
+            return {
+                ...menuItem,
+                menuItem: {
+                    ...menuItem.menuItem,
+                    image: imgSrc
+                }
+            };
+        });
+        return { ...order, menuItems: updatedMenuItems };
+    })
+    setactiveOrder(updatedItems);
     })
     .catch((res) => {
     toast.error(res.response.data.message);
@@ -102,12 +132,26 @@ async function getAllOrder(){
     });
 }
 
-async function getUserActiveOrder(){
-    const result = await getActiveOrder()
+async function getUserHistoryOrder(){
+    const result = await getHistoryOrder()
     .then((res) => {
-    console.log("active order",res);
+    console.log("history order",res);
     // toast.success(res.data.message); 
-    setactiveOrder(res.data.activeOrders);
+    const updatedItems = res.data.historyOrders.map((order) => {
+        const updatedMenuItems = order.menuItems.map((menuItem) => {
+            const imgSrc = menuItem.menuItem.image.slice(9)
+            return {
+                ...menuItem,
+                menuItem: {
+                    ...menuItem.menuItem,
+                    image: imgSrc
+                }
+            };
+        });
+        return { ...order, menuItems: updatedMenuItems };
+    })
+    console.log(updatedItems);
+    sethistoryOrders(updatedItems);
     })
     .catch((res) => {
     toast.error(res.response.data.message);
@@ -118,15 +162,14 @@ async function getUserActiveOrder(){
 useEffect(() => {
 getUserDate();
 getUserActiveOrder()
+getUserHistoryOrder()
 // showBooking();
-if(autoOrders == true){
-    getAllOrder();
-}
+    setactiveLink("Active Orders");
 }, []);
 
 return (
 <>
-    <section className="bg">
+<section className="bg pb-5">
     <div className="container">
         <div className="p-y w-100">
         {user ? (
@@ -136,7 +179,7 @@ return (
                 <img
                     width="100px"
                     className="rounded-circle mb-3 image-profile"
-                    src={userpic}
+                    src={`http://localhost:5173/${profilePic}`}
                     alt=""
                 />
                 <div className="profile-details">
@@ -150,7 +193,7 @@ return (
                         <span className="fw-500 text-black">{user.phoneNumber}</span>
                     </h6>
                 </div>
-                <button onClick={() => updateData(user.name, user.phoneNumber)} className="button-edit">Edit</button>
+                <button onClick={() => updateData(user.name, user.phoneNumber, profilePic,)} className="button-edit">Edit</button>
                 </div>
             {/* </div> */}
             </>
@@ -164,17 +207,32 @@ return (
         <div className="row d-flex justify-content-center mt-4 ">
             <div
             onClick={() => {
-                setactiveLink("My Orders");
-                getAllOrder();
+                setactiveLink("Active Orders");
+                getUserActiveOrder();
             }}
             className={
-                activeLink === "My Orders"
-                ? "col-lg-6 mb-3 btn-category active-menu"
-                : "col-lg-6 mb-3 btn-category bg-white cursor-pointer" 
+                activeLink === "Active Orders"
+                ? "col-lg-6 mb-3 btn-category active-menu w-auto"
+                : "col-lg-6 mb-3 btn-category bg-white cursor-pointer w-auto" 
             }
             >
-            <span>My Orders</span>
+            <span>Active Orders</span>
             </div>
+
+            <div
+            onClick={() => 
+                {setactiveLink("History Orders")
+                getUserHistoryOrder()
+            }}
+            className={
+                activeLink === "History Orders"
+                ? "col-lg-6 mb-3 btn-category active-menu w-auto"
+                : "col-lg-6 mb-3 btn-category bg-white cursor-pointer w-auto"
+            }
+            >
+            <span>History Order</span>
+            </div>
+
             <div
             onClick={() => 
                 {setactiveLink("My Booking")
@@ -190,7 +248,7 @@ return (
             </div>
         </div>
 
-        <section className="mt-4">
+        <section className="mt-5">
                 {activeLink == "My Booking" ? (
                     <div className="row">
                     <div className="col-12">
@@ -239,8 +297,8 @@ return (
         </section>
 
         <section className="mt-4">
-            {activeLink == "My Orders" ? (
-            order?.map((orederItem) => (
+            {activeLink == "Active Orders" ? (
+            activeOrder?.map((orederItem) => (
                 <>
                     <div className="row border-bottom">
                         <div className="col-lg-3 col-md-4 col-sm-4 col-4">
@@ -257,7 +315,7 @@ return (
                     <div className="row mb-5">
                         <div className="col-md-8">
                             <div className="row">
-                            {orederItem.menuItems.map((menu) => (
+                            {orederItem?.menuItems?.map((menu) => (
                         <>
                                 <div className="col-5 border-bottom">
                                     <div className="d-flex align-items-center py-3 h-100">
@@ -305,9 +363,9 @@ return (
             ): null}
         </section>
 
-        {/* <section className="mt-4 bg-info-subtle">
-            {activeLink == "My Orders" ? (
-            activeOrder?.map((orederItem) => (
+        <section className="mt-4">
+            {activeLink == "History Orders" ? (
+            historyOrders?.map((orederItem) => (
                 <>
                     <div className="row border-bottom">
                         <div className="col-lg-3 col-md-4 col-sm-4 col-4">
@@ -324,7 +382,7 @@ return (
                     <div className="row mb-5">
                         <div className="col-md-8">
                             <div className="row">
-                            {orederItem.menuItems.map((menu) => (
+                            {orederItem?.menuItems?.map((menu) => (
                         <>
                                 <div className="col-5 border-bottom">
                                     <div className="d-flex align-items-center py-3 h-100">
@@ -370,11 +428,10 @@ return (
                 </>
             ))
             ): null}
-        </section> */}
+        </section>
 
     </div>
     </section>
-
 </>
 );
 }

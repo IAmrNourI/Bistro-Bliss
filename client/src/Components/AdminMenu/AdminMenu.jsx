@@ -8,12 +8,24 @@ export default function RecentMenu() {
 const navigate = useNavigate();
 const [menu, setmenu] = useState([]);
 const [activeLink, setactiveLink] = useState("All");
+const [subCategory, setsubCategory] = useState([])
 
 async function getAllMenu() {
     const result = await items()
     .then((res) => {
-        console.log(res.data.items);
-        setmenu(res.data.items);
+        console.log("menu",res.data.items);
+        // setmenu(res.data.items);
+        const updateImgSrc = res.data.items.map((img) => {
+            let currectSrc = img.image.slice(9);
+            console.log(currectSrc);
+            return {
+                ...img,
+                image: currectSrc
+            }
+        })
+        setmenu(updateImgSrc);
+        setsubCategory(updateImgSrc)
+        
     })
     .catch((res) => {
         console.log(res);
@@ -24,7 +36,7 @@ async function getAllMenu() {
 async function getBreakfastMenu() {
     const result = await items()
     .then((res) => {
-        let breakfastMenu = res.data.items.filter((item) => item.category == "Breakfast")
+        let breakfastMenu = subCategory.filter((item) => item.category == "Breakfast")
         setmenu(breakfastMenu);
     })
     .catch((res) => {
@@ -35,7 +47,7 @@ async function getBreakfastMenu() {
 async function getMainDishesMenu() {
     const result = await items()
     .then((res) => {
-        let MainDishes = res.data.items.filter((item) => item.category == "Main Dishes")
+        let MainDishes = subCategory.filter((item) => item.category == "Main Dishes")
         setmenu(MainDishes);
     })
     .catch((res) => {
@@ -43,11 +55,10 @@ async function getMainDishesMenu() {
     });
 }
 
-
 async function getDrinksMenu() {
     const result = await items()
     .then((res) => {
-        let Drinks = res.data.items.filter((item) => item.category == "Drinks")
+        let Drinks = subCategory.filter((item) => item.category == "Drinks")
         setmenu(Drinks);
     })
     .catch((res) => {
@@ -58,13 +69,14 @@ async function getDrinksMenu() {
 async function getDessertsMenu() {
     const result = await items()
     .then((res) => {
-        let Desserts = res.data.items.filter((item) => item.category == "Desserts")
+        let Desserts = subCategory.filter((item) => item.category == "Desserts")
         setmenu(Desserts);
     })
     .catch((res) => {
         console.log(res);
     });
 }
+
 
 async function removeItem(id) {
     const result = await deleteItem({ id })

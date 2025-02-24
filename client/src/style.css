@@ -1,3 +1,7 @@
+.bg-notfication {
+  background-color: #f1f1f1;
+}
+
 .add-btn {
     background-color: #AD343E;
     color: white;
@@ -62,7 +66,6 @@
 .price-order {
     display: flex;
     justify-content: space-between;
-
 }
 
 .confirmed {
@@ -182,23 +185,57 @@
 
 .notfication-container {
   width: 400px;
-  height: auto;
+  /* height: auto; */
   z-index: 500;
   background-color: white;
   margin-top: 39px;
   border-radius: 5px;
   right: -290px;
-  
+  max-height: 520px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@keyframes shake {
+  0% { transform: rotate(20deg); }
+  20% { transform: rotate(-20deg); }
+  40% { transform: rotate(20deg); }
+  60% { transform: rotate(-20deg); }
+  80% { transform: rotate(20deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.shaking {
+  animation: shake 1s ease-in-out;
+}
+
+.shak:hover {
+  animation: shake 1s ease-in-out;
+}
+
+.fw-700 {
+  font-weight: 700;
 }
 
 
+.triangle {
+  position: relative;
+}
 
+.triangle::after{
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-top: 0;
+  margin-left: 4px;
+  border-color: transparent transparent white transparent;
+}
 
-
-
-
-
-
+.upload-alert {
+  bottom: -10px;
+}
 
 
 
@@ -214,7 +251,60 @@
   }
 }
 
+.scroll-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: #AD343E;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 50%;
+  font-size: 1rem;
+  scroll-behavior: smooth;
+  transition: all 1s;
+  color: white;
+}
 
+.wish-menu-icon {
+  top: 10px;
+  left: 10px;
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-menu {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50px;
+  border: 1px solid #AD343E;
+  /* padding: 8px 18px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: black;
+  font-weight: 600;
+  width: 140px;
+  padding-block: 8px;
+  font-size: 14px;
+}
+
+.add-menu  i {
+  color: #AD343E;
+  padding-right: 10px;
+}
 
 
 

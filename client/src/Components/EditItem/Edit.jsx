@@ -33,10 +33,6 @@ async function edit(values) {
     toast.error(res.response.data.message);
     setbtnLoding(false);
     });
-
-// // console.log(result);
-// let res = await axios.post(`http://localhost:8085/api/register`, values);
-// console.log(res);
 }
 
 let validationSchema = Yup.object().shape({
@@ -92,7 +88,7 @@ return (
             />
             <label htmlFor="floatingInput">Name</label>
             {formik.errors.name ? (
-                <span className="alert alert-danger p-0 mt-1 d-block">
+                <span className="alert text-start text-danger mb-0 p-0 d-block">
                 {formik.errors.name}
                 </span>
             ) : null}
@@ -111,7 +107,7 @@ return (
             />
             <label htmlFor="floatingInput">Price</label>
             {formik.errors.price ? (
-                <span className="alert alert-danger p-0 mt-1 d-block">
+                <span className="alert text-start text-danger mb-0 p-0 d-block">
                 {formik.errors.price}
                 </span>
             ) : null}
@@ -136,7 +132,7 @@ return (
             </select>
             <label htmlFor="category">Category</label>
             {formik.errors.category ? (
-                <span className="alert alert-danger p-0 mt-1 d-block">
+                <span className="alert text-start text-danger mb-0 p-0 d-block">
                 {formik.errors.category}
                 </span>
             ) : null}
@@ -155,7 +151,7 @@ return (
             />
             <label htmlFor="floatingInput">description</label>
             {formik.errors.description ? (
-                <span className="alert alert-danger p-0 mt-1 d-block">
+                <span className="alert text-start text-danger mb-0 p-0 d-block">
                 {formik.errors.description}
                 </span>
             ) : null}

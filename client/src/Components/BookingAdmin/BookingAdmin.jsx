@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   acceptBooking,
   getAllBooking,
+  getNotifications,
   getPendingBooking,
   getUpcomingBooking,
   rejectBooking,
@@ -36,6 +37,7 @@ export default function BookingAdmin() {
       });
   }
 
+
   async function accept(id, userId) {
     const result = await acceptBooking(id,userId)
       .then((res) => {
@@ -47,6 +49,7 @@ export default function BookingAdmin() {
             msg: "Your booking has been accepted.",
           });
           toast.success("Notification sent!");
+          
         } else {
           toast.error("Socket not connected.");
         }

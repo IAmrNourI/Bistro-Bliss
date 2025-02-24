@@ -9,6 +9,42 @@ import toast from 'react-hot-toast';
 export default function Register() {
   const navigate = useNavigate();
   const [btnLoding, setbtnLoding] = useState(false)
+  const [imagePath, setImagePath] = useState(""); // لحفظ مسار الصورة بعد الرفع
+
+
+    
+  async function uploadImage() {
+    const input = document.getElementById("image");
+    if (input.files.length === 0) {
+      toast.error("Please select an image and upload.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", input.files[0]);
+
+    try {
+        const response = await axios.post(
+            "http://localhost:8085/api/menu/upload",
+            formData,
+            {
+                headers: { "Content-Type": "multipart/form-data" },
+            }
+        );
+        if (response.status === 200) {
+            const uploadedPath = response.data.path;
+            setImagePath(uploadedPath); // حفظ المسار بعد الرفع
+            formik.setFieldValue("profilePic", uploadedPath); // تحديث قيمة الصورة في فورميك
+            toast.success("Image uploaded successfully!");
+            // console.log(uploadedPath)
+        } else {
+            toast.error("Failed to upload image.");
+        }
+    } catch (error) {
+        console.error("Error uploading image:", error);
+        toast.error("An error occurred during the upload.");
+    }
+}
 
   async function handleRegister(values) {
     setbtnLoding(true)
@@ -54,11 +90,13 @@ export default function Register() {
       email: "",
       phoneNumber: "",
       password: "",
-      profilePic:"static"
+      profilePic:""
     },
     validationSchema,
     onSubmit: handleRegister,
   });
+
+
 
   return (
     <>
@@ -66,6 +104,30 @@ export default function Register() {
         <section className="register">
           <form onSubmit={formik.handleSubmit} action="">
             <div className="register-container">
+            <div className="mb-3 d-flex position-relative pb-3">
+                            <input
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                name="image"
+                                type="file"
+                                accept="image/*"
+                                id="image"
+                                className="form-control"
+                            />
+                            <button
+                                type="button"
+                                onClick={uploadImage}
+                                className="upload-btn border px-2 ms-1 rounded-2"
+                            >
+                                Upload
+                            </button>
+                            {formik.errors.image ? (
+                                <span className="alert text-start text-danger mb-0 p-0 d-block position-absolute upload-alert">
+                                    {formik.errors.image}
+                                </span>
+                            ) : null}
+              </div>
+
               <div className="form-floating mb-3">
                 <input
                   onBlur={formik.handleBlur}
@@ -79,7 +141,7 @@ export default function Register() {
                 />
                 <label htmlFor="floatingInput">Enter your name</label>
                 {formik.errors.name ? (
-                  <span className="alert alert-danger p-0 mt-1 d-block">
+                  <span className="alert text-start text-danger mb-0 p-0 mt-1 d-block">
                     {formik.errors.name}
                   </span>
                 ) : null}
@@ -98,7 +160,7 @@ export default function Register() {
                 />
                 <label htmlFor="floatingInput">Email address</label>
                 {formik.errors.email ? (
-                  <span className="alert alert-danger p-0 mt-1 d-block">
+                  <span className="alert text-start text-danger mb-0 p-0 mt-1 d-block">
                     {formik.errors.email}
                   </span>
                 ) : null}
@@ -117,7 +179,7 @@ export default function Register() {
                 />
                 <label htmlFor="floatingInput">Phone</label>
                 {formik.errors.phoneNumber ? (
-                  <span className="alert alert-danger p-0 mt-1 d-block">
+                  <span className="alert text-start text-danger mb-0 p-0 mt-1 d-block">
                     {formik.errors.phoneNumber}
                   </span>
                 ) : null}
@@ -136,15 +198,19 @@ export default function Register() {
                 />
                 <label htmlFor="floatingInput">Password</label>
                 {formik.errors.password ? (
-                  <span className="alert alert-danger p-0 mt-1 d-block">
+                  <span className="alert text-start text-danger mb-0 p-0 mt-1 d-block">
                     {formik.errors.password}
                   </span>
                 ) : null}
               </div>
 
-              <button type="submit" className="btn btn-register w-100">
-                {btnLoding ? <i className='fas fa-spinner fa-spin'></i> : "Register" }  
-              </button>
+              <button
+                  type="submit"
+                  className="btn btn-register w-100"
+                  disabled={!imagePath || btnLoding} // منع الإضافة بدون صورة
+                  >
+                  {btnLoding ? <i className="fas fa-spinner fa-spin"></i> : "Register"}
+                </button>
             </div>
           </form>
         </section>

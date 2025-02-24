@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { addToCart, delteWishItem, getWishlist } from '../../network/user.api';
 import toast from 'react-hot-toast';
+import { useLocation } from 'react-router-dom';
 
 
 
@@ -9,6 +10,8 @@ export default function Wishlist() {
     const [items, setitems] = useState([])
     const [icon, seticon] = useState(null)
     const [currentId, setcurrentId] = useState(0)
+    const { pathname } = useLocation();
+
 
     async function getWishCart() {
         setIsLoding(true);
@@ -18,6 +21,7 @@ export default function Wishlist() {
                 console.log(res);
                 
                 const updatedItems = res.data.data.menuItems.map((item) => {
+                    const picture = item.menuItem.image.slice(9)
                     const date = new Date(item.menuItem.createdAt);
                     const monthName = date.toLocaleString("en-US", { month: "long" });
                     const monthNumber = date.getMonth() + 1;
@@ -28,7 +32,8 @@ export default function Wishlist() {
                         ...item, 
                         menuItem: {
                             ...item.menuItem,
-                            createdAt: newCreatedAt
+                            createdAt: newCreatedAt,
+                            image: picture
                         }
                     };
                 });
@@ -37,6 +42,9 @@ export default function Wishlist() {
                 setIsLoding(false);
             })
             .catch((error) => {
+                if(error.response.data.message == "Wishlist is Empty"){
+                    setitems([]);
+                }
                 console.log(error);
                 setIsLoding(false);
             });
@@ -49,6 +57,9 @@ export default function Wishlist() {
         .then((res) => {            
         console.log(res); 
         toast.success(res.data.message)
+        const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]")
+        const updateWishlist = wishlist.filter((item) => item !== id);
+        localStorage.setItem("wishlist", JSON.stringify(updateWishlist))
         getWishCart()
         setIsLoding(false);    
         })
@@ -78,6 +89,11 @@ export default function Wishlist() {
     useEffect(() => {
         getWishCart()
     }, [])
+
+    useEffect(() => {
+        window.scrollTo(0,0)
+    },[pathname]);
+    
 
 return (
 
@@ -114,7 +130,7 @@ return (
                 </div>
                 <div className="col-4">
                     <div className="d-flex align-items-center py-3 h-100">
-                        <img src={item.menuItem.image} width="60px" alt="" />
+                        <img src={`http://localhost:5173/${item.menuItem.image}`} width="60px" alt="" />
                         <p className='m-0 ms-3'>{item.menuItem.name}</p>
                     </div>
                 </div>

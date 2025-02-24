@@ -1,30 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import vedioPic from "../../assets/aboutVideo.png";
 
 export default function Vedio() {
+    const [showVideo, setShowVideo] = useState(false);
+
 return (
 <>
     <section className="vedio">
-        <div className="about-vedio position-relative">
-            <div class="position-absolute d-flex flex-column justify-content-center align-items-center">
-                <button 
-                onClick={() => window.open("https://www.youtube.com/watch?v=invOCNXAYKc", "_blank")} 
-                class="btn-vedio mb-2">
-                <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    height="1.3em"
-                    width="1.3em"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"></path>
-                </svg>
-                </button>
-                <h1 class="text-white vedio-header">
-                    Feel the authentic & <br /> original taste from us
-                </h1>
+    <div className="about-vedio position-relative">
+            <div className="position-absolute w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+                {!showVideo ? (
+                    <button 
+                        onClick={() => setShowVideo(true)} 
+                        className="btn-vedio mb-2"
+                    >
+                        <svg
+                            stroke="currentColor"
+                            fill="currentColor"
+                            strokeWidth="0"
+                            viewBox="0 0 512 512"
+                            height="1.3em"
+                            width="1.3em"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"></path>
+                        </svg>
+                    </button>
+                ) : (
+                    <iframe 
+                        className="position-absolute w-100 h-100"
+                        src="https://www.youtube.com/embed/invOCNXAYKc?autoplay=1" 
+                        title="YouTube video player" 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowFullScreen
+                    ></iframe>
+                )}
+
+                {!showVideo && (
+                    <h1 className="text-white vedio-header">
+                        Feel the authentic & <br /> original taste from us
+                    </h1>
+                )}
             </div>
         </div>
         <div className="container">
@@ -32,7 +49,7 @@ return (
                 <div className="col-md-4">
                     <div className="vedio-item">
                         <div className="icon">
-                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-4xl mt-[-4px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M19,15 L23,15 L23,1 L9,1 L9,5 M15,19 L19,19 L19,5 L5,5 L5,9 M1,23 L15,23 L15,9 L1,9 L1,23 L1,23 L1,23 Z"></path></svg>
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" className="text-4xl mt-[-4px]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M19,15 L23,15 L23,1 L9,1 L9,5 M15,19 L19,19 L19,5 L5,5 L5,9 M1,23 L15,23 L15,9 L1,9 L1,23 L1,23 L1,23 Z"></path></svg>
                         </div>
                         <div className="vedio-text">
                             <p>Multi Cuisine</p>

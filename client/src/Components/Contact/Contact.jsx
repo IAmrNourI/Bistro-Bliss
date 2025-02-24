@@ -43,11 +43,11 @@ export default function Contact() {
     subject: Yup.string()
     .min(5, "Please enter at least 5 characters")
     .max(20, "Maximum 20 characters allowed")
-        .required("Subject is erquired"),
+        .required("Subject is required"),
     message: Yup.string()
     .min(5, "Please enter at least 5 characters")
     .max(200, "Maximum 200 characters allowed")
-        .required("Message is erquired"),
+        .required("Message is required"),
     });
 
     let formik = useFormik({
@@ -88,7 +88,7 @@ return (
                         type="text" 
                         placeholder='Enter your name ' />
                         {formik.errors.name ? (
-                        <span className="alert alert-danger p-0 mt-1 d-block">
+                        <span className="alert text-start text-danger mb-0 p-0 d-block">
                             {formik.errors.name}
                         </span>
                         ) : null}
@@ -105,7 +105,7 @@ return (
                         type="email" 
                         placeholder='Enter email address' />
                         {formik.errors.email ? (
-                        <span className="alert alert-danger p-0 mt-1 d-block">
+                        <span className="alert text-start text-danger mb-0 p-0 d-block">
                             {formik.errors.email}
                         </span>
                         ) : null}
@@ -124,7 +124,7 @@ return (
                         type="text" 
                         placeholder='Write a subject' />
                         {formik.errors.subject ? (
-                        <span className="alert alert-danger p-0 mt-1 d-block">
+                        <span className="alert text-start text-danger mb-0 p-0 d-block">
                             {formik.errors.subject}
                         </span>
                         ) : null}
@@ -143,7 +143,7 @@ return (
                         id="message">
                         </textarea>
                         {formik.errors.message ? (
-                        <span className="alert alert-danger p-0 mt-1 d-block">
+                        <span className="alert text-start text-danger mb-0 p-0 d-block">
                         {formik.errors.message}
                         </span>
                         ) : null}

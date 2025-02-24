@@ -10,7 +10,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bg {
-    background-color: #f9f9f7;
+    background-color: #f7f7f7;
 }
 
 li {
@@ -1024,6 +1024,7 @@ input {
     animation: fadeLeft 1s ease;
     animation-timeline: view();
     animation-range: entry 0% cover 40%;
+    /* Scroll problem */
 }
 
 .menu-item .price {
