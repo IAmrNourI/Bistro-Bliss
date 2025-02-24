@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { addToCart, addToWishlist, delteWishItem, items } from "../../network/user.api";
+import { addToCart, addToWishlist, delteWishItem, items, searchMenu } from "../../network/user.api";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 
@@ -102,7 +102,6 @@ async function getAllMenu() {
         })
         setmenu(updateImgSrc);
         setsubCategory(updateImgSrc)
-        
     })
     .catch((res) => {
         console.log(res);
@@ -151,6 +150,25 @@ async function getDessertsMenu() {
     .catch((res) => {
         console.log(res);
     });
+}
+
+async function handleSearch(e){
+    const value = e.target.value
+    try {
+        const result = await searchMenu({ search: value })
+        const updateImgSrc = result.data.data.map((img) => {
+            let currectSrc = img.image.slice(9);
+            // console.log(currectSrc);
+            return {
+                ...img,
+                image: currectSrc
+            }
+        })
+        console.log(result);
+        setmenu(updateImgSrc)
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 
@@ -252,6 +270,22 @@ return (
             <span>Desserts</span>
             </div>
         </div>
+
+        <div className="row justify-content-center">
+            <div className="col-md-6">
+                <div className="position-relative">
+                    <input
+                        onChange={handleSearch}
+                        name="phoneNumber"
+                        type="serch"
+                        className="form-control mt-4"
+                        placeholder="Search"
+                    />
+                    <i className="fa-solid fa-magnifying-glass position-absolute search-icon"></i>
+                </div>
+            </div>
+        </div>
+
 
         <div className="row">
             {menu?.map((item ,index) => (

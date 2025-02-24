@@ -299,6 +299,7 @@
   width: 140px;
   padding-block: 8px;
   font-size: 14px;
+  transition: 0.3s;
 }
 
 .add-menu  i {
@@ -306,24 +307,44 @@
   padding-right: 10px;
 }
 
+.accept {
+  background-color: #198754;
+  border-color: #198754;
+}
 
+.deliverd {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
 
+.ship {
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
 
+.search-icon {
+  padding: 7px;
+  right: 5px;
+  top: 5px;
+  color: black;
+  } 
 
+  .form-control:focus {
+  border-color: #AD343E !important;
+  box-shadow: 0 0 5px #AD343E !important;
+}
 
+.add-menu:hover {
+  box-shadow: 0 0 10px #AD343E !important;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+.time-input {
+  width: 30px;
+  outline: none;
+  /* margin-top: 10px; */
+  border: 2px solid;
+  border-radius: 5px;
+}
 
 
 

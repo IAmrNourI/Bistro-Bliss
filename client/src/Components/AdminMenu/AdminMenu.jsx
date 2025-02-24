@@ -97,12 +97,21 @@ async function handleSearch(e){
     const value = e.target.value
     try {
         const result = await searchMenu({ search: value })
+        const updateImgSrc = result.data.data.map((img) => {
+            let currectSrc = img.image.slice(9);
+            // console.log(currectSrc);
+            return {
+                ...img,
+                image: currectSrc
+            }
+        })
         console.log(result);
-        setmenu(result.data.data)
+        setmenu(updateImgSrc)
     } catch (error) {
         console.error(error);
     }
 }
+
 
 useEffect(() => {
     getAllMenu();
@@ -185,17 +194,23 @@ return (
                     <span>Desserts</span>
                     </div>
                 </div>
+
                 <div className="row">
-                    <div className="form-floating mb-3">
-                    <input
-                        onChange={handleSearch}
-                        name="phoneNumber"
-                        type="serch"
-                        className="form-control"
-                        placeholder=""
-                    />
-                    <label htmlFor="floatingInput" className="ms-3">Search (name, description, category)</label>
+                    
+                <div className="row justify-content-center">
+                    <div className="col-md-6">
+                        <div className="position-relative">
+                            <input
+                                onChange={handleSearch}
+                                name="phoneNumber"
+                                type="serch"
+                                className="form-control mt-4"
+                                placeholder="Search"
+                            />
+                            <i className="fa-solid fa-magnifying-glass position-absolute search-icon"></i>
+                        </div>
                     </div>
+                </div>
 
 
                     <div className="col-lg-3 col-md-6 gy-5">
