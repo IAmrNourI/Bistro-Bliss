@@ -108,7 +108,7 @@ export default function Cart() {
         })
         .catch((res) => {
         console.log(res)
-        toast.error(res.response.data.message);
+        // toast.error(res.response.data.message);
         setIsLoding(false); 
         });
     }
