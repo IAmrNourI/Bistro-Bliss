@@ -247,14 +247,47 @@ return (
                 <h6 className=" mt-1 text-center">{orederItem.status}</h6>
                 {/* <span class="loader"></span> */}
 
-                {JSON.parse(
-                    localStorage.getItem("acceptedOrders")
-                )?.includes(orederItem._id) ? (
-                    <>
-                    {orederItem.status === "preparing" || orederItem.status === "shipping" ? 
-                    <>                    
+                {orederItem.status === "pending" ? 
+                <>
                     <button
-                        disabled={orederItem.status === "preparing"}
+                        onClick={() => {
+                        setshowTime(true);
+                        setcurrentId(orederItem._id);
+                        }}
+                        className="add-btn accept mt-2"
+                    >
+                        Accept Order
+                    </button>
+                    <button
+                            onClick={() =>
+                            cancel(orederItem._id, orederItem.user)
+                            }
+                            className="add-btn cancel mt-2"
+                        >
+                            Cancel Order
+                    </button>
+                </> : null }
+
+                {orederItem.status === "preparing" ? 
+                <>
+                    <button
+                        onClick={() => ship(orederItem._id, orederItem.user)}
+                        className="add-btn ship mt-2"
+                    >
+                        ship Order
+                    </button> 
+                    <button
+                            onClick={() =>
+                            cancel(orederItem._id, orederItem.user)
+                            }
+                            className="add-btn cancel mt-2"
+                        >
+                            Cancel Order
+                    </button>
+                </> : null }
+
+                {orederItem.status === "shipping" ? <>
+                    <button
                         onClick={() =>
                         deliver(orederItem._id, orederItem.user)
                         }
@@ -263,38 +296,21 @@ return (
                         Deliver Order
                     </button>
                     <button
-                        disabled={orederItem.status === "shipping"}
-                        onClick={() => ship(orederItem._id, orederItem.user)}
-                        className="add-btn ship mt-2"
-                    >
-                        ship Order
-                    </button> </>:null }
-                    </>
-                ) : (
+                            onClick={() =>
+                            cancel(orederItem._id, orederItem.user)
+                            }
+                            className="add-btn cancel mt-2"
+                        >
+                            Cancel Order
+                    </button>
+                </>: null}
 
-                    <>
-                    {orederItem.status === "cancelled" ? <></> : <>
-                        <button
-                        disabled={orederItem.status === "cancelled"}
-                        onClick={() => {
-                        setshowTime(true);
-                        setcurrentId(orederItem._id);
-                        }}
-                        className="add-btn accept"
-                    >
-                        Accept Order
-                    </button>
-                    <button
-                        onClick={() =>
-                        cancel(orederItem._id, orederItem.user)
-                        }
-                        className="add-btn cancel mt-2"
-                    >
-                        Cancel Order
-                    </button>
-                    </>}
-                    </>
-                )}
+                {orederItem.status === "delivered" ? <>
+                </>: null}
+                {orederItem.status === "cancelled" ? <>
+                </>: null}
+
+
 
                 {showTime && currentId == orederItem._id ? (
                     <div className="mt-2">
