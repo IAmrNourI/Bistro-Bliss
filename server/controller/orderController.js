@@ -98,8 +98,8 @@ exports.acceptOrder = async (req, res) => {
     estimatedTime =
       new Date(Date.now() + (hours) * 1000 * 60 * 60 + minutes * 1000 * 60);
     order.estimatedTime = estimatedTime;
-    order.acceptedAt = new Date(Date.now());
     await order.save();
+    console.log("estimated time", estimatedTime);
     
 
     formatedEstimatedTime = estimatedTime.toLocaleString("en-US", {
@@ -156,7 +156,6 @@ exports.shipOrder = async (req, res) => {
       });
     }
     order.status = "shipping";
-    order.shippedAt = new Date(Date.now());
     await order.save();
 
     const createdAt = new Date(order.createdAt);
@@ -205,7 +204,6 @@ exports.deliverOrder = async (req, res) => {
       });
     }
     order.status = "delivered";
-    order.deliveredAt = new Date(Date.now());
     await order.save();
 
     const createdAt = new Date(order.createdAt);
@@ -247,9 +245,9 @@ exports.cancelOrder = async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: "Order not found", error: true });
     }
-    if (order.status !== "cancelled") {
+    if (order.status !== "pending") {
       return res.status(404).json({
-        message: `Order is already ${order.status}`,
+        message: `Order is already ${order.status}, you can't cancel it, you can only cancel pending orders`,
         error: true,
       });
     }
