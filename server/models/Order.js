@@ -32,15 +32,8 @@ const orderSchema = new mongoose.Schema(
     },
     estimatedTime: {
       type: Date,
-    },
-    acceptedAt: {
-      type: Date,
-    },
-    shippedAt: {
-      type: Date,
-    },
-    deliveredAt: {
-      type: Date,
+      default: Date.now(),
+      required: true,
     }
   },
   { timestamps: true }
