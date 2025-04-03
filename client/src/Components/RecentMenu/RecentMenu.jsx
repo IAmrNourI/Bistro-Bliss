@@ -142,7 +142,7 @@ async function getDrinksMenu() {
 }
 
 async function getDessertsMenu() {
-    const result = await items()
+    await items()
     .then((res) => {
         let Desserts = subCategory.filter((item) => item.category == "Desserts")
         setmenu(Desserts);
@@ -173,6 +173,7 @@ async function handleSearch(e){
 
 
 useEffect(() => {
+    getAllMenu()
     if(category == "breakfast"){
         getBreakfastMenu()
         setactiveLink("Breakfast");

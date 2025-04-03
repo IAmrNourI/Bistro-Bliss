@@ -346,6 +346,28 @@
   border-radius: 5px;
 }
 
+/* .test {
+  background-color: red;
+  height: 200px;
+  width: 100%;
+  position: relative;
+}
+
+.test::after {
+  content: "";
+  background-color: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transform: translateX(-100%);
+  transition: 0.5s;
+}
+
+.test:hover::after {
+  transform: translateX(-50%);
+} */
 
 
 
