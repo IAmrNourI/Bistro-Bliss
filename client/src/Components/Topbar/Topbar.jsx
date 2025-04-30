@@ -153,7 +153,7 @@ export default function Topbar() {
                   >
                     <span
                       className={
-                        user.unSeenMessages > 0 ? "notificationsNumber " : null
+                        user?.unSeenMessages > 0 ? "notificationsNumber " : null
                       }
                     >
                       {unSeen > 0 ? user?.unSeenMessages : null}

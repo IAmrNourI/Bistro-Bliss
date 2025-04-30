@@ -36,6 +36,8 @@ exports.createBookingValidationRules = [
       }
       return true;
     }),
+
+  
 ];
 
 exports.statusValidationRules = (allowedStatuses) => {
