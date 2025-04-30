@@ -16,6 +16,7 @@ const [historyOrders, sethistoryOrders] = useState([])
 const [profilePic, setprofilePic] = useState("")
 
 
+
 async function getUserDate() {
 const result = await getUser()
     .then((res) => {
@@ -106,31 +107,72 @@ async function cancelBooking(id){
 //     });
 // }
 
-async function getUserActiveOrder(){
-    const result = await getActiveOrder()
-    .then((res) => {
-    console.log("active order",res);
-    // toast.success(res.data.message); 
-    const updatedItems = res.data.activeOrders.map((order) => {
-        const updatedMenuItems = order.menuItems.map((menuItem) => {
-            const imgSrc = menuItem.menuItem.image.slice(9)
-            return {
-                ...menuItem,
-                menuItem: {
-                    ...menuItem.menuItem,
-                    image: imgSrc
-                }
+async function getUserActiveOrder() {
+    try {
+        const res = await getActiveOrder();
+        console.log("active order", res);
+
+        const updatedItems = res.data.activeOrders.map((order) => {
+            const createdAt = new Date(order.createdAt);
+            const estimatedTime = new Date(order.estimatedTime);
+            const totalTime = estimatedTime - createdAt;
+
+            const updatedMenuItems = order.menuItems.map((menuItem) => {
+                const imgSrc = menuItem.menuItem.image.slice(9)
+                return {
+                    ...menuItem,
+                    menuItem: {
+                        ...menuItem.menuItem,
+                        image: imgSrc
+                    }
+                };
+            });           
+            
+            return { 
+                ...order, 
+                totalTime,
+                estimatedTime,
+                createdAt,
+                menuItems: updatedMenuItems
             };
         });
-        return { ...order, menuItems: updatedMenuItems };
-    })
-    setactiveOrder(updatedItems);
-    })
-    .catch((res) => {
-    toast.error(res.response.data.message);
-    console.log(res)
-    });
+
+        setactiveOrder(updatedItems);
+    } catch (error) {
+        toast.error(error.response?.data?.message || "An error occurred");
+        console.error(error);
+    }
 }
+
+
+
+useEffect(() => {
+    const interval = setInterval(() => {
+        setactiveOrder((prevOrders) => prevOrders.map((order) => {
+            const datanow = new Date();
+            const difference = order.estimatedTime - datanow;
+            const percentage = Math.max(0, Math.min(100, Math.floor(((order.totalTime - difference) / order.totalTime) * 100)));
+
+            const totalMinutes = Math.floor(difference / (1000 * 60));
+            const totalSeconds = Math.floor(difference / 1000); 
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            const seconds = totalSeconds % 60; 
+
+            let displayTime = difference > 0 
+                ? (hours > 0 ? `${hours}: ${minutes}: ${seconds}:` : `${minutes}: ${seconds}:`) 
+                : "Order will be delivered soon";
+
+            return { 
+                ...order, 
+                difference: displayTime,
+                percentage: percentage
+            };
+        }));
+    }, 1000);
+    return () => clearInterval(interval);
+}, []);
+
 
 async function getUserHistoryOrder(){
     const result = await getHistoryOrder()
@@ -156,8 +198,11 @@ async function getUserHistoryOrder(){
     .catch((res) => {
     toast.error(res.response.data.message);
     console.log(res)
-    });
+});
 }
+
+
+
 
 useEffect(() => {
 getUserDate();
@@ -353,8 +398,12 @@ return (
                                     {(orederItem.totalPrice + 15).toString().slice(0, 5)}$</span>
                                 </h6>
             
-                                    <h6 className=" mt-1 text-center">{orederItem.status}</h6>
-                                    <span class="loader"></span>
+                                    {/* <h6 className=" mt-1 text-center">{orederItem.status}</h6> */}
+                                    {/* <span class="loader"></span> */}
+                                    <h6 className="mt-3">{orederItem.difference}</h6>
+                                    <div className="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                        <div className="progress-bar progress-bar-striped" style={{ width: `${orederItem.percentage}%` }}></div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -432,6 +481,8 @@ return (
 
     </div>
     </section>
+
+    <div className="test"></div>
 </>
 );
 }
