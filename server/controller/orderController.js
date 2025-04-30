@@ -247,7 +247,7 @@ exports.cancelOrder = async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: "Order not found", error: true });
     }
-    if (order.status !== "cancelled") {
+    if (order.status == "cancelled") {
       return res.status(404).json({
         message: `Order is already ${order.status}`,
         error: true,
