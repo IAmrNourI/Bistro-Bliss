@@ -430,3 +430,64 @@
       opacity: 0;
     }
   }
+
+
+
+.stat {
+  display: flex;
+  align-items: center;
+  justify-content: center;;
+  width: 30px;
+  background-color: #AD343E;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  top: -7.5px;
+}
+
+.stat1 {
+  left: -2px;
+}
+.stat2 {
+  left: 20%;
+}
+.stat3 {
+  left:70%
+
+}
+.stat::after {
+  content: "";
+  position: absolute;
+  background-color: white;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+}
+
+.stat::before {
+  position: absolute;
+  width: 80px;
+  height: auto;
+  border-radius: 50%;
+  top: -20px;
+  left: -5px;
+}
+
+.stat1::before {
+  content: "Created";
+}
+
+.stat2::before {
+  content: "Accepted";
+}
+
+.stat3::before {
+  content: "Shipped";
+}
+
+.progress {
+  width: 100%; /* Ensure the parent div takes up full width */
+  height: 20px; /* Set a height to make the progress bar visible */
+  overflow: visible;
+}

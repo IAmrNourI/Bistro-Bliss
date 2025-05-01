@@ -48,23 +48,6 @@ async function addItemToWishlist(id){
                 {result.data.message} <i className="fa-solid fa-heart cursor-pointer"></i>
             </span>
         );
-        // toast(
-        //     <span>
-        //     {result.data.message} <i className="fa-solid fa-heart cursor-pointer"></i>
-        // </span>,
-        // {
-        //     style: {
-        //     border: '1px solid #AD343E',
-        //     color: '#AD343E',
-        //     backgroundColor: '#A9A9A9'
-        //     },
-        //     iconTheme: {
-        //     primary: '#AD343E',
-        //     secondary: '#AD343E',
-        //     },
-        // }
-        // );
-
     }
     }catch(error){
         if(error.response.data.message == "Item already in wishlist" ){
@@ -294,6 +277,7 @@ return (
                 <div className="menu-item text-center border border-1 rounded-3 overflow-hidden position-relative">
                 <div className="overflow-hidden">
                     <img
+                    loading='lazy'
                     className="w-100 img-border"
                     src={`http://localhost:5173/${item.image}`}
                     alt="food"
@@ -302,7 +286,7 @@ return (
                 <div className="p-2 position-relative">
                     <p className="price mb-1 pt-4">${item.price}</p>
                     <p className="name mb-1">{item.name}</p>
-                    <p className="desc mb-2">{item.description}</p>
+                    <p className="desc mb-2 text-black">{item.description}</p>
                     <div className="sub-container">
                         <span></span>
                         {/* <button className="" onClick={() => addItemToCart(item._id)} >Add To Cart</button>    */}

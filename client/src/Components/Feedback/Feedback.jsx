@@ -11,18 +11,18 @@ return (
     <>
         <section className='feedback p-y'>
             <div className="container">
-            <div class="section-header text-center pb-4"><h3 class="h1">What Our Customers Say</h3></div>
+            <div class="section-header text-center pb-4"><h2 class="h1">What Our Customers Say</h2></div>
                 <div className="row mt-4">
                     <div className="col-lg-4 col-md-6 mb-3">
                         <div className="feedback-item">
                             <p className='header'>“The best restaurant”</p>
-                            <p className='info'>Last night, we dined at place and were simply blown away. 
+                            <p className='info text-black'>Last night, we dined at place and were simply blown away. 
                                 From the moment we stepped in, 
                                 we were enveloped in an inviting atmosphere 
                                 and greeted with warm smiles
                             .</p>
                             <div className="customer d-flex mt-4">
-                                <img src={fcustomer} alt="customer pic" />
+                                <img loading='lazy' src={fcustomer} alt="customer pic" />
                                 <div className='ms-3 mt-2'>
                                     <p className='mb-1 fw-500'>Sophire Robson</p>
                                     <span>Los Angeles, CA</span>
@@ -33,13 +33,13 @@ return (
                     <div className="col-lg-4 col-md-6 mb-3">
                         <div className="feedback-item">
                             <p className='header'>“The best restaurant”</p>
-                            <p className='info'>Last night, we dined at place and were simply blown away. 
+                            <p className='info text-black'>Last night, we dined at place and were simply blown away. 
                                 From the moment we stepped in, 
                                 we were enveloped in an inviting atmosphere 
                                 and greeted with warm smiles
                             .</p>
                             <div className="customer d-flex mt-4">
-                                <img src={fcustomer} alt="customer pic" />
+                                <img loading='lazy' src={fcustomer} alt="customer pic" />
                                 <div className='ms-3 mt-2'>
                                     <p className='mb-1 fw-500'>Sophire Robson</p>
                                     <span>Los Angeles, CA</span>
@@ -50,13 +50,13 @@ return (
                     <div className="col-lg-4 col-md-12 mb-3">
                         <div className="feedback-item">
                             <p className='header'>“The best restaurant”</p>
-                            <p className='info'>Last night, we dined at place and were simply blown away. 
+                            <p className='info text-black'>Last night, we dined at place and were simply blown away. 
                                 From the moment we stepped in, 
                                 we were enveloped in an inviting atmosphere 
                                 and greeted with warm smiles
                             .</p>
                             <div className="customer d-flex mt-4">
-                                <img src={fcustomer} alt="customer pic" />
+                                <img loading='lazy' src={fcustomer} alt="customer pic" />
                                 <div className='ms-3 mt-2'>
                                     <p className='mb-1 fw-500'>Sophire Robson</p>
                                     <span>Los Angeles, CA</span>

@@ -19,10 +19,10 @@ return (
                 <div className="row">
                     <div className="col-xl-8 col-lg-12">
                         <div className='d-flex'>
-                            <img src={cheef} className='fimg object-fit-cover me-4 ' width="" height="550px" alt="Chef" />
+                            <img loading="lazy" src={cheef} className='fimg object-fit-cover me-4 ' width="" height="550px" alt="Chef" />
                             <div className='d-flex flex-column fast-pic'>
-                                <img src={meat} className='simg object-fit-cover mt-4 ' width="250px" height="" alt="meat" />
-                                <img src={salad} className='timg object-fit-cover mt-4' width="250px" height="" alt="salad" />
+                                <img loading="lazy" src={meat} className='simg object-fit-cover mt-4 ' width="250px" height="" alt="meat" />
+                                <img loading="lazy" src={salad} className='timg object-fit-cover mt-4' width="250px" height="" alt="salad" />
                             </div> 
                         </div>
                     </div>
