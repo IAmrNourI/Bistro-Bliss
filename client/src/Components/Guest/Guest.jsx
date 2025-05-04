@@ -40,7 +40,7 @@ return (
                     </div>
                     <div className="col-6">
                         <div className="guest-img">
-                            <img src={cook} className='  object-fit-cover rounded-3 mt-2' height="550px" width="550px" alt="cooking" />
+                            <img src={cook} loading='lazy' className='  object-fit-cover rounded-3 mt-2' height="550px" width="550px" alt="cooking" />
                         </div>
                     </div>
                 </div>

@@ -106,7 +106,6 @@ exports.acceptOrder = async (req, res) => {
       hour: "2-digit",
       minute: "2-digit",
     });
-    console.log( "form Estimated", formatedEstimatedTime);
     const createdAt = new Date(order.createdAt);
     const formattedDate = createdAt.toLocaleString("en-US", {
       weekday: "long",
@@ -116,9 +115,7 @@ exports.acceptOrder = async (req, res) => {
       hour: "2-digit",
       minute: "2-digit",
     });
-    console.log("order. createdAt: ", order.createdAt);
-    console.log("formattedDate: ", formattedDate);
-    console.log("createdAt: ", createdAt);
+
 
     const newNotification = await Notification.create({
       user: order.user,
@@ -247,7 +244,7 @@ exports.cancelOrder = async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: "Order not found", error: true });
     }
-    if (order.status !== "cancelled") {
+    if (order.status == "cancelled") {
       return res.status(404).json({
         message: `Order is already ${order.status}`,
         error: true,

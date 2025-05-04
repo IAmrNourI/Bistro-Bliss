@@ -31,7 +31,6 @@ exports.addToCart = async (req, res) => {
         }
         if (!cart) {
             totalPrice = itemPrice * quantity;
-            console.log(totalPrice)
             const newCart = new Cart({ user: req.user.id, menuItems: [{ menuItem: menuItemId, quantity: quantity }], totalPrice });
             await newCart.save();
             return res.status(200).json({ message: "New cart created", data: newCart, success: true });
@@ -56,7 +55,6 @@ exports.getCart = async (req, res) => {
 exports.deleteFromCart = async (req, res) => {
     try {
         const { menuItemId } = req.params;
-        console.log(menuItemId)
         const cart = await Cart.findOne({ user: req.user.id })
         const menuItemData = await MenuItem.findOne({ _id: menuItemId});
         if (!menuItemData) {

@@ -82,30 +82,6 @@ async function cancelBooking(id){
     // console.log(res);
 }
 
-// async function getAllOrder(){
-//     const result = await getUserOrder()
-//     .then((res) => {
-//     console.log(res);
-//     // toast.success(res.data.message); 
-//         const updatedItems = res.data.orders.map((order) => {
-//             const date = new Date(order.updatedAt);
-//             const monthName = date.toLocaleString("en-US", { month: "long" });
-//             const monthNumber = date.getMonth() + 1;
-//             const year = date.getFullYear();
-//             const newCreatedAt = `${monthName} ${monthNumber}, ${year}`;
-//             return{
-//                 ...order,
-//                 updatedAt: newCreatedAt
-//             }
-//         })
-//     setorder(updatedItems);
-//     console.log(updatedItems);
-//     })
-//     .catch((res) => {
-//     toast.error(res.response.data.message);
-//     console.log(res)
-//     });
-// }
 
 async function getUserActiveOrder() {
     try {
@@ -398,12 +374,37 @@ return (
                                     {(orederItem.totalPrice + 15).toString().slice(0, 5)}$</span>
                                 </h6>
             
-                                    {/* <h6 className=" mt-1 text-center">{orederItem.status}</h6> */}
-                                    {/* <span class="loader"></span> */}
-                                    <h6 className="mt-3">{orederItem.difference}</h6>
-                                    <div className="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                <h6 className=" mt-1 text-center">{orederItem.status}</h6>
+                                {/* <span class="loader"></span> */}
+                                <h6 className="mt-3">{orederItem.difference}</h6>
+                                <div className="position-relative mt-4">
+                                    <div className="progress bar" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                        <div className="stat stat1"></div>
+                                        {orederItem.status !== "pending" && <div className="stat stat2"></div>}
+                                        {orederItem.status === "shipping" && <div className="stat stat3" style={{
+                                                      left: `${(((new Date(orederItem.shippedAt) - new Date(orederItem.acceptedAt)) / (new Date(orederItem.estimatedTime) - new Date(orederItem.createdAt)))+0.2) * 100}%`
+
+                                            }}></div>}
+
+                                        {(orederItem.status !== "pending") ? <div className="progress-bar progress-bar-striped" style={{ width: `20%` }}></div> : null}
+                                        
+                                        <div className="progress-bar progress-bar-striped" style={{ width: `${Math.max(orederItem.percentage)*0.8}%` }}></div>
+
+                                    </div>
+                                </div>
+                                {/* <div className="position-relative mt-4">
+                                    <div className="progress bar" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                        <div className="stat stat1"></div>
+
+                                        {(orederItem.status === "preparing" || orederItem.status === "shipping") ? <div className="stat stat2"></div> : null}
+                                        {orederItem.status === "shipping" ? <div className="stat stat3"></div> : null}
+
+
+ 
                                         <div className="progress-bar progress-bar-striped" style={{ width: `${orederItem.percentage}%` }}></div>
                                     </div>
+                                    </div> */}
+
                             </div>
                         </div>
                     </div>

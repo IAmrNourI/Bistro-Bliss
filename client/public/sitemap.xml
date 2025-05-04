@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Main Pages -->
+  <url>
+    <loc>https://www.example.com/</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>1.00</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.example.com/about</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://www.example.com/menu</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://www.example.com/contact</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://www.example.com/book</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://www.example.com/userprofile</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <url>
+    <loc>https://www.example.com/updateuser</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Auth Pages -->
+
+  
+  <url>
+    <loc>https://www.example.com/auth/register</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://www.example.com/auth/login</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://www.example.com/auth/loginpassword</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://www.example.com/auth/forgetpassword</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://www.example.com/auth/newpassword</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
+    <loc>https://www.example.com/auth/otp</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <!-- Error Page -->
+
+  <url>
+    <loc>https://www.example.com/*</loc>
+    <lastmod>2025-05-01</lastmod>
+    <priority>0.50</priority>
+  </url>
+
+</urlset>

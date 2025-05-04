@@ -129,19 +129,20 @@ export default function Topbar() {
               </div>
               <div className="col-xl-6 d-flex align-items-center justify-content-xl-end justify-content-md-start">
                 <div className="social d-flex mt-2 pb-2 d-flex">
-                  <a href="#">
+                  <a aria-label="twitter" href="#">
                     <i className="fa-brands fa-twitter text-white "></i>
                   </a>
-                  <a href="#">
+                  <a aria-label="facebook" href="#">
                     <i className="fa-brands fa-facebook-f text-white "></i>
                   </a>
-                  <a href="#">
+                  <a aria-label="instagram" href="#">
                     <i className="fa-brands fa-instagram text-white "></i>
                   </a>
-                  <a href="#">
+                  <a aria-label="github" href="#">
                     <i className="fa-brands fa-github text-white "></i>
                   </a>
                   <a
+                  aria-label="notification"
                     className={`position-relative ms-3 ${
                       showNotification ? "triangle" : ""
                     }`}
@@ -153,7 +154,7 @@ export default function Topbar() {
                   >
                     <span
                       className={
-                        user.unSeenMessages > 0 ? "notificationsNumber " : null
+                        user?.unSeenMessages > 0 ? "notificationsNumber " : null
                       }
                     >
                       {unSeen > 0 ? user?.unSeenMessages : null}
@@ -217,12 +218,14 @@ export default function Topbar() {
                   <Link
                     to="/wishlist"
                     className="cursor-pointer d-flex align-items-center text-white"
+                    aria-label="wishlist"
                   >
                     <i class="fa-regular fa-heart"></i>
                   </Link>
                   <Link
                     to="/cart"
                     className="cursor-pointer d-flex align-items-center text-white"
+                    aria-label="cart"
                   >
                     <i class="fa-solid fa-cart-shopping"></i>
                   </Link>
@@ -230,13 +233,15 @@ export default function Topbar() {
                   <Link
                     to="/userprofile"
                     className="cursor-pointer d-flex align-items-center text-white"
+                    aria-label="userprofile"
                   >
                     <i class="fa-regular fa-user"></i>
                   </Link>
 
                   {isAdmin == "admin" ? (
                     <Link
-                      to="/admin"
+                    aria-label="admin"
+                    to="/admin"
                       className="cursor-pointer d-flex align-items-center text-white"
                     >
                       <i class="fa-solid fa-user-tie"></i>

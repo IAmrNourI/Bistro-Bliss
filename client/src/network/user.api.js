@@ -49,7 +49,6 @@ const searchMenu = async (data) => {
 }
 
 const addItem = async(data) => {
-    // console.log(localStorage.getItem("userToken"))
     // return await axiosInstance.post("/menu/add-item", data)
     const token = localStorage.getItem("userToken");    
     return await axiosInstance.post("/menu/add-item", data, {

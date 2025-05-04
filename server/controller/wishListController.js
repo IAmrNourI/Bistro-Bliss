@@ -8,7 +8,6 @@ exports.addToWishList = async (req, res) => {
         if(wishList){
             let itemFound = false;
             wishList.menuItems.map((item) => {
-                console.log(item)
                 if(item.menuItem == menuItemId){
                     itemFound = true;
                 }

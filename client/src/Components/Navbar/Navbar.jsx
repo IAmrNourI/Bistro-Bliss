@@ -107,7 +107,7 @@ export default function Navbar() {
 
         
       </nav>
-      <button onClick={scrollToTop} className="scroll-btn">
+      <button aria-label="Scroll to top" onClick={scrollToTop} className="scroll-btn">
         <i className="fa-solid fa-arrow-up"></i>
       </button>
       </header>

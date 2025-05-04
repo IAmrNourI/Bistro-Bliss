@@ -31,7 +31,7 @@ exports.userValidationRules = [
 ];
 
 exports.updateUserValidationRules = [
-  body("name").trim().optional().notEmpty().withMessage("name is required"), //optional check if provided or not
+  body("name").trim().optional().notEmpty().withMessage("name is required"), 
   body("email").optional().isEmail().withMessage("Invalid email format"),
   check("password")
     .optional()
