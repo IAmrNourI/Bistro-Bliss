@@ -81,7 +81,6 @@ exports.acceptBooking = async (req, res) => {
     const { bookingId, userId } = req.params;
     const booking = await Booking.findById(bookingId);
 
-    console.log(userId);
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
     }

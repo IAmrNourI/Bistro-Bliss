@@ -106,13 +106,13 @@ return (
             
             <div className="row border-bottom ps-5 titles">
                 <div className="col-5 ps-5">
-                    <h5 className='ps-5'>Product name</h5>
+                    <h2 className='ps-5 h4'>Product name</h2>
                 </div>
                 <div className="col-2">
-                    <h5>Unit price</h5>
+                    <h2 className='h4'>Unit price</h2>
                 </div>
                 <div className="col-4">
-                    <h5>Quantity</h5>
+                    <h2 className='h4'>Quantity</h2>
                 </div>
             </div>
 
@@ -130,7 +130,7 @@ return (
                 </div>
                 <div className="col-4">
                     <div className="d-flex align-items-center py-3 h-100">
-                        <img src={`http://localhost:5173/${item.menuItem.image}`} width="60px" alt="" />
+                        <img loading='lazy' src={`http://localhost:5173/${item.menuItem.image}`} width="60px" alt="" />
                         <p className='m-0 ms-3'>{item.menuItem.name}</p>
                     </div>
                 </div>
@@ -148,7 +148,7 @@ return (
                 </div>
                 <div className="col-md-3 col-12">
                     <div className="d-flex flex-column align-items-center py-3 h-100">
-                        <p className='createdAt'>Added on: {item.menuItem.createdAt} </p>
+                        <p className='createdAt text-black'>Added on: {item.menuItem.createdAt} </p>
                         <button onClick={() => addItemToCart(item.menuItem._id)} className='add-btn'>Add to cart</button>
                     </div>
                 </div>

@@ -20,15 +20,26 @@ const server = createServer(app);
 const createSocketIo = require("./socket/socket"); // added or edit this line
 
 
-app.use( 
-  cors({
-    origin: process.env.FRONTEND_URL, // Make sure this points to http://localhost:3000 during development
-    credentials: true, // Allow credentials like cookies to be sent
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
-    credentials: true, // Allow credentials
-  })
-); 
+const allowedOrigins = [
+  process.env.CLIENT_URL,  
+  process.env.CLIENT_URLL  
+];
+
+
+app.use(
+cors({
+  origin: (origin, callback) => {
+      if (allowedOrigins.includes(origin) || !origin) {  
+          callback(null, true);
+      } else {
+          callback(new Error('Not allowed by CORS'));
+      }
+  },
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: ["GET", "POST", "PUT", "DELETE"]
+})
+);
 
 app.use(express.json()); 
 app.use(cookiesParser());
@@ -61,9 +72,3 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/order", orderRoutes);
   
-
-//amr
-//w35mq6AhNhNGvGLj
-//MONGODB_URL = mongodb://localhost:27017/BistroBliss
-//mongodb+srv://amr:w35mq6AhNhNGvGLj@bistroblisscluster.jsec3.mongodb.net/?retryWrites=true&w=majority&appName=bistroBlissCluster
-//MONGODB_URL = mongodb://localhost:27017/BistroBliss
