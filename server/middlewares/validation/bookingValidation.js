@@ -46,8 +46,6 @@ exports.statusValidationRules = (allowedStatuses) => {
       .trim()
       .notEmpty()
       .custom((val) => {
-        console.log(`val = ${val}`);
-        console.log(`baseStauts = ${allowedStatuses}`);
         if (!allowedStatuses.includes(val)) {
           throw new Error(
             `you can convert ${val} to ${allowedStatuses} in this case`

@@ -298,7 +298,6 @@ exports.verifyResetPasswordOtp = async (req, res) => {
     await user.save();
 
     const forgetTokenDetails = generateForgetPasswordToken(user);
-    console.log("Cookie: " , forgetTokenDetails.cookieOptions);
     return res
       .cookie("token", forgetTokenDetails.token, forgetTokenDetails.cookieOptions)
       .status(200)
@@ -314,10 +313,8 @@ exports.verifyResetPasswordOtp = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
   try {
-    console.log("resetPassword")
     const { password } = req.body;
     const user = await User.findById(req.user.id);
-    console.log(req.user.id)
     const hashedPassword = await bcryptjs.hashSync(password, 12);
     user.password = hashedPassword;
     await user.save();

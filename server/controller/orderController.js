@@ -106,7 +106,6 @@ exports.acceptOrder = async (req, res) => {
       hour: "2-digit",
       minute: "2-digit",
     });
-    console.log( "form Estimated", formatedEstimatedTime);
     const createdAt = new Date(order.createdAt);
     const formattedDate = createdAt.toLocaleString("en-US", {
       weekday: "long",
@@ -116,9 +115,7 @@ exports.acceptOrder = async (req, res) => {
       hour: "2-digit",
       minute: "2-digit",
     });
-    console.log("order. createdAt: ", order.createdAt);
-    console.log("formattedDate: ", formattedDate);
-    console.log("createdAt: ", createdAt);
+
 
     const newNotification = await Notification.create({
       user: order.user,

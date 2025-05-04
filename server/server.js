@@ -72,9 +72,3 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/order", orderRoutes);
   
-
-//amr
-//w35mq6AhNhNGvGLj
-//MONGODB_URL = mongodb://localhost:27017/BistroBliss
-//mongodb+srv://amr:w35mq6AhNhNGvGLj@bistroblisscluster.jsec3.mongodb.net/?retryWrites=true&w=majority&appName=bistroBlissCluster
-//MONGODB_URL = mongodb://localhost:27017/BistroBliss
